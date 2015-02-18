@@ -48,7 +48,7 @@ simplify.config(['$stateProvider', '$urlRouterProvider', function($stateProvider
     }) 
     .state('viewLicense', {
       url: '/license/view/:recordId', 
-      templateUrl: 'components/license/license.crud.html' ,
+      templateUrl: 'components/license/license.view.html' ,
     })
     .state('overviewLicense', {
       url: '/license/overview', 

@@ -28,11 +28,9 @@ angular
 
 if ($state.current.name == 'viewLicense') {
 
-	// console.log('$stateParams.recordId : ' + $stateParams.recordId);
 	//we get details for selected license
 	licenseService.get($stateParams.recordId).then(function(response){
 		$scope.license = response.data;
-		// console.log('license : ' + JSON.stringify($scope.license));
 	});
 
 	$scope.confirmDeleteLicense = function(){
