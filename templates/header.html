@@ -1,0 +1,20 @@
+
+<nav class="navbar nav-justified" ng-controller="HeaderCtrl">
+	<div class="container-fluid" ng-show="userName != undefined">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<img src="images/pnord.jpg" class="img-circle logo">		
+			<div class="btn-group">
+				<a class="btn btn-info btn-lg" href="#/home"><i class="fa fa-home fa-lg"></i><span class="label label-info">!Simplify v0.1</span></a>
+				<a class="btn btn-info btn-lg" target="_new" href="http://ufi.validpnord.nc/"><i class="fa fa-windows fa-lg"></i><span class="label label-info">SharePoint</span></a>
+				<a class="btn btn-info btn-lg" target="_new" href="http://centreon/centreon/main.php"><i class="fa fa-cube fa-lg"></i><span class="label label-info">Centreon</span></a>
+				<a class="btn btn-info btn-lg" target="_new" href="https://kuru.pnord.nc:4343/officescan/console/html/cgi/cgiChkMasterPwd.exe"><i class="fa fa-bullhorn fa-lg"></i></span><span class="label label-info">Trend Micro </span></a>
+				<a class="btn btn-info btn-lg" target="_new" href="https://10.16.32.30:9443/triton/login/pages/loginPage.jsf"><i class="fa fa-eye fa-lg"></i><span class="label label-info">WebSense</span></a>
+				<a class="btn btn-info btn-lg" target="_new" href="https://10.16.7.254:12369/"><i class="fa fa-fire fa-lg"></i><span class="label label-info">Astaro</span></a>
+				<a class="btn btn-info btn-lg" target="_new" href="https://10.16.25.3/admin/public/index.html"><i class="fa fa-fire fa-lg"></i><span class="label label-info">ASA</span></a>
+				<a class="btn btn-info btn-lg disabled" href="#"><i class="fa fa-user fa-lg"></i><span class="label label-info">Bonjour {{userName}}</span></a>
+				<a class="btn btn-default btn-lg" href="/logout.php"><i class="fa fa-user-times fa-lg"></i><span class="label label-default"> Déconnexion</span></a>
+			</div>
+		</div>
+	</div><!-- /.container-fluid -->
+</nav>
