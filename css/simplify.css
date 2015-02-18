@@ -1,0 +1,84 @@
+.logo {
+    width:10%;
+    height:10%;
+}
+.padding-top {
+	padding-top: 200px; 
+}
+.margin-top {
+	margin-top: 100px;
+}
+.light-margin-top {
+  margin-top: 20px;
+}
+.light-margin-bot {
+	margin-bottom: 20px;
+}
+
+.sticky-footer{
+
+	border-top: 1px solid gray;
+	position: absolute;
+	bottom: 0; 
+	width: 100%;
+	height: 60px;
+	bottom: 0;
+}
+
+
+.image-custom{
+
+	width: 20%;
+	height: 20%;
+	margin-top: 5px;
+}
+
+ .btn-black {
+  background-color: #4d4c4c;
+  border-color: #4d4c4c;
+}
+.btn-black:hover,
+.btn-black:focus,
+.btn-black:active,
+.btn-black.active {
+  background-color: #403f3f;
+  border-color: #333333;
+}
+.btn-black.disabled:hover,
+.btn-black.disabled:focus,
+.btn-black.disabled:active,
+.btn-black.disabled.active,
+.btn-black[disabled]:hover,
+.btn-black[disabled]:focus,
+.btn-black[disabled]:active,
+.btn-black[disabled].active,
+fieldset[disabled] .btn-black:hover,
+fieldset[disabled] .btn-black:focus,
+fieldset[disabled] .btn-black:active,
+fieldset[disabled] .btn-black.active {
+  background-color: #4d4c4c;
+  border-color: #4d4c4c;
+}
+
+.blocBorder {
+  border:1px solid gray;
+  /*-webkit-box-shadow: -3px 1px 7px 0px rgba(80, 147, 140, 0.74);
+-moz-box-shadow:    -3px 1px 7px 0px rgba(80, 147, 140, 0.74);
+box-shadow:         -3px 1px 7px 2px rgba(80, 147, 140, 0.74);*/
+  margin:-1px 0 0 -1px;
+	
+}
+
+.bloc-center {
+    width: 100px;
+    height: 100px;
+    background-color: red;
+
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    margin: auto;
+}
