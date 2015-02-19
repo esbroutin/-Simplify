@@ -7,7 +7,7 @@
   		<tr class="info"><th>ID</th><th>Date de création</th><th>Libéllé</th><th>Prestataire</th><th>Marque</th><th>Date de début</th><th>Date de fin</th></tr>
   	</thead>
   	<tbody>
-  		<tr ng-repeat="license in licenses" ng-click="viewLicense(license)" >
+  		<tr class="reveal-animation" ng-repeat="license in licenses" ng-click="viewLicense(license)" >
   			<td>{{license.ID}}</td>
         <td>{{license.DATE_CREATION | tsDateTime}}</td>
   			<td>{{license.LABEL}}</td>

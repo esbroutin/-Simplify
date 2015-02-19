@@ -23,7 +23,7 @@ class LicenseDAO extends BaseSimplifyObject{
   **/
   function listLicense($search){
 
-    //if no search string, we get all
+    //if no search string, we get all 
     if ($search == 'undefined' || $search== ''){
       $conditionSql = "";
     }else{

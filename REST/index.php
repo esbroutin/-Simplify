@@ -26,10 +26,6 @@ $app = new \Slim\Slim(array(
     'log.level' => \Slim\Log::DEBUG,
 ));
 
-$app->contentType('application/json');
-$app->expires('-1000000');
-// $db = new PDO('pgsql:host='.$db_host.';port='.$db_port.';dbname='.$db_name.'', $db_user, $db_passwd);
-
 //Définition de la configuration, pour la rendre accessible dans tous les controleurs à travers $app->environment['APP_CONFIG']
 global $gTblConfig; 
 $app->environment['APP_CONFIG'] = $gTblConfig;
@@ -39,6 +35,12 @@ $app->environment['APP_CONFIG_CUSTOM'] = $gTblConfigCustom;
 $app->log->setWriter(new \PNORD\LogWriter($app));
 
 $app->log->info("******* REQUEST START - " . $_SERVER['REQUEST_METHOD'] . " ". $_SERVER["REQUEST_URI"] . " - " . (isset($_SESSION['userid'])?$_SESSION['userid']:"No active session") . " - **********");
+
+/********ACL******************************************************************************************/
+//Does the current user has access to the 'moduleName' module ?
+$app->get('/acl/module/:moduleName', function($moduleName) use($app){
+  echo $bAuth = checkAuth($app,$moduleName);
+});
 
 // **************************************************
 // *	LICENSE

@@ -10,13 +10,6 @@ namespace PNORD;
 use PDO;
 use PDOException;
 use PNORD\BaseSimplifyObject;
-require('/var/www/webapp-simplify/config.inc.php');
-$gTblConfig = array();
-$gTblConfig['DB_HOST'] = '10.16.21.57';
-$gTblConfig['DB_USER'] = 'postgres';
-$gTblConfig['DB_PASSWD'] = 'postgres';
-$gTblConfig['DB_NAME'] = "simplify"; 
-$gTblConfig['DB_PORT'] = "5433"; 
 
 class DB extends BaseSimplifyObject{
   
@@ -39,16 +32,13 @@ class DB extends BaseSimplifyObject{
   * @param string schema schema to selected
   **/
   function open($schema=""){
-    // $this->app->log->info(__CLASS__ . "::" . __METHOD__ . "($schema)");
-    // $this->app->log->info(":***environment***:" . $this->app->environment['APP_CONFIG']);
-
-    //*******  A CHANGER ******
+  // $this->app->log->info('--- $ gTblConfig :  '.$this->dumpRet($this->app->environment['APP_CONFIG']));
     
-    $conStr = "pgsql:host=".'10.16.21.57'.";port=".'5433'.";dbname=".'simplify';
+    $conStr = "pgsql:host=".$this->app->environment['APP_CONFIG']['DB_HOST'].";port=".$this->app->environment['APP_CONFIG']['DB_PORT'].";dbname=".$this->app->environment['APP_CONFIG']['DB_NAME'];
     
     //Open DB
     try {
-      $this->pdo = new PDO($conStr,'postgres','postgres');
+      $this->pdo = new PDO($conStr,$this->app->environment['APP_CONFIG']['DB_USER'],$this->app->environment['APP_CONFIG']['DB_PASSWD']);
     }
     catch(Exception $e) {
       if($e->getCode()==7){
@@ -61,7 +51,7 @@ class DB extends BaseSimplifyObject{
     $this->pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
     $this->pdo->setAttribute(PDO::ATTR_CASE,PDO::CASE_UPPER);
 
-    //Select Schema (<=> schema)
+    //Select Schema (<=> public) *** A CHANGER ***
     try {
       $this->pdo->exec("SET SCHEMA 'public';");
     }

@@ -32,16 +32,6 @@ if ($state.current.name == 'viewLicense') {
 		$scope.license = response.data;
 	});
 
-	$scope.confirmDeleteLicense = function(){
-
-		$scope.confirmDelete = 1;
-		
-		licenseService.delete($scope.license.ID).then(function(response){
-			$scope.response = response.data;
-			$scope.showList();
-		});
-	}
-
 	$scope.deleteLicense = function(){
 
 		$scope.confirmDelete = 1;

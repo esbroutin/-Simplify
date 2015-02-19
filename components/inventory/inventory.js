@@ -1,5 +1,4 @@
 //Inventory CRUD Controller
-console.log('Inventory Basic Controller'); 
 angular
   .module('simplify')
   .controller('InventoryCtrl', ['$scope','$state','$http', function($scope, $state, $http){

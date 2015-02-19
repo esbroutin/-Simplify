@@ -67,6 +67,19 @@ simplify.config(['$stateProvider', '$urlRouterProvider', function($stateProvider
       url: '/inventory/add', 
       templateUrl: 'components/inventory/inventory.crud.html' ,
     })
+  //Versionning routing
+    .state('versionning', {
+      url: '/versionning',
+      templateUrl: 'components/versionning/versionning.html',
+    }) 
+    .state('listVersionning', {
+      url: '/versionning/list',
+      templateUrl: 'components/versionning/versionning.list.html',
+    })
+    .state('addVersionning', {
+      url: '/versionning/add', 
+      templateUrl: 'components/versionning/versionning.crud.html' ,
+    })
   //Material routing
     .state('material', {
       url: '/material',

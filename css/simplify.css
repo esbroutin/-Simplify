@@ -82,3 +82,15 @@ box-shadow:         -3px 1px 7px 2px rgba(80, 147, 140, 0.74);*/
 
     margin: auto;
 }
+.reveal-animation.ng-enter {
+  -webkit-animation: enter_sequence 0.5s linear; /* Safari/Chrome */
+  animation: enter_sequence 0.5s linear; /* IE10+ and Future Browsers */
+}
+@-webkit-keyframes enter_sequence {
+  from { opacity:0; }
+  to { opacity:1; }
+}
+@keyframes enter_sequence {
+  from { opacity:0; }
+  to { opacity:1; }
+}
