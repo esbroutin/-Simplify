@@ -25,7 +25,7 @@ simplify.factory('licenseService', function($http) {
     },
     //Gantt Overview
     getGantt: function() {
-         return $http.get("REST/license/gantt/");
+         return $http.get("REST/license/gantt");
     },
   }
 });

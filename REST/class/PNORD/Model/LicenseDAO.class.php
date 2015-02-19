@@ -207,8 +207,8 @@ $ganttData = '[';
                             ':web_address'=>$web_address
                             ));
     
-    // $this->app->log->info('****result **** -> '.$this->dumpRet($result));
-
+    $this->app->log->info('****licenseId **** -> '.$this->dumpRet($licenseId));
+      $licenseId = str_replace('"', "", $licenseId);
       $return = $queryLicense->fetch(PDO::FETCH_ASSOC);
       $this->db()->commit(); // commit global pour éviter les Entrées orphelines ou incomplète en cas d'erreur
 

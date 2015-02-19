@@ -36,12 +36,6 @@ $app->log->setWriter(new \PNORD\LogWriter($app));
 
 $app->log->info("******* REQUEST START - " . $_SERVER['REQUEST_METHOD'] . " ". $_SERVER["REQUEST_URI"] . " - " . (isset($_SESSION['userid'])?$_SESSION['userid']:"No active session") . " - **********");
 
-/********ACL******************************************************************************************/
-//Does the current user has access to the 'moduleName' module ?
-$app->get('/acl/module/:moduleName', function($moduleName) use($app){
-  echo $bAuth = checkAuth($app,$moduleName);
-});
-
 // **************************************************
 // *	LICENSE
 // **************************************************
@@ -78,7 +72,7 @@ $app->get('/license/get/:licenseId', function($licenseId) use($app)  {
 });
 
 //GANTT OVERVIEW
-$app->get('/license/gantt/', function() use($app)  {
+$app->get('/license/gantt', function() use($app)  {
     if(checkAuth($app)){
       $license = new \PNORD\Ctrl\LicenseCtrl($app);  
       $ret = $license->getGantt();

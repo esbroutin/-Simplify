@@ -13,12 +13,7 @@ angular
 	$scope.showList = function(){
 		$state.transitionTo('listLicense', {reload: true});
 	}
-
-	//redirection to view created license
-	$scope.viewLicense = function(){
-		$state.transitionTo('viewLicense',{recordId:$scope.newLicenseId});
-	}
-
+	
 /***************************
 *
 *VIEW LICENSE MODE (state : VIEW)

@@ -7,8 +7,7 @@ angular
 
 		licenseService.getGantt().then(function(response){
 			$scope.gantt = response.data;
-			$scope.gantt = angular.fromJson($scope.gantt);
-			// console.log('gantt : ' + JSON.stringify($scope.gantt));
+			$scope.gantt = JSON.parse(angular.fromJson($scope.gantt));
 		});
 
 }]);

@@ -71,7 +71,7 @@ box-shadow:         -3px 1px 7px 2px rgba(80, 147, 140, 0.74);*/
 
 .bloc-center {
     width: 100px;
-    height: 100px;
+    height: 100px; 
     background-color: red;
 
     position: absolute;
@@ -83,14 +83,19 @@ box-shadow:         -3px 1px 7px 2px rgba(80, 147, 140, 0.74);*/
     margin: auto;
 }
 .reveal-animation.ng-enter {
-  -webkit-animation: enter_sequence 0.5s linear; /* Safari/Chrome */
-  animation: enter_sequence 0.5s linear; /* IE10+ and Future Browsers */
+ -webkit-transition: 0.4s linear all; /* Safari/Chrome */
+ transition: 0.4s linear all; /* All other modern browsers and IE10+ */
+
+ /* The animation preparation code */
+ opacity: 0;
 }
-@-webkit-keyframes enter_sequence {
-  from { opacity:0; }
-  to { opacity:1; }
-}
-@keyframes enter_sequence {
-  from { opacity:0; }
-  to { opacity:1; }
+
+/*
+ Keep in mind that you want to combine both CSS
+ classes together to avoid any CSS-specificity
+ conflicts
+*/
+.reveal-animation.ng-enter.ng-enter-active {
+ /* The animation code itself */
+ opacity: 1;
 }

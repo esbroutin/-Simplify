@@ -86,104 +86,14 @@
       <button class="btn btn-warning col-md-offset-1" ng-model="newProvider" btn-radio="'0'">Annuler</button>
     </div>
   </div>
-
-
-
-  <!-- we display the details only when in View Mode -->
-  <div  ng-show="status == 'viewLicense' && deleteButton == '0'">
-    <legend>Licence N° {{license.LICENSE_ID}} - {{license.LICENSE_LABEL}}</legend>
-    <div class="blocBorder col-md-6">
-    <legend>Informations</legend>
-      <div class='row'>
-        <label class="col-md-4 text-right control-label"> ID Licence:</label>
-        <div class="col-md-4">
-          {{license.LICENSE_ID}}
-        </div>
-      </div>
-      <div class='row'>
-        <label class="col-md-4 text-right control-label"> Créé le :</label>
-        <div class="col-md-4">
-          {{license.DATE_CREATION | tsDateTime}}
-        </div>
-      </div>
-      <div class='row borderTop'>
-        <label class="col-md-4 text-right control-label"> Libellé:</label>
-        <div class="col-md-8">
-          {{license.LICENSE_LABEL}}
-        </div>
-      </div>
-      <div class='row borderTop'>
-        <label class="col-md-4 text-right control-label"> Date de début:</label>
-        <div class="col-md-8">
-          {{license.DATE_START}}
-        </div>
-      </div>
-      <div class='row borderTop'>
-        <label class="col-md-4 text-right control-label"> Date de fin:</label>
-        <div class="col-md-8">
-          {{license.DATE_END}}
-        </div>
-      </div>
-      <div class='row borderTop'>
-        <label class="col-md-4 text-right control-label"> Description:</label>
-        <div class="col-md-8">
-          {{license.LICENSE_DESCRIPTION}}
-        </div>
-      </div>
-      <div class='row borderTop'>
-        <label class="col-md-4 text-right control-label"> Marque:</label>
-        <div class="col-md-8">
-          {{license.LICENSE_BRAND}}
-        </div>
-      </div> 
-      <div class='row'>
-        <label class="col-md-4 text-right control-label">Adresse Web:</label>
-        <div class="col-md-4 light-margin-bot">
-          <a target="_new" href="{{license.WEB_ADDRESS}}" class="btn btn-success btn-sm">Lien Web</a>
-        </div>
-      </div>
-    </div>
-    <div class="blocBorder col-md-6">
-      <legend>Prestataire</legend>
-      <div class='row'>
-        <label class="col-md-4 text-right control-label"> Nom:</label>
-        <div class="col-md-8 row">
-          {{license.PROVIDER_LABEL}}
-        </div>
-      </div>
-      <div class='row'>
-        <label class="col-md-4 text-right control-label"> Contact:</label>
-        <div class="col-md-8 row">
-          {{license.PROVIDER_CONTACT}}
-        </div>
-      </div>
-      <div class='row'>
-        <label class="col-md-4 text-right control-label"> Description:</label>
-        <div class="col-md-8 row">
-          {{license.PROVIDER_DESCRIPTION}}
-        </div>
-      </div>
-    </div>
-    <div class="blocBorder col-md-12"> 
-      <div class='row'>
-        <label class="col-md-4 text-right control-label">Numéro de Licence:</label>
-        <div class="col-md-8">
-          <strong>{{license.SERIAL}}</strong>
-        </div>
-      </div>
-    </div>
-    <div class='row col-md-12 light-margin-top text-right button-group'>
-      <button type="submit" class="btn btn-info " ng-click="showList()">Liste</button>
-      <button type="submit" class="btn btn-danger col-md-offset-1 " name='deleteButton' ng-model="deleteButton" btn-radio="'1'" ng-click="">Supprimer</button>
-    </div>
-  </div>
-
+  
   <!-- we display the choice options when the form add is completed -->
   <div class="col-md-12 jumbotron text-center" ng-show="status == 'addLicense' && formDone == 1">
     <legend>La nouvelle licence a été ajoutée, que souhaitez-vous faire ?</legend>
     </br>
       <p class="text-center">
         <button type="submit" class="btn btn-default btn-lg" ng-click="showList()"  >Liste</button>
+        <a href="{{newLicenseId}}">Pouic !</a>
         <button type="submit" class="btn btn-default btn-lg col-md-offset-1" ng-click="viewLicense()"  >Afficher les détails</button>
         <button type="submit" class="btn btn-default btn-lg col-md-offset-1" ng-click="newLicense()"  >Nouvelle Licence</button>
       </p>
@@ -202,15 +112,6 @@
       <p class="text-center light-margin-top">
         <button type="submit" class="btn btn-danger btn-lg" ng-click="addNewLicense()">Oui</button>
       	<button type="submit" class="btn btn-warning btn-lg col-md-offset-1 " name='addButton2' ng-model="addButton" btn-radio="'0'" ng-click="">Annuler</button>
-      </p>
-  </div>
-
-  <!-- we display the delete comfirmation dialog when the delete button is pushed -->
-  <div class="col-md-12 jumbotron text-center" ng-show="deleteButton == '1'">
-    <legend>Êtes-vous sûr de vouloir supprimer la licence {{license.LICENSE_ID}} -- <span class="text-warning ">{{license.LICENSE_LABEL}}</span> ?</legend>
-      <p class="text-center">
-        <button type="submit" class="btn btn-danger btn-lg" ng-click="deleteLicense()"  >Oui</button>
-        <button type="submit" class="col-md-offset-1 btn btn-default btn-lg" ng-model="deleteButton" btn-radio="'0'">Non</button>
       </p>
   </div>
 

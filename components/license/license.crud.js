@@ -3,8 +3,6 @@ angular
   .module('simplify')
   .controller('LicenseCrudCtrl', ['$scope','$state','$stateParams', '$http', 'licenseService', function($scope, $state,$stateParams, $http, licenseService){
 
-// angular.extend(this,$controller('BaseCRUDCtrl', { $scope: $scope, dataService: licenseService }));
-
 //we initialize our values
 	$scope.formDone = 0;
 	$scope.deleteButton = 0;
@@ -17,6 +15,8 @@ angular
 
 	//redirection to view created license
 	$scope.viewLicense = function(){
+
+		console.log('$scope.newLicenseId : ' + $scope.newLicenseId);
 		$state.transitionTo('viewLicense',{recordId:$scope.newLicenseId});
 	}
 
@@ -32,16 +32,6 @@ if ($state.current.name == 'viewLicense') {
 	licenseService.get($stateParams.recordId).then(function(response){
 		$scope.license = response.data;
 	});
-
-	$scope.confirmDeleteLicense = function(){
-
-		$scope.confirmDelete = 1;
-		
-		licenseService.delete($scope.license.ID).then(function(response){
-			$scope.response = response.data;
-			$scope.showList();
-		});
-	}
 
 	$scope.deleteLicense = function(){
 
@@ -138,8 +128,8 @@ else{
   $scope.toggleMin();
 
 	//redirection to addLicense
-	$scope.newLicense = function(){
-		$scope.license = {};
+	$scope.newLicense = function(){   
+		$scope.license = {};   
 		$scope.formDone = 0;
 	}
 
@@ -153,6 +143,13 @@ else{
 			$scope.addButton = 0;
 			$scope.formDone = 1;
 			$scope.newLicenseId = $scope.response;
+
+			//ugly temporary algorithm to remove double quotes because angularjs suddendly added stuff, bitch is crazy ...
+			var str = '';
+			str = $scope.newLicenseId;
+			str = str.replace('"','');
+			$scope.newLicenseId = str.replace('"',''); 
+			console.log('newLicenseId : ' + $scope.newLicenseId);
 		});
 
 	}
