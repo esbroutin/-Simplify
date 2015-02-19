@@ -136,7 +136,7 @@ $app->post('/provider/add', function () use ($app) {
 /******** CONTEXT ************************************************************************/
 
 /**
-* @return connected user, current scenario
+* @return connected user, current schema
 **/
 $app->get('/context', function () use($app)  {
     $userInfo = new \PNORD\Ctrl\UserInfoCtrl();

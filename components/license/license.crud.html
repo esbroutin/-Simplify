@@ -1,5 +1,5 @@
 <div ng-controller="LicenseCrudCtrl">
-  <div ng-show="status == 'addLicense' && formDone == 0 && addButton != 1 && newProvider !=1">
+  <div ng-show="formDone == 0 && addButton != 1 && newProvider !=1">
   <legend>Ajouter une nouvelle Licence</legend>
   <!-- we display the form only when in Add Mode -->
     <form class="col-md-6 " >
@@ -93,7 +93,6 @@
     </br>
       <p class="text-center">
         <button type="submit" class="btn btn-default btn-lg" ng-click="showList()"  >Liste</button>
-        <a href="{{newLicenseId}}">Pouic !</a>
         <button type="submit" class="btn btn-default btn-lg col-md-offset-1" ng-click="viewLicense()"  >Afficher les détails</button>
         <button type="submit" class="btn btn-default btn-lg col-md-offset-1" ng-click="newLicense()"  >Nouvelle Licence</button>
       </p>

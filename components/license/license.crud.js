@@ -77,7 +77,7 @@ else{
 *
 ****************************/
 
-	$scope.$watchCollection('[license.DATE_START, license.DATE_END, license.DESCRIPTION, license.PROVIDER, license.LABEL, license.SERIAL]', function(newValues) {
+	$scope.$watchCollection('[license.DATE_START, license.DATE_END, license.PROVIDER, license.LABEL]', function(newValues) {
 		var countDefined='';
 
 		for (var i = newValues.length - 1; i >= 0; i--) {

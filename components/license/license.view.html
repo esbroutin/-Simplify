@@ -1,6 +1,6 @@
 <div ng-controller="LicenseViewCtrl">
   <!-- we display the details only when in View Mode -->
-  <div  ng-show="status == 'viewLicense' && deleteButton == '0'">
+  <div  ng-show="deleteButton == '0'">
     <legend>Licence N° {{license.LICENSE_ID}} - {{license.LICENSE_LABEL}}</legend>
     <div class="blocBorder col-md-6">
     <legend>Informations</legend>
@@ -93,7 +93,7 @@
     <legend>Êtes-vous sûr de vouloir supprimer la licence {{license.LICENSE_ID}} -- <span class="text-warning ">{{license.LICENSE_LABEL}}</span> ?</legend>
       <p class="text-center">
         <button type="submit" class="btn btn-danger btn-lg" ng-click="deleteLicense()"  >Oui</button>
-        <button type="submit" class="col-md-offset-1 btn btn-default btn-lg" ng-model="deleteButton" btn-radio="'0'">Non</button>
+        <button type="submit" class="col-md-offset-1 btn btn-success btn-lg" ng-model="deleteButton" btn-radio="'0'">Non</button>
       </p>
   </div>
 
