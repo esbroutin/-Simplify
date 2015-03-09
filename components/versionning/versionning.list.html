@@ -1,3 +1,25 @@
 <legend>Versionning</legend>
 <div ng-controller="VersionningListCtrl">  
+  <div class='row'><div class="col-md-4 "><input  class='form-control' type="text" name='listSearch' ng-model="sofwareSearch" class="form-control" placeholder="Rechercher..." ng-change="searchSofware()"/></div>
+  </div>
+  <table class="table table-striped table-bordered table-hover tbl-list light-margin-top">
+  	<thead>
+  		<tr class="info"><th>ID</th><th>Date de création</th><th>Marque</th><th>Produit</th><th>Mise à jour</th><th>Date de début</th><th>Date de fin</th></tr>
+  	</thead>
+  	<tbody>
+  		<tr class="reveal-animation" ng-repeat="software in softwares" ng-click="viewSoftware(software)" >
+  			<td>{{software.ID}}</td>
+        <td>{{software.DATE_CREATION | tsDateTime}}</td>
+  			<td>{{software.LABEL}}</td>
+        <td>{{software.PROVIDER_LABEL}}</td>
+        <td>{{software.BRAND}}</td>
+  			<td>{{software.DATE_START | tsDate}}</td>
+        <td>{{software.DATE_END | tsDate}}</td>
+  		</tr>
+  	</tbody>
+  </table>
+  
+  
+  
+  
 </div>  

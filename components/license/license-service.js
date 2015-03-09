@@ -15,17 +15,12 @@ simplify.factory('licenseService', function($http) {
     get: function(licenseId) {
          return $http.get("REST/license/get/"+licenseId);
     },
-    // non-crud resources
-      // Providers
-    listProvider: function(search) {
-         return $http.get("REST/provider/list");
-    },
-    addProvider: function(provider) {
-         return $http.post("REST/provider/add",provider);
+    update: function(license) {
+         return $http.post("REST/license/update",license);
     },
     //Gantt Overview
     getGantt: function() {
          return $http.get("REST/license/gantt");
-    },
+    }
   }
 });

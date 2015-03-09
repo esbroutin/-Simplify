@@ -1,9 +1,9 @@
 <div ng-controller="LicenseViewCtrl">
   <!-- we display the details only when in View Mode -->
-  <div  ng-show="deleteButton == '0'">
-    <legend>Licence N° {{license.LICENSE_ID}} - {{license.LICENSE_LABEL}}</legend>
+  <legend>Licence N° {{license.LICENSE_ID}} - {{license.LICENSE_LABEL}}</legend>
+  <div  ng-show="deleteButton == '0' && editButton != 1">
     <div class="blocBorder col-md-6">
-    <legend>Informations</legend>
+    <legend><i class="fa fa-info-circle fa-lg"></i> Informations</legend>
       <div class='row'>
         <label class="col-md-4 text-right control-label"> ID Licence:</label>
         <div class="col-md-4">
@@ -25,13 +25,16 @@
       <div class='row borderTop'>
         <label class="col-md-4 text-right control-label"> Date de début:</label>
         <div class="col-md-8">
-          {{license.DATE_START}}
+          {{license.DATE_START | tsDate}}
         </div>
       </div>
       <div class='row borderTop'>
         <label class="col-md-4 text-right control-label"> Date de fin:</label>
-        <div class="col-md-8">
-          {{license.DATE_END}}
+        <div class="col-md-8 text-danger" ng-show='license.ALERT == 1'><i class="fa fa-exclamation"></i>
+          {{license.DATE_END | tsDate}}
+        </div>
+        <div class="col-md-8" ng-hide='license.ALERT == 1'>
+          {{license.DATE_END | tsDate}}
         </div>
       </div>
       <div class='row borderTop'>
@@ -41,36 +44,59 @@
         </div>
       </div>
       <div class='row borderTop'>
-        <label class="col-md-4 text-right control-label"> Marque:</label>
+        <label class="col-md-4 text-right control-label"> Niveau de service:</label>
         <div class="col-md-8">
-          {{license.LICENSE_BRAND}}
+          {{license.SERVICE_LEVEL}}
         </div>
       </div> 
       <div class='row'>
         <label class="col-md-4 text-right control-label">Adresse Web:</label>
         <div class="col-md-4 light-margin-bot">
-          <a target="_new" href="{{license.WEB_ADDRESS}}" class="btn btn-success btn-sm">Lien Web</a>
+          <a target="_new" href="{{license.WEB_ADDRESS}}" class="btn btn-success "><i class="fa fa-globe"></i> Lien Web</a>
         </div>
       </div>
     </div>
-    <div class="blocBorder col-md-6">
-      <legend>Prestataire</legend>
+    <!-- PROVIDER BLOC -->
+    <div class="blocBorder col-md-3">
+      <legend><i class="fa fa-users fa-lg"></i> Prestataire <span class="text-warning" ng-show="license.PROVIDER.STATUS == 'DELETED'"> Doit être changé !</span></legend>
       <div class='row'>
         <label class="col-md-4 text-right control-label"> Nom:</label>
         <div class="col-md-8 row">
-          {{license.PROVIDER_LABEL}}
+          {{license.PROVIDER.LABEL}}
         </div>
       </div>
       <div class='row'>
         <label class="col-md-4 text-right control-label"> Contact:</label>
         <div class="col-md-8 row">
-          {{license.PROVIDER_CONTACT}}
+          {{license.PROVIDER.CONTACT}}
         </div>
       </div>
       <div class='row'>
         <label class="col-md-4 text-right control-label"> Description:</label>
         <div class="col-md-8 row">
-          {{license.PROVIDER_DESCRIPTION}}
+          {{license.PROVIDER.DESCRIPTION}}
+        </div>
+      </div>
+      <div class='row'>
+        <label class="col-md-4 text-right control-label">Site Web:</label>
+        <div class="col-md-4 light-margin-bot">
+          <a target="_new" href="http://{{license.PROVIDER.WEB_ADDRESS}}" class="btn btn-success "><i class="fa fa-globe"></i> Site Web</a>
+        </div>
+      </div>
+    </div>
+    <!-- BRAND BLOC -->
+    <div class="blocBorder col-md-3">
+      <legend><i class="fa fa-building fa-lg"></i> Marque <span class="text-warning" ng-show="license.BRAND.STATUS == 'DELETED'"> Doit être changé !</span></legend>
+      <div class='row'>
+        <label class="col-md-4 text-right control-label"> Nom:</label>
+        <div class="col-md-8 row">
+          {{license.BRAND.LABEL}}
+        </div>
+      </div>
+      <div class='row'>
+        <label class="col-md-4 text-right control-label">Site Web:</label>
+        <div class="col-md-4 light-margin-bot">
+          <a target="_new" href="http://{{license.BRAND.WEB_ADDRESS}}" class="btn btn-success "><i class="fa fa-globe"></i> Site Web</a>
         </div>
       </div>
     </div>
@@ -82,9 +108,10 @@
         </div>
       </div>
     </div>
-    <div class='row col-md-12 light-margin-top text-right button-group'>
-      <button type="submit" class="btn btn-info " ng-click="showList()">Liste</button>
-      <button type="submit" class="btn btn-danger col-md-offset-1 " name='deleteButton' ng-model="deleteButton" btn-radio="'1'" ng-click="">Supprimer</button>
+    <div class='row col-md-12 light-margin-top text-left button-group'>
+      <button type="submit" class="btn btn-info " ng-click="showList()"><i class="fa fa-th-list"></i> Liste</button>
+      <button type="submit" class="btn btn-primary col-md-offset-1 " ng-click="edit()"><i class="fa fa-pencil"></i> Modifier</button>
+      <button type="submit" class="btn btn-danger col-md-offset-1 " ng-click="deleteButton = 1"><i class="fa fa-trash-o"></i> Supprimer</button>
     </div>
   </div>
 
@@ -92,9 +119,115 @@
   <div class="col-md-12 jumbotron text-center" ng-show="deleteButton == '1'">
     <legend>Êtes-vous sûr de vouloir supprimer la licence {{license.LICENSE_ID}} -- <span class="text-warning ">{{license.LICENSE_LABEL}}</span> ?</legend>
       <p class="text-center">
-        <button type="submit" class="btn btn-danger btn-lg" ng-click="deleteLicense()"  >Oui</button>
-        <button type="submit" class="col-md-offset-1 btn btn-success btn-lg" ng-model="deleteButton" btn-radio="'0'">Non</button>
+        <button type="submit" class="btn btn-danger btn-lg" ng-click="deleteLicense()"  ><i class="fa fa-trash"></i> Oui</button>
+        <button type="submit" class="col-md-offset-1 btn btn-success btn-lg" ng-model="deleteButton" btn-radio="'0'"><i class="fa fa-undo"></i> Non</button>
       </p>
   </div>
 
+  <!-- we display the edit form only if the edit button is pushed -->
+    <form class="col-md-6  reveal-animation" ng-show="editButton == '1'">
+      <!-- label -->
+      <div class="form-group row text-left">
+        <div class="col-md-2">
+          <label for="licenseLabel">Libéllé</label>
+        </div>   
+        <div class="col-md-10">
+          <input type="text" class="form-control" ng-model="license.LICENSE_LABEL" placeholder="entrez le libéllé ...">
+        </div>
+      </div>
+      <!-- Web link -->
+      <div class="form-group row text-left">
+        <div class="col-md-2">
+          <label for="licenseLabel">Date de début</label>
+        </div>   
+        <div class="col-md-4">
+            <p class="input-group">
+              <input type="text" class="form-control" datepicker-popup="dd-MM-yy" ng-model="license.DATE_START" is-open="openedStartDate" min-date="2000-01-01" max-date="'2099-06-22'" close-text="Close" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-success" ng-click="openStartDate($event)"><i class="fa fa-calendar fa-lg"></i></button>
+              </span>
+            </p>
+        </div>
+        <div class="col-md-2">
+          <label for="licenseLabel">Date de fin</label>
+        </div>   
+        <div class="col-md-4">
+            <p class="input-group">
+              <input type="text" class="form-control" datepicker-popup="dd-MM-yy" ng-model="license.DATE_END" is-open="openedEndDate" min-date="{{license.DATE_START | date : 'yyyy-MM-dd'}}" max-date="'2099-06-22'" close-text="Close" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-danger" ng-click="openEndDate($event)"><i class="fa fa-calendar fa-lg"></i></button>
+              </span>
+            </p>
+        </div>
+      </div>
+      <!-- description -->
+      <div class="form-group row text-left">
+        <div class="col-md-2">
+          <label for="license">Description</label>
+        </div>   
+        <div class="col-md-10">
+          <input type="text" class="form-control" ng-model="license.LICENSE_DESCRIPTION" placeholder="entrez la description ...">
+        </div>
+      </div>
+      <div class="form-group row text-left">
+        <div class="col-md-2">
+          <label for="license">Niveau de service</label>
+        </div>   
+        <div class="col-md-10">
+          <input type="text" class="form-control" ng-model="license.SERVICE_LEVEL" placeholder="niveau de service ...">
+        </div>
+      </div>
+      <!-- provider -->
+      <div class="form-group row">
+        <div class="col-md-2">
+          <label for="license">Prestataire</label>
+        </div>
+        <div class="col-md-7">
+          <ui-select ng-model="license.PROVIDER" theme="selectize"> 
+            <ui-select-match placeholder="Selectionnez ou recherchez un prestataire dans la liste...">{{$select.selected.LABEL}}</ui-select-match>
+            <ui-select-choices repeat="provider in providers | filter: $select.search">
+              <strong> Nom :</strong> 
+              <span ng-bind-html="provider.LABEL | highlight: $select.search" class="text-info"></span> 
+              <strong> Contact :</strong> 
+              <small ng-bind-html="provider.CONTACT | highlight: $select.search"></small>
+            </ui-select-choices>
+          </ui-select>
+        </div>     
+      </div> 
+      <!-- brand -->
+      <div class="form-group row">
+        <div class="col-md-2">
+          <label for="license">Marque</label>
+        </div>
+        <div class="col-md-7">
+          <ui-select ng-model="license.BRAND" theme="selectize"> 
+            <ui-select-match placeholder="Selectionnez ou recherchez une marque dans la liste...">{{$select.selected.LABEL}}</ui-select-match>
+            <ui-select-choices repeat="brand in brands | filter: $select.search">
+              <strong> Nom :</strong> 
+              <span ng-bind-html="brand.LABEL | highlight: $select.search" class="text-info"></span> 
+            </ui-select-choices>
+          </ui-select>
+        </div>     
+      </div> 
+      <!-- Serial -->
+      <div class="form-group row text-left">
+        <div class="col-md-2">
+          <label for="licenseLabel">Numéro de licence</label>
+        </div>   
+        <div class="col-md-10">
+          <input type="text" class="form-control" ng-model="license.SERIAL" placeholder="entrer le numéro de licence ...">
+        </div>
+      </div>
+      <!-- Web link -->
+      <div class="form-group row text-left">
+        <div class="col-md-2">
+          <label for="licenseLabel">Lien Web</label>
+        </div>   
+        <div class="col-md-10">
+          <input type="text" class="form-control" ng-model="license.WEB_ADDRESS" placeholder="Lien Web ...">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-danger col-md-offset-1 " ng-click="save()"><i class="fa fa-floppy-o"></i> Enregistrer</button>
+      <button type="submit" class="btn btn-warning col-md-offset-1" ng-click="cancelEdit()"><i class="fa fa-undo"></i> Annuler</button>
+    </form> 
 </div>

@@ -1,0 +1,136 @@
+<div ng-controller="SoftwareViewCtrl">
+  <legend>Logiciel N° {{software.ID}} - {{software.LABEL}}</legend>
+  <div  ng-show="deleteButton == '0' && editButton != 1">
+    <div class="blocBorder col-md-6">
+    <legend><i class="fa fa-info-circle fa-lg"></i> Informations</legend>
+      <div class='row'>
+        <label class="col-md-4 text-right control-label"> ID Logiciel:</label>
+        <div class="col-md-4">
+          {{software.ID}}
+        </div>
+      </div>
+      <div class='row'>
+        <label class="col-md-4 text-right control-label"> Modifié le :</label>
+        <div class="col-md-4">
+          {{software.EDITION_DATE | tsDateTime}}
+        </div>
+      </div>
+      <div class='row borderTop'>
+        <label class="col-md-4 text-right control-label"> Libellé:</label>
+        <div class="col-md-8">
+          {{software.LABEL}}
+        </div>
+      </div>
+      <div class='row borderTop'>
+        <label class="col-md-4 text-right control-label"> Service Pack:</label>
+        <div class="col-md-8">
+          {{software.SERVICE_PACK}}
+        </div>
+      </div>
+      <div class='row borderTop'>
+        <label class="col-md-4 text-right control-label"> Version Actuelle:</label>
+        <div class="col-md-8">
+          {{software.CURRENT_VERSION}}
+        </div>
+      </div>
+      <div class='row borderTop'>
+        <label class="col-md-4 text-right control-label"> Mise à jour:</label>
+        <div class="col-md-8">
+          {{software.NEXT_VERSION}}
+        </div>
+      </div>
+      <div class='row borderTop'>
+        <label class="col-md-4 text-right control-label"> A faire:</label>
+        <div class="col-md-8">
+          {{software.TO_DO}}
+        </div>
+      </div>
+      <div class='row'>
+        <label class="col-md-4 text-right control-label">Adresse Web:</label>
+        <div class="col-md-4 light-margin-bot">
+          <a target="_new" href="http://{{software.WEB_ADDRESS}}" class="btn btn-success"><i class="fa fa-globe"></i> Lien Web</a>
+        </div>
+      </div>
+    </div>
+    <!-- BRAND BLOC -->
+    <div class="blocBorder col-md-3">
+      <legend><i class="fa fa-building fa-lg"></i> Marque / Entreprise <span class="text-warning" ng-show="software.BRAND.STATUS == 'DELETED'"> Doit être changé !</span></legend>
+      <div class='row'>
+        <label class="col-md-4 text-right control-label"> Nom:</label>
+        <div class="col-md-8 row">
+          {{software.BRAND.LABEL}}
+        </div>
+      </div>
+      <div class='row'>
+        <label class="col-md-4 text-right control-label">Site Web:</label>
+        <div class="col-md-4 light-margin-bot">
+          <a target="_new" href="http://{{software.BRAND.WEB_ADDRESS}}" class="btn btn-success "><i class="fa fa-globe"></i> Site Web</a>
+        </div>
+      </div>
+    </div>
+    <!-- BUTTON BLOC -->
+    <div class='row col-md-12 light-margin-top text-left button-group'>
+      <button type="submit" class="btn btn-info " ng-click="showList()"><i class="fa fa-list"></i> Liste</button>
+      <button type="submit" class="btn btn-primary col-md-offset-1 " ng-click="edit()"><i class="fa fa-pencil"></i> Modifier</button>
+      <button type="submit" class="btn btn-danger col-md-offset-1 " ng-click="deleteButton = 1"><i class="fa fa-trash-o"></i> Supprimer</button>
+    </div>
+  </div>
+
+  <!-- we display the edit form only if the edit button is pushed and mask the rest -->
+    <form class="col-md-6" ng-show="editButton == '1'">
+      <!-- Brand or brand name -->
+      <div class="form-group  row">
+        <div class="col-md-3 text-right">
+          <label for="software">Marque / Entreprise</label> 
+        </div>
+        <div class="col-md-7">
+          <ui-select ng-model="software.BRAND" theme="selectize"> 
+            <ui-select-match placeholder="Selectionnez ou recherchez une Marque dans la liste...">{{$select.selected.LABEL}}</ui-select-match>
+            <ui-select-choices repeat="brand in brands | filter: $select.search">
+              <strong> Libéllé :</strong> 
+              <span ng-bind-html="brand.LABEL | highlight: $select.search" class="text-info"></span> 
+            </ui-select-choices>
+          </ui-select>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-info" ng-model="newBrand" btn-radio="'1'"><i class="fa fa-plus"></i></button>
+        </div>       
+      </div>
+      <div class="form-group">
+        <label for="softwareLabel">Libéllé</label>
+        <input type="text" class="form-control" id="softwareLabel" ng-model="software.LABEL">
+      </div>
+      <div class="form-group">
+        <label for="software">Service Pack</label>
+        <input type="text" class="form-control" id="softwareDesc" ng-model="software.SERVICE_PACK">
+      </div>
+      <div class="form-group">
+        <label for="software">Version actuelle</label>
+        <input type="text" class="form-control" id="softwarebrand" ng-model="software.CURRENT_VERSION">
+      </div>
+      <div class="form-group">
+        <label for="software">Mise à jour </label>
+        <input type="text" class="form-control" id="softwarebrand" ng-model="software.NEXT_VERSION">
+      </div>
+      <div class="form-group">
+        <label for="software">Lien Web</label>
+        <input type="text" class="form-control" id="softwareWeb" ng-model="software.WEB_ADDRESS">
+      </div>
+      <div class="form-group">
+        <label for="software">A faire</label>
+        <input type="text" class="form-control" id="softwareWeb" ng-model="software.TO_DO">
+      </div>
+      <button type="submit" class="btn btn-danger col-md-offset-1 " ng-click="save()"><i class="fa fa-floppy-o"></i> Enregistrer</button>
+      <button type="submit" class="btn btn-warning col-md-offset-1" ng-click="cancelEdit()"><i class="fa fa-undo"></i> Annuler</button>
+    </form> 
+
+  <!-- we display the delete comfirmation dialog when the delete button is pushed -->
+  <div class="col-md-12 jumbotron text-center" ng-show="deleteButton == '1'">
+    <legend>Êtes-vous sûr de vouloir supprimer ce logiciel {{software.ID}} -- <span class="text-warning ">{{software.LABEL}}</span> ?</legend>
+      <p class="text-danger">Cet acte est irréversible !</p>
+      <p class="text-center">
+        <button type="submit" class="btn btn-danger btn-lg" ng-click="deleteSoftware()"  ><i class="fa fa-trash-o"></i> Oui</button>
+        <button type="submit" class="col-md-offset-1 btn btn-success btn-lg" ng-model="deleteButton" btn-radio="'0'"><i class="fa fa-undo"></i>Non</button>
+      </p>
+  </div>
+</div>

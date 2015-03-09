@@ -1,0 +1,61 @@
+<div ng-controller="BrandViewCtrl">
+  <legend>Marque N° {{brand.ID}} - {{brand.LABEL}}</legend>
+  <div  ng-show="deleteButton == '0' && editButton != 1">
+    <div class="blocBorder col-md-6">
+    <legend><i class="fa fa-info-circle fa-lg"></i> Informations</legend>
+      <div class='row'>
+        <label class="col-md-4 text-right control-label"> ID Marque:</label>
+        <div class="col-md-4">
+          {{brand.ID}}
+        </div>
+      </div>
+      <div class='row'>
+        <label class="col-md-4 text-right control-label"> Modifié le :</label>
+        <div class="col-md-4">
+          {{brand.EDITION_DATE | tsDateTime}}
+        </div>
+      </div>
+      <div class='row borderTop'>
+        <label class="col-md-4 text-right control-label"> Libellé:</label>
+        <div class="col-md-8">
+          {{brand.LABEL}}
+        </div>
+      </div>
+      <div class='row'>
+        <label class="col-md-4 text-right control-label">Adresse Web:</label>
+        <div class="col-md-4 light-margin-bot">
+          <a target="_new" href="http://{{brand.WEB_ADDRESS}}" class="btn btn-success"><i class="fa fa-globe"></i> Lien Web</a>
+        </div>
+      </div>
+    </div>
+    <div class='row col-md-12 light-margin-top text-left button-group'>
+      <button type="submit" class="btn btn-info " ng-click="showList()"><i class="fa fa-list"></i> Liste</button>
+      <button type="submit" class="btn btn-primary col-md-offset-1 " ng-click="edit()"><i class="fa fa-pencil"></i> Modifier</button>
+      <button type="submit" class="btn btn-danger col-md-offset-1 " ng-click="deleteButton = 1"><i class="fa fa-trash-o"></i> Supprimer</button>
+    </div>
+  </div>
+
+  <!-- we display the edit form only if the edit button is pushed and mask the rest -->
+    <form class="col-md-6" ng-show="editButton == '1'">
+      <div class="form-group">
+        <label for="brandLabel">Libéllé</label>
+        <input type="text" class="form-control" id="brandLabel" ng-model="brand.LABEL">
+      </div>
+      <div class="form-group">
+        <label for="brand">Lien Web</label>
+        <input type="text" class="form-control" id="brandWeb" ng-model="brand.WEB_ADDRESS">
+      </div>
+      <button type="submit" class="btn btn-danger col-md-offset-1 " ng-click="save()"><i class="fa fa-floppy-o"></i> Enregistrer</button>
+      <button type="submit" class="btn btn-warning col-md-offset-1" ng-click="cancelEdit()"><i class="fa fa-undo"></i> Annuler</button>
+    </form> 
+
+  <!-- we display the delete comfirmation dialog when the delete button is pushed -->
+  <div class="col-md-12 jumbotron text-center" ng-show="deleteButton == '1'">
+    <legend>Êtes-vous sûr de vouloir supprimer cette marque {{brand.ID}} -- <span class="text-warning ">{{brand.LABEL}}</span> ?</legend>
+      <p class="text-danger">Les licences liées à cette marque devront être modifiées afin de leur assigner un nouvelle marque</p>
+      <p class="text-center">
+        <button type="submit" class="btn btn-danger btn-lg" ng-click="deleteBrand()"  ><i class="fa fa-trash-o"></i> Oui</button>
+        <button type="submit" class="col-md-offset-1 btn btn-success btn-lg" ng-model="deleteButton" btn-radio="'0'"><i class="fa fa-undo"></i>Non</button>
+      </p>
+  </div>
+</div>

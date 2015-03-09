@@ -1,0 +1,206 @@
+<div ng-controller="HardwareCrudCtrl">
+  <div ng-show="formDone == 0 && addButton != 1 && newProvider !=1&& newBrand !=1">
+  <legend>Ajouter un nouveau Matériel</legend>
+    <form class="col-md-6 " >
+      <!-- label -->
+      <div class="form-group row text-left">
+        <div class="col-md-2">
+          <label for="hardwareLabel">Libéllé</label>
+        </div>   
+        <div class="col-md-4">
+          <input type="text" class="form-control" ng-model="hardware.LABEL" placeholder="entrez le libéllé ...">
+        </div>
+      <!-- type -->
+        <div class="col-md-2">
+          <label for="hardwareType">Type</label>
+        </div>   
+        <div class="col-md-4">
+          <select class="form-control" id="select" ng-model="hardware.TYPE">
+              <option>Serveur</option>
+              <option>Switch</option>
+              <option>Astaro RED</option>
+              <option>Routeur</option>
+              <option>Routeur CISCO</option>
+          </select>
+        </div>
+      </div>
+      <!-- Web link -->
+      <div class="form-group row text-left">
+        <div class="col-md-2">
+          <label for="hardwareStartWarranty">Début de garantie</label>
+        </div>   
+        <div class="col-md-4">
+            <p class="input-group">
+              <input type="text" class="form-control" datepicker-popup="dd-MM-yy" ng-model="hardware.WARRANTY_START" is-open="openedStartDate" max-date="'2099-06-22'" close-text="Close" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-success" ng-click="openStartDate($event)"><i class="fa fa-calendar fa-lg"></i></button>
+              </span>
+            </p>
+        </div>
+        <div class="col-md-2">
+          <label for="hardwareEndWarranty">Fin de garantie</label>
+        </div>   
+        <div class="col-md-4">
+            <p class="input-group">
+              <input type="text" class="form-control" datepicker-popup="dd-MM-yy" ng-model="hardware.WARRANTY_END" is-open="openedEndDate" max-date="'2099-06-22'" close-text="Close" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-danger" ng-click="openEndDate($event)"><i class="fa fa-calendar fa-lg"></i></button>
+              </span>
+            </p>
+        </div>
+      </div>
+      <!-- description -->
+      <div class="form-group row text-left">
+        <div class="col-md-2">
+          <label for="hardwareDescription">Description</label>
+        </div>   
+        <div class="col-md-10">
+          <input type="text" class="form-control" ng-model="hardware.DESCRIPTION" placeholder="entrez la description ...">
+        </div>
+      </div>
+      <!-- Product name -->
+      <div class="form-group row text-left">
+        <div class="col-md-2">
+          <label for="hardware">Site</label>
+        </div>   
+        <div class="col-md-10">
+          <input type="text" class="form-control" ng-model="hardware.SITE" placeholder="niveau de service ...">
+        </div>
+      </div>
+      <!-- provider BLOC-->
+      <div class="form-group row" ng-hide="newProvider ==1">
+        <div class="col-md-2">
+          <label for="hardware">Prestataire</label>
+        </div>
+        <div class="col-md-7">
+          <ui-select ng-model="hardware.PROVIDER" theme="selectize" ng-disabled="disabled"> 
+            <ui-select-match placeholder="Selectionnez ou recherchez un prestataire dans la liste...">{{$select.selected.LABEL}}</ui-select-match>
+            <ui-select-choices repeat="provider in providers | filter: $select.search">
+              <strong> Nom :</strong> 
+              <span ng-bind-html="provider.LABEL | highlight: $select.search" class="text-info"></span> 
+              <strong> Contact :</strong> 
+              <small ng-bind-html="provider.CONTACT | highlight: $select.search"></small>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+        <div class="col-md-3">
+          <button class="btn btn-info" ng-model="newProvider" btn-radio="'1'"><i class="fa fa-plus"></i></button>
+        </div>       
+      </div> 
+      <!-- brand BLOC-->
+      <div class="form-group row" ng-hide="newBrand ==1">
+        <div class="col-md-2">
+          <label for="hardware">Marque</label>
+        </div>
+        <div class="col-md-7">
+          <ui-select ng-model="hardware.BRAND" theme="selectize" ng-disabled="disabled"> 
+            <ui-select-match placeholder="Selectionnez ou recherchez une marque dans la liste...">{{$select.selected.LABEL}}</ui-select-match>
+            <ui-select-choices repeat="brand in brands | filter: $select.search">
+              <strong> Nom :</strong> 
+              <span ng-bind-html="brand.LABEL | highlight: $select.search" class="text-info"></span>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+        <div class="col-md-3">
+          <button class="btn btn-info" ng-model="newBrand" btn-radio="'1'"><i class="fa fa-plus"></i></button>
+        </div>       
+      </div> 
+      <!-- Serial-->
+      <div class="form-group row text-left">
+        <div class="col-md-2">
+          <label for="hardwareLabel">Numéro de série</label>
+        </div>   
+        <div class="col-md-10">
+          <input type="text" class="form-control" ng-model="hardware.SERIAL_NUMBER" placeholder="entrer le numéro de licence ...">
+        </div>
+      </div>
+      <!-- Barcode-->
+      <div class="form-group row text-left">
+        <div class="col-md-2">
+          <label for="hardwareLabel">Code barre</label>
+        </div>   
+        <div class="col-md-10">
+          <input type="text" class="form-control" ng-model="hardware.BARCODE" placeholder="entrer le numéro de licence ...">
+        </div>
+      </div>
+      <!-- Web link -->
+      <div class="form-group row text-left">
+        <div class="col-md-2">
+          <label for="hardwareLabel">Lien Web</label>
+        </div>   
+        <div class="col-md-10">
+          <input type="text" class="form-control" ng-model="hardware.WEB_ADDRESS" placeholder=" http://www.*****.*** ">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-danger col-md-offset-1 " ng-disabled="completeForm < 100"  name='addButton' ng-model="addButton" btn-radio="'1'"><i class="fa fa-floppy-o"></i> Ajouter</button>
+      <button type="submit" class="btn btn-warning col-md-offset-1" ng-click="showList()"><i class="fa fa-undo"></i> Annuler</button>
+    </form> 
+  </div>
+  <!-- New provider form -->     
+  <div class="col-md-6 reveal-animation"  ng-show="newProvider ==1"> 
+  <legend>Nouveau Prestataire</legend> 
+    <div class="col-md-7">     
+      <label for="providerLabel">Libéllé</label>
+        <input type="text" class="form-control" id="providerLabel" ng-model="newProviderForm.LABEL" placeholder="entrez le libéllé ...">
+    </div>
+    <div class="col-md-7">
+      <label for="providerContact">Contact</label>
+      <input type="text" class="form-control" id="providerContact" ng-model="newProviderForm.CONTACT" placeholder="entrez le contact ...">
+    </div>
+    <div class="col-md-7">
+      <label for="providerDescription">Description</label>
+      <input type="text" class="form-control" id="providerDescription" ng-model="newProviderForm.DESCRIPTION" placeholder="entrez la description ...">
+    </div>
+    <div class="row col-md-12 light-margin-top">
+      <button class="btn btn-success" ng-model="addProvider" ng-click="addProvider()"><i class="fa fa-floppy-o "></i> Créer</button>
+      <button class="btn btn-warning col-md-offset-1" ng-model="newProvider" btn-radio="'0'"><i class="fa fa-undo "></i> Annuler</button>
+    </div>
+  </div>
+  <!-- New brand form -->     
+  <div class="col-md-6 reveal-animation"  ng-show="newBrand ==1"> 
+  <legend>Nouvelle Marque</legend> 
+    <div class="col-md-7">     
+      <label for="brandLabel">Libéllé</label>
+        <input type="text" class="form-control" id="brandLabel" ng-model="newBrandForm.LABEL" placeholder="entrez le libéllé ...">
+    </div>
+    <div class="col-md-7">
+      <label for="providerWebAddress">Site web</label>
+      <input type="text" class="form-control" id="providerWebAddress" ng-model="newBrandForm.WEB_ADDRESS" placeholder="site web ...">
+    </div> 
+    <div class="row col-md-12 light-margin-top">
+      <button class="btn btn-success" ng-model="addBrand" ng-click="addBrand()"><i class="fa fa-floppy-o "></i> Créer</button>
+      <button class="btn btn-warning col-md-offset-1" ng-model="newBrand" btn-radio="'0'"><i class="fa fa-undo "></i> Annuler</button>
+    </div>
+  </div>
+  
+  <!-- we display the choice options when the form add is completed -->
+  <div class="col-md-12 jumbotron text-center" ng-show="status == 'addHardware' && formDone == 1">
+    <legend>La nouvelle licence a été ajoutée, que souhaitez-vous faire ?</legend>
+    </br>
+      <p class="text-center">
+        <button type="submit" class="btn btn-info btn-lg" ng-click="showList()"  ><i class="fa fa-list"></i> Liste</button>
+        <button type="submit" class="btn btn-success btn-lg col-md-offset-1" ng-click="viewHardware()"  ><i class="fa fa-info"></i> Afficher les détails</button>
+        <button type="submit" class="btn btn-danger btn-lg col-md-offset-1" ng-click="newHardware()"  ><i class="fa fa-pencil"></i> Nouveau Matériel</button>
+      </p>
+  </div>
+
+  <!-- we display the add confirmation options when the add button is pushed -->
+  <div class="col-md-12 jumbotron" ng-show="addButton ==1">
+    <legend>Êtes-vous sûr des informations suivantes ?</legend>
+      <div class="row"><div class="col-md-6 text-right">Libellé: </div><div class="col-md-6 text-left text-warning"> {{hardware.LABEL}}</div></div>
+      <div class="row light-margin-top "><div class="col-md-6 text-right">Description: </div><div class="col-md-6 text-left text-warning"> {{hardware.DESCRIPTION}}</div></div>
+      <div class="row light-margin-top "><div class="col-md-6 text-right">Site: </div><div class="col-md-6 text-left text-warning"> {{hardware.SITE}}</div></div>
+      <div class="row light-margin-top "><div class="col-md-6 text-right">Type: </div><div class="col-md-6 text-left text-warning"> {{hardware.TYPE}}</div></div>
+      <div class="row light-margin-top "><div class="col-md-6 text-right">Code barre: </div><div class="col-md-6 text-left text-warning"> {{hardware.BARCODE}}</div></div>
+      <div class="row light-margin-top "><div class="col-md-6 text-right">Date de début: </div><div class="col-md-6 text-left text-warning"> {{hardware.WARRANTY_START | tsDate}}</div></div>
+      <div class="row light-margin-top "><div class="col-md-6 text-right">Date de début: </div><div class="col-md-6 text-left text-warning"> {{hardware.WARRANTY_END | tsDate}}</div></div>
+      <div class="row light-margin-top "><div class="col-md-6 text-right">Numéro de série: </div><div class="col-md-6 text-left text-warning">  {{hardware.SERIAL_NUMBER}}</div></div>
+      <div class="row light-margin-top "><div class="col-md-6 text-right">Prestataire: </div><div class="col-md-6 text-left text-warning"> {{hardware.PROVIDER.LABEL}}</div></div>
+      <div class="row light-margin-top "><div class="col-md-6 text-right">Marque: </div><div class="col-md-6 text-left text-warning"> {{hardware.BRAND.LABEL}}</div></div>
+      <p class="text-center light-margin-top">
+        <button type="submit" class="btn btn-danger btn-lg" ng-click="addNewHardware()"><i class="fa fa-floppy-o"></i> Oui</button>
+      	<button type="submit" class="btn btn-warning btn-lg col-md-offset-1 " name='addButton2' ng-model="addButton" btn-radio="'0'" ng-click=""><i class="fa fa-undo"></i> Annuler</button>
+      </p>
+  </div>
+
+</div>

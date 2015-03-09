@@ -1,6 +1,16 @@
 <legend>Vue d'ensemble des licences</legend>
 <div ng-controller="LicenseOverviewCtrl"> 
-<div gantt data=gantt>
+<div ng-show="loading == 1" class="text-center"><i class="fa fa-6x fa-spin fa-refresh"></i></div>
+<div gantt data=gantt ng-show="loading != 1">
+          <gantt-tree></gantt-tree>
+          <gantt-groups></gantt-groups>
+          <gantt-tooltips></gantt-tooltips>
+          <gantt-bounds></gantt-bounds>
+          <gantt-progress></gantt-progress>
+          <gantt-sortable></gantt-sortable>
+          <gantt-movable></gantt-movable>
+          <gantt-draw-task></gantt-draw-task>
+
 </div>  
 
 </div>  

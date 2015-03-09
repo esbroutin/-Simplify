@@ -19,11 +19,37 @@ class ProviderCtrl extends BaseSimplifyObject{
   * @return array(array())
   **/
 
-  function listProvider(){
+  function listProvider($search){
 
     $this->app->log->info(__CLASS__ . '::' . __METHOD__);
     $dao = new \PNORD\Model\ProviderDAO($this->app);  
-    return $dao->listProvider();   
+    return $dao->listProvider($search);   
+
+  }
+
+  /**
+  * get the provider data
+  * @return array(array())
+  **/
+
+  function getProvider($providerId){
+
+    $this->app->log->info(__CLASS__ . '::' . __METHOD__);
+    $dao = new \PNORD\Model\ProviderDAO($this->app);  
+    return $dao->getProvider($providerId);   
+
+  }
+
+  /**
+  * delete the provider
+  * @return array(array())
+  **/
+
+  function deleteProvider($providerId){
+
+    $this->app->log->info(__CLASS__ . '::' . __METHOD__);
+    $dao = new \PNORD\Model\ProviderDAO($this->app);  
+    return $dao->deleteProvider($providerId);   
 
   }
   /**
@@ -34,9 +60,22 @@ class ProviderCtrl extends BaseSimplifyObject{
   function addProvider($provider){
 
     $this->app->log->info(__CLASS__ . '::' . __METHOD__);
-    $this->app->log->info('provider : '.$this->dumpRet($provider));
+    // $this->app->log->info('provider : '.$this->dumpRet($provider));
     $dao = new \PNORD\Model\ProviderDAO($this->app);  
     return $dao->addProvider($provider);   
+
+  }
+  /**
+  * update a provider (array)
+  * @return success
+  **/
+
+  function updateProvider($provider){
+
+    $this->app->log->info(__CLASS__ . '::' . __METHOD__);
+    // $this->app->log->info('provider : '.$this->dumpRet($provider));
+    $dao = new \PNORD\Model\ProviderDAO($this->app);  
+    return $dao->updateProvider($provider);   
 
   }
     

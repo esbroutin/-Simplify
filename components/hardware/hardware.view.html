@@ -1,0 +1,295 @@
+<div ng-controller="HardwareViewCtrl">
+  <!-- we display the details only when in View Mode -->
+  <legend>Matériel N° {{hardware.ID}} - {{hardware.LABEL}}</legend>
+  <div  ng-show="deleteButton == '0' && editButton != 1">
+    <div class="blocBorder col-md-6">
+    <legend><i class="fa fa-info-circle fa-lg"></i> Informations</legend>
+    <!-- ID -->
+      <div class='row'>
+        <label class="col-md-4 text-right control-label"> ID Matériel:</label>
+        <div class="col-md-4">
+          {{hardware.ID}}
+        </div>
+      </div>
+    <!-- EDITION_DATE -->
+      <div class='row'>
+        <label class="col-md-4 text-right control-label"> Créé le :</label>
+        <div class="col-md-4">
+          {{hardware.EDITION_DATE | tsDateTime}}
+        </div>
+      </div>
+    <!-- LABEL -->
+      <div class='row borderTop'>
+        <label class="col-md-4 text-right control-label"> Libellé:</label>
+        <div class="col-md-8">
+          {{hardware.LABEL}}
+        </div>
+      </div>
+    <!-- SITE -->
+      <div class='row borderTop'>
+        <label class="col-md-4 text-right control-label"> Site:</label>
+        <div class="col-md-8">
+          {{hardware.SITE}}
+        </div>
+      </div>
+    <!-- TYPE -->
+      <div class='row borderTop'>
+        <label class="col-md-4 text-right control-label"> Type:</label>
+        <div class="col-md-8">
+          {{hardware.TYPE}}
+        </div>
+      </div>
+    <!-- STATUS -->
+      <div class='row borderTop'>
+        <label class="col-md-4 text-right control-label"> Status:</label>
+        <div class="col-md-8">
+          <span th-code="{{hardware.STATUS}}" th-cat="STATUS"/>
+        </div>
+      </div>
+    <!-- WARRANTY_START -->
+      <div class='row borderTop'>
+        <label class="col-md-4 text-right control-label">Début de garantie:</label>
+        <div class="col-md-8">
+          {{hardware.WARRANTY_START | tsDate}}
+        </div>
+      </div>
+    <!-- WARRANTY_END -->
+      <div class='row borderTop'>
+        <label class="col-md-4 text-right control-label">Fin de garantie:</label>
+        <div class="col-md-8 text-danger" ng-show="hardware.ALERT == 1"><i class="fa fa-exclamation"></i>
+          {{hardware.WARRANTY_END | tsDate}}
+        </div>
+        <div class="col-md-8" ng-hide="hardware.ALERT == 1">
+          {{hardware.WARRANTY_END | tsDate}}
+        </div>
+      </div>
+    <!-- DESCRIPTION -->
+      <div class='row borderTop'>
+        <label class="col-md-4 text-right control-label"> Description:</label>
+        <div class="col-md-8">
+          {{hardware.DESCRIPTION}}
+        </div>
+      </div>
+    <!-- BARCODE -->
+      <div class='row borderTop'>
+        <label class="col-md-4 text-right control-label"> Code barre:</label>
+        <div class="col-md-8">
+          {{hardware.BARCODE}}
+        </div>
+      </div> 
+    <!-- SERIAL_NUMBER -->
+      <div class='row borderTop'>
+        <label class="col-md-4 text-right control-label"> Numéro de série:</label>
+        <div class="col-md-8">
+          {{hardware.SERIAL_NUMBER}}
+        </div>
+      </div> 
+    </div>
+    <!-- PROVIDER BLOC -->
+    <div class="blocBorder col-md-3">
+      <legend><i class="fa fa-users fa-lg"></i> Prestataire <span class="text-warning" ng-show="hardware.PROVIDER.STATUS == 'DELETED'"> Doit être changé !</span></legend>
+      <div class='row'>
+        <label class="col-md-4 text-right control-label"> Nom:</label>
+        <div class="col-md-8 row">
+          {{hardware.PROVIDER.LABEL}}
+        </div>
+      </div>
+      <div class='row'>
+        <label class="col-md-4 text-right control-label"> Contact:</label>
+        <div class="col-md-8 row">
+          {{hardware.PROVIDER.CONTACT}}
+        </div>
+      </div>
+      <div class='row'>
+        <label class="col-md-4 text-right control-label"> Description:</label>
+        <div class="col-md-8 row">
+          {{hardware.PROVIDER.DESCRIPTION}}
+        </div>
+      </div>
+      <div class='row'>
+        <label class="col-md-4 text-right control-label">Site Web:</label>
+        <div class="col-md-4 light-margin-bot">
+          <a target="_new" href="http://{{hardware.PROVIDER.WEB_ADDRESS}}" class="btn btn-success "><i class="fa fa-globe"></i> Site Web</a>
+        </div>
+      </div>
+    </div>
+    <!-- BRAND BLOC -->
+    <div class="blocBorder col-md-3">
+      <legend><i class="fa fa-building fa-lg"></i> Marque/Entreprise <span class="text-warning" ng-show="hardware.BRAND.STATUS == 'DELETED'"> Doit être changé !</span></legend>
+      <div class='row'>
+        <label class="col-md-4 text-right control-label"> Nom:</label>
+        <div class="col-md-8 row">
+          {{hardware.BRAND.LABEL}}
+        </div>
+      </div>
+      <div class='row'>
+        <label class="col-md-4 text-right control-label">Site Web:</label>
+        <div class="col-md-4 light-margin-bot">
+          <a target="_new" href="http://{{hardware.BRAND.WEB_ADDRESS}}" class="btn btn-success "><i class="fa fa-globe"></i> Site Web</a>
+        </div>
+      </div>
+    </div>
+    <div class='row col-md-12 light-margin-top text-left button-group'>
+      <button type="submit" class="btn btn-info " ng-click="showList()"><i class="fa fa-th-list"></i> Liste</button>
+      <button type="submit" class="btn btn-primary col-md-offset-1 " ng-click="edit()"><i class="fa fa-pencil"></i> Modifier</button>
+      <button type="submit" class="btn btn-danger col-md-offset-1 " ng-click="deleteButton = 1"><i class="fa fa-trash-o"></i> Supprimer</button>
+    </div>
+  </div>
+
+  <!-- we display the delete comfirmation dialog when the delete button is pushed -->
+  <div class="col-md-12 jumbotron text-center" ng-show="deleteButton == '1'">
+    <legend>Êtes-vous sûr de vouloir supprimer le matériel {{hardware.ID}} -- <span class="text-warning ">{{hardware.LABEL}}</span> ?</legend>
+      <p class="text-center">
+        <button type="submit" class="btn btn-danger btn-lg" ng-click="deleteHardware()"  ><i class="fa fa-trash"></i> Oui</button>
+        <button type="submit" class="col-md-offset-1 btn btn-success btn-lg" ng-model="deleteButton" btn-radio="'0'"><i class="fa fa-undo"></i> Non</button>
+      </p>
+  </div>
+
+  <!-- we display the edit form only if the edit button is pushed -->
+    <form class="col-md-6  reveal-animation" ng-show="editButton == '1'">
+      <div class="form-group row text-left">
+      <!-- label -->
+        <div class="col-md-2">
+          <label for="licenseLabel">Libéllé</label>
+        </div>   
+        <div class="col-md-4">
+          <input type="text" class="form-control" ng-model="hardware.LABEL" placeholder="entrez le libéllé ...">
+        </div>
+      <!-- type -->
+        <div class="col-md-2">
+          <label for="licenseLabel">Type</label>
+        </div>   
+        <div class="col-md-4">
+          <select class="form-control" id="select" ng-model="hardware.TYPE">
+              <option>Serveur</option>
+              <option>Switch</option>
+              <option>Astaro RED</option>
+              <option>Routeur</option>
+              <option>Routeur CISCO</option>
+          </select>
+        </div>
+      </div>
+      <!-- status -->
+      <div class="form-group row">
+        <div class="col-md-2">
+          <label for="licenseLabel">Status</label>
+        </div>   
+        <div class="col-md-8">
+          <div class="col-md-4">
+            <label>
+              <input type="radio" name="optionsRadios" id="optionsRadios2" value="IN_STOCK" ng-model="hardware.STATUS" checked>
+              <span th-code="IN_STOCK" th-cat="STATUS"/>
+            </label>
+          </div>
+          <div class="col-md-4">
+            <label>
+              <input type="radio" name="optionsRadios" id="optionsRadios1" value="IN_USE" ng-model="hardware.STATUS">
+              <span th-code="IN_USE" th-cat="STATUS"/>
+            </label>
+          </div>
+          <div class="col-md-4">
+            <label>
+              <input type="radio" name="optionsRadios" id="optionsRadios3" value="OUT_OF_ORDER" ng-model="hardware.STATUS">
+              <span th-code="OUT_OF_ORDER" th-cat="STATUS"/>
+            </label>
+          </div>
+        </div>
+      </div>
+      <!-- warranty start -->
+      <div class="form-group row text-left">
+        <div class="col-md-2">
+          <label for="licenseLabel">Début de garantie</label>
+        </div>   
+        <div class="col-md-4">
+            <p class="input-group">
+              <input type="text" class="form-control" datepicker-popup="dd-MM-yy" ng-model="hardware.WARRANTY_START" is-open="openedStartDate" min-date="2000-01-01" max-date="'2099-06-22'" close-text="Close" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-success" ng-click="openStartDate($event)"><i class="fa fa-calendar fa-lg"></i></button>
+              </span>
+            </p>
+        </div>
+      <!-- warranty end -->
+        <div class="col-md-2">
+          <label for="licenseLabel">Fin de garantie</label>
+        </div>   
+        <div class="col-md-4">
+            <p class="input-group">
+              <input type="text" class="form-control" datepicker-popup="dd-MM-yy" ng-model="hardware.WARRANTY_END" is-open="openedEndDate" min-date="{{hardware.WARRANTY_START | date : 'yyyy-MM-dd'}}" max-date="'2099-06-22'" close-text="Close" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-danger" ng-click="openEndDate($event)"><i class="fa fa-calendar fa-lg"></i></button>
+              </span>
+            </p>
+        </div>
+      </div>
+      <!-- Site -->
+      <div class="form-group row text-left">
+        <div class="col-md-2">
+          <label for="hardware">Site</label>
+        </div>   
+        <div class="col-md-10">
+          <input type="text" class="form-control" ng-model="hardware.SITE" placeholder="entrez le site ...">
+        </div>
+      </div>
+      <!-- description -->
+      <div class="form-group row text-left">
+        <div class="col-md-2">
+          <label for="hardware">Description</label>
+        </div>   
+        <div class="col-md-10">
+          <input type="text" class="form-control" ng-model="hardware.DESCRIPTION" placeholder="entrez la description ...">
+        </div>
+      </div>
+      <!-- barcode -->
+      <div class="form-group row text-left">
+        <div class="col-md-2">
+          <label for="hardware">Code barre</label>
+        </div>   
+        <div class="col-md-10">
+          <input type="text" class="form-control" ng-model="hardware.BARCODE" placeholder="code barre ...">
+        </div>
+      </div>
+      <!-- serial number -->
+      <div class="form-group row text-left">
+        <div class="col-md-2">
+          <label for="hardware">numéro de série</label>
+        </div>   
+        <div class="col-md-10">
+          <input type="text" class="form-control" ng-model="hardware.SERIAL_NUMBER" placeholder="numéro de série ...">
+        </div>
+      </div>
+      <!-- provider -->
+      <div class="form-group row">
+        <div class="col-md-2">
+          <label for="hardware">Prestataire</label>
+        </div>
+        <div class="col-md-7">
+          <ui-select ng-model="hardware.PROVIDER" theme="selectize"> 
+            <ui-select-match placeholder="Selectionnez ou recherchez un prestataire dans la liste...">{{$select.selected.LABEL}}</ui-select-match>
+            <ui-select-choices repeat="provider in providers | filter: $select.search">
+              <strong> Nom :</strong> 
+              <span ng-bind-html="provider.LABEL | highlight: $select.search" class="text-info"></span> 
+              <strong> Contact :</strong> 
+              <small ng-bind-html="provider.CONTACT | highlight: $select.search"></small>
+            </ui-select-choices>
+          </ui-select>
+        </div>     
+      </div> 
+      <!-- brand -->
+      <div class="form-group row">
+        <div class="col-md-2">
+          <label for="hardware">Marque</label>
+        </div>
+        <div class="col-md-7">
+          <ui-select ng-model="hardware.BRAND" theme="selectize"> 
+            <ui-select-match placeholder="Selectionnez ou recherchez une marque dans la liste...">{{$select.selected.LABEL}}</ui-select-match>
+            <ui-select-choices repeat="brand in brands | filter: $select.search">
+              <strong> Nom :</strong> 
+              <span ng-bind-html="brand.LABEL | highlight: $select.search" class="text-info"></span> 
+            </ui-select-choices>
+          </ui-select>
+        </div>     
+      </div>
+      <button type="submit" class="btn btn-danger col-md-offset-1 " ng-click="save()"><i class="fa fa-floppy-o"></i> Enregistrer</button>
+      <button type="submit" class="btn btn-warning col-md-offset-1" ng-click="cancelEdit()"><i class="fa fa-undo"></i> Annuler</button>
+    </form> 
+</div>

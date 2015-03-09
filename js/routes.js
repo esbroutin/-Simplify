@@ -54,6 +54,23 @@ simplify.config(['$stateProvider', '$urlRouterProvider', function($stateProvider
       url: '/license/overview', 
       templateUrl: 'components/license/license.overview.html' ,
     })
+  //Hardware routing
+    .state('hardware', {
+      url: '/hardware',
+      templateUrl: 'components/hardware/hardware.html',
+    }) 
+    .state('listHardware', {
+      url: '/hardware/list',
+      templateUrl: 'components/hardware/hardware.list.html',
+    })
+    .state('viewHardware', {
+      url: '/hardware/view/:recordId',
+      templateUrl: 'components/hardware/hardware.view.html',
+    })
+    .state('addHardware', {
+      url: '/hardware/add', 
+      templateUrl: 'components/hardware/hardware.crud.html' ,
+    })
   //Inventory routing
     .state('inventory', {
       url: '/inventory',
@@ -67,18 +84,56 @@ simplify.config(['$stateProvider', '$urlRouterProvider', function($stateProvider
       url: '/inventory/add', 
       templateUrl: 'components/inventory/inventory.crud.html' ,
     })
-  //Versionning routing
-    .state('versionning', {
-      url: '/versionning',
-      templateUrl: 'components/versionning/versionning.html',
+  //software routing
+    .state('software', {
+      url: '/software',
+      templateUrl: 'components/software/software.html',
     }) 
-    .state('listVersionning', {
-      url: '/versionning/list',
-      templateUrl: 'components/versionning/versionning.list.html',
+    .state('listSoftware', {
+      url: '/software/list',
+      templateUrl: 'components/software/software.list.html',
     })
-    .state('addVersionning', {
-      url: '/versionning/add', 
-      templateUrl: 'components/versionning/versionning.crud.html' ,
+    .state('addSoftware', {
+      url: '/software/add', 
+      templateUrl: 'components/software/software.crud.html' ,
+    })
+    .state('viewSoftware', {
+      url: '/software/view/:recordId', 
+      templateUrl: 'components/software/software.view.html' ,
+    })
+  //Provider routing
+    .state('provider', {
+      url: '/provider',
+      templateUrl: 'components/provider/provider.html',
+    }) 
+    .state('listProvider', {
+      url: '/provider/list',
+      templateUrl: 'components/provider/provider.list.html',
+    })
+    .state('addProvider', {
+      url: '/provider/add', 
+      templateUrl: 'components/provider/provider.crud.html' ,
+    })
+    .state('viewProvider', {
+      url: '/provider/view/:recordId', 
+      templateUrl: 'components/provider/provider.view.html' ,
+    })
+  //Brand routing
+    .state('brand', {
+      url: '/brand',
+      templateUrl: 'components/brand/brand.html',
+    }) 
+    .state('listBrand', {
+      url: '/brand/list',
+      templateUrl: 'components/brand/brand.list.html',
+    })
+    .state('addBrand', {
+      url: '/brand/add', 
+      templateUrl: 'components/brand/brand.crud.html' ,
+    })
+    .state('viewBrand', {
+      url: '/brand/view/:recordId', 
+      templateUrl: 'components/brand/brand.view.html' ,
     })
   //Material routing
     .state('material', {

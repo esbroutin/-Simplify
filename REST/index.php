@@ -37,7 +37,20 @@ $app->log->setWriter(new \PNORD\LogWriter($app));
 $app->log->info("******* REQUEST START - " . $_SERVER['REQUEST_METHOD'] . " ". $_SERVER["REQUEST_URI"] . " - " . (isset($_SESSION['userid'])?$_SESSION['userid']:"No active session") . " - **********");
 
 // **************************************************
-// *	LICENSE
+// *  ALERTS
+// **************************************************
+
+$app->get('/admin/alert/list', function () use ($app) {
+    if(checkAuth($app)){
+      $admin = new \PNORD\Ctrl\AdminCtrl($app);    
+      $ret = $admin->listAlert();
+      echo json_encode($ret);  
+    }else{
+      $app->response->setStatus(403); 
+    }
+}); 
+// **************************************************
+// *  LICENSE
 // **************************************************
 
 $app->get('/license/list/:search', function ($search) use ($app) {
@@ -55,6 +68,17 @@ $app->post('/license/add', function() use($app)  {
       $license = new \PNORD\Ctrl\LicenseCtrl($app);  
       $data = json_decode($app->request->getBody());  
       $ret = $license->addLicense($data);
+      echo json_encode($ret);   
+    }else{
+      $app->response->setStatus(403); 
+    }
+});
+
+$app->post('/license/update', function() use($app)  {
+    if(checkAuth($app)){
+      $license = new \PNORD\Ctrl\LicenseCtrl($app);  
+      $data = json_decode($app->request->getBody());  
+      $ret = $license->updateLicense($data);
       echo json_encode($ret);   
     }else{
       $app->response->setStatus(403); 
@@ -93,6 +117,129 @@ $app->delete('/license/delete/:licenseId', function($licenseId) use($app)  {
 });
 
 // **************************************************
+// *  HARDWARE
+// **************************************************
+
+$app->get('/hardware/list/:search', function ($search) use ($app) {
+    if(checkAuth($app)){
+      $hardware = new \PNORD\Ctrl\HardwareCtrl($app);    
+      $ret = $hardware->listHardware($search);
+      echo json_encode($ret);  
+    }else{
+      $app->response->setStatus(403); 
+    }
+}); 
+
+$app->post('/hardware/add', function() use($app)  {
+    if(checkAuth($app)){
+      $hardware = new \PNORD\Ctrl\HardwareCtrl($app);  
+      $data = json_decode($app->request->getBody());  
+      $ret = $hardware->addHardware($data);
+      echo json_encode($ret);   
+    }else{
+      $app->response->setStatus(403); 
+    }
+});
+
+$app->post('/hardware/update', function() use($app)  {
+    if(checkAuth($app)){
+      $hardware = new \PNORD\Ctrl\HardwareCtrl($app);  
+      $data = json_decode($app->request->getBody());  
+      $ret = $hardware->updateHardware($data);
+      echo json_encode($ret);   
+    }else{
+      $app->response->setStatus(403); 
+    }
+});
+
+$app->get('/hardware/get/:hardwareId', function($hardwareId) use($app)  {
+    if(checkAuth($app)){
+      $hardware = new \PNORD\Ctrl\HardwareCtrl($app);  
+      $ret = $hardware->getHardware($hardwareId);
+      echo json_encode($ret);  
+    }else{
+      $app->response->setStatus(403); 
+    } 
+});
+
+//GANTT OVERVIEW
+$app->get('/hardware/gantt', function() use($app)  {
+    if(checkAuth($app)){
+      $hardware = new \PNORD\Ctrl\HardwareCtrl($app);  
+      $ret = $hardware->getGantt();
+      echo json_encode($ret);  
+    }else{
+      $app->response->setStatus(403); 
+    } 
+});
+
+$app->delete('/hardware/delete/:hardwareId', function($hardwareId) use($app)  {
+    if(checkAuth($app)){
+      $hardware = new \PNORD\Ctrl\HardwareCtrl($app);  
+      $ret = $hardware->deleteHardware($hardwareId);
+      echo json_encode($ret);   
+    }else{
+      $app->response->setStatus(403); 
+    } 
+});
+
+// **************************************************
+// *	VERSIONNNING (SOFTWARE)
+// **************************************************
+
+$app->get('/software/list/:search', function ($search) use ($app) {
+    if(checkAuth($app)){
+      $software = new \PNORD\Ctrl\SoftwareCtrl($app);    
+      $ret = $software->listSoftware($search);
+      echo json_encode($ret);  
+    }else{
+      $app->response->setStatus(403); 
+    }
+}); 
+
+$app->post('/software/add', function() use($app)  {
+    if(checkAuth($app)){
+      $software = new \PNORD\Ctrl\SoftwareCtrl($app);  
+      $data = json_decode($app->request->getBody());  
+      $ret = $software->addSoftware($data);
+      echo json_encode($ret);   
+    }else{
+      $app->response->setStatus(403); 
+    }
+});
+
+$app->post('/software/update', function() use($app)  {
+    if(checkAuth($app)){
+      $software = new \PNORD\Ctrl\SoftwareCtrl($app);  
+      $data = json_decode($app->request->getBody());  
+      $ret = $software->updateSoftware($data);
+      echo json_encode($ret);   
+    }else{
+      $app->response->setStatus(403); 
+    }
+});
+
+$app->get('/software/get/:softwareId', function($softwareId) use($app)  {
+    if(checkAuth($app)){
+      $software = new \PNORD\Ctrl\SoftwareCtrl($app);  
+      $ret = $software->getSoftware($softwareId);
+      echo json_encode($ret);  
+    }else{
+      $app->response->setStatus(403); 
+    } 
+});
+
+$app->delete('/software/delete/:softwareId', function($softwareId) use($app)  {
+    if(checkAuth($app)){
+      $software = new \PNORD\Ctrl\SoftwareCtrl($app);  
+      $ret = $software->deleteSoftware($softwareId);
+      echo json_encode($ret);   
+    }else{
+      $app->response->setStatus(403); 
+    } 
+});
+
+// **************************************************
 // *  MAINTENANCE
 // **************************************************
 
@@ -106,20 +253,40 @@ $app->get('/maintenance/list', function () use ($app) {
     } 
 }); 
 
-
 // **************************************************
-// *	PROVIDERS
+// *  PROVIDERS
 // **************************************************
 
-$app->get('/provider/list', function () use ($app) {
+$app->get('/provider/list/:search', function ($search) use ($app) {
     if(checkAuth($app)){
       $provider = new \PNORD\Ctrl\ProviderCtrl($app);    
-      $ret = $provider->listProvider();
+      $ret = $provider->listProvider($search);
       echo json_encode($ret);  
     }else{
       $app->response->setStatus(403); 
     } 
 }); 
+
+$app->get('/provider/get/:providerId', function($providerId) use($app)  {
+    if(checkAuth($app)){
+      $provider = new \PNORD\Ctrl\ProviderCtrl($app);  
+      $ret = $provider->getProvider($providerId);
+      echo json_encode($ret);  
+    }else{
+      $app->response->setStatus(403); 
+    } 
+});
+
+$app->post('/provider/update', function() use($app)  {
+    if(checkAuth($app)){
+      $provider = new \PNORD\Ctrl\ProviderCtrl($app);  
+      $data = json_decode($app->request->getBody());  
+      $ret = $provider->updateProvider($data);
+      echo json_encode($ret);   
+    }else{
+      $app->response->setStatus(403); 
+    }
+});
 
 $app->post('/provider/add', function () use ($app) {
     if(checkAuth($app)){
@@ -132,6 +299,95 @@ $app->post('/provider/add', function () use ($app) {
     }
 }); 
 
+$app->delete('/provider/delete/:providerId', function($providerId) use($app)  {
+    if(checkAuth($app)){
+      $provider = new \PNORD\Ctrl\ProviderCtrl($app);  
+      $ret = $provider->deleteProvider($providerId);
+      echo json_encode($ret);   
+    }else{
+      $app->response->setStatus(403); 
+    } 
+});
+
+// **************************************************
+// *  BRAND
+// **************************************************
+
+$app->get('/brand/list/:search', function ($search) use ($app) {
+    if(checkAuth($app)){
+      $brand = new \PNORD\Ctrl\BrandCtrl($app);    
+      $ret = $brand->listBrand($search);
+      echo json_encode($ret);  
+    }else{
+      $app->response->setStatus(403); 
+    } 
+}); 
+
+$app->get('/brand/get/:providerId', function($providerId) use($app)  {
+    if(checkAuth($app)){
+      $brand = new \PNORD\Ctrl\BrandCtrl($app);  
+      $ret = $brand->getBrand($providerId);
+      echo json_encode($ret);  
+    }else{
+      $app->response->setStatus(403); 
+    } 
+});
+
+$app->post('/brand/update', function() use($app)  {
+    if(checkAuth($app)){
+      $brand = new \PNORD\Ctrl\BrandCtrl($app);  
+      $data = json_decode($app->request->getBody());  
+      $ret = $brand->updateBrand($data);
+      echo json_encode($ret);   
+    }else{
+      $app->response->setStatus(403); 
+    }
+});
+
+$app->post('/brand/add', function () use ($app) {
+    if(checkAuth($app)){
+      $brand = new \PNORD\Ctrl\BrandCtrl($app);  
+      $data = json_decode($app->request->getBody());  
+      $ret = $brand->addBrand($data);
+      echo json_encode($ret);   
+    }else{
+      $app->response->setStatus(403); 
+    }
+}); 
+
+$app->delete('/brand/delete/:brandId', function($brandId) use($app)  {
+    if(checkAuth($app)){
+      $brand = new \PNORD\Ctrl\BrandCtrl($app);  
+      $ret = $brand->deleteBrand($brandId);
+      echo json_encode($ret);   
+    }else{
+      $app->response->setStatus(403); 
+    } 
+});
+
+/******** THESAURUS ************************************************************************/
+
+//Return thesaurus entries
+$app->get('/thesaurus/:codename', function($codename) use($app)  {
+    if(checkAuth($app)){
+      $daoThesaurus = new \PNORD\Model\ThesaurusDAO($app);
+      $tblEntries = $daoThesaurus->getList($codename);
+    echo json_encode($tblEntries);
+    }else{
+      $app->response->setStatus(403);    
+    }
+});
+
+//Return distinct thesaurus entries - used to know if a list of choice is available for a given field (mainly for extra_data)
+$app->get('/thesaurus/list/cat', function() use($app)  {
+    if(checkAuth($app)){
+      $daoThesaurus = new \PNORD\Model\ThesaurusDAO($app);
+      $tblEntries = $daoThesaurus->getDistinctCatList();
+      echo json_encode($tblEntries);
+    }else{
+      $app->response->setStatus(403);    
+    }
+});
 
 /******** CONTEXT ************************************************************************/
 

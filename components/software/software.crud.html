@@ -1,0 +1,122 @@
+<div ng-controller="SoftwareCrudCtrl">
+  <div ng-show="formDone == 0 && addButton != '1' && newBrand !=1">
+  <legend>Nouveau Logiciel</legend>
+      <!-- New Form -->
+    <form class="col-md-6">
+      <!-- Brand or brand name -->
+      <div class="form-group  row">
+        <div class="col-md-3 text-right">
+          <label for="software">Marque</label> 
+        </div>
+        <div class="col-md-7">
+          <ui-select ng-model="software.BRAND" theme="selectize"> 
+            <ui-select-match placeholder="Selectionnez ou recherchez une Marque dans la liste...">{{$select.selected.LABEL}}</ui-select-match>
+            <ui-select-choices repeat="brand in brands | filter: $select.search">
+              <strong> Libéllé :</strong> 
+              <span ng-bind-html="brand.LABEL | highlight: $select.search" class="text-info"></span> 
+            </ui-select-choices>
+          </ui-select>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-info" ng-model="newBrand" btn-radio="'1'"><i class="fa fa-plus"></i></button>
+        </div>       
+      </div>
+      <!-- Product name -->
+      <div class="form-group row text-right">
+        <div class="col-md-3">
+          <label for="softwareLabel">Nom du produit</label>
+        </div>   
+        <div class="col-md-3">
+        	<input type="text" class="form-control" ng-model="software.LABEL" placeholder="Nom du produit ...">
+      	</div>
+      <!-- Service Pack -->
+        <div class="col-md-3">
+          <label for="softwareSP">Service Pack</label>
+        </div>   
+        <div class="col-md-3">
+        	<input type="text" class="form-control" ng-model="software.SERVICE_PACK" placeholder="Service Pack ...">
+      	</div>
+      </div>
+      <div class="form-group row text-right">
+      <!-- current version -->
+        <div class="col-md-3">
+          <label for="softwareCurrentVersion">Version actuelle</label>
+        </div>   
+        <div class="col-md-3">
+          <input type="text" class="form-control" ng-model="software.CURRENT_VERSION" placeholder="Version actuelle ...">
+        </div>
+      <!-- Next version -->
+        <div class="col-md-3">
+          <label for="softwareNextVersion">Mise à jour</label>
+        </div>   
+        <div class="col-md-3">
+        	<input type="text" class="form-control" ng-model="software.NEXT_VERSION" placeholder="Mise à jour ...">
+      	</div>
+      </div>
+      <!-- To do-->
+      <div class="form-group row text-right">
+        <div class="col-md-3">
+          <label for="softwareToDo">A faire</label>
+        </div>   
+        <div class="col-md-9">
+          <input type="text" class="form-control" ng-model="software.TO_DO" placeholder="A faire ...">
+        </div>
+      </div>
+      <!-- web link -->
+      <div class="form-group row text-right">
+        <div class="col-md-3">
+          <label for="softwareWebAddress">Lien Web</label>
+        </div>   
+        <div class="col-md-9">
+        	<input type="text" class="form-control" ng-model="software.WEB_ADDRESS" placeholder="Adresse web ...">
+      	</div>
+      </div>
+      <div class="row light-margin-top">
+    		<button type="submit" class="btn btn-success" name='addButton' ng-model="addButton" btn-radio="'1'">Créer</button>
+	      <button type="submit" class="btn btn-warning col-md-offset-1" ng-click="showList()">Annuler</button>
+  		</div>
+    </form> 
+  	</div>
+  <!-- we display the choice options when the form add is completed -->
+  <div class="col-md-12 jumbotron text-center" ng-show="formDone == 1">
+    <legend>Une nouvelle entrée a été ajoutée, que souhaitez-vous faire ?</legend>
+    </br>
+      <p class="text-center"> 
+        <button type="submit" class="btn btn-info btn-lg" ng-click="showList()">Liste</button>
+        <button type="submit" class="btn btn-primary btn-lg col-md-offset-1" ng-click="viewSoftware()">Afficher les détails</button>
+        <button type="submit" class="btn btn-default btn-lg col-md-offset-1" ng-click="newSoftware()">Nouvelle entrée</button>
+      </p>
+  </div>
+  <!-- newBrand form -->      
+  <div class="col-md-6"  ng-show="newBrand ==1"> 
+  <legend>Nouvelle entreprise / Marque</legend> 
+    <div class="col-md-7">     
+      <label for="brandLabel">Libéllé</label>
+      <input type="text" class="form-control" id="brandLabel" ng-model="newBrandForm.LABEL" placeholder="entrez le libéllé ...">
+    </div> 
+    <div class="col-md-7">
+      <label for="brandWebAddress">Site web</label>
+      <input type="text" class="form-control" id="brandWebAddress" ng-model="newBrandForm.WEB_ADDRESS" placeholder="site web ...">
+    </div> 
+    <div class="row col-md-12 light-margin-top">
+      <button class="btn btn-danger" ng-model="addBrand" ng-click="addBrand()" ng-disabled="newBrandForm.LABEL == undefined || newBrandForm.LABEL == ''"><i class="fa fa-floppy-o"></i> Ajouter</button>
+      <button class="btn btn-warning col-md-offset-1" ng-model="newBrand" ng-click="newBrand = 0"><i class="fa fa-undo"></i> Annuler</button>
+    </div> 
+  </div>
+
+  <!-- we display the add confirmation options when the add button is pushed -->
+  <div class="col-md-12 jumbotron" ng-show="addButton == 1">
+    <legend>Êtes-vous sûr des informations suivantes ?</legend>
+    <div class="row"><div class="col-md-6 text-right">Marque: </div><div class="col-md-6 text-left text-warning"> {{software.BRAND.LABEL}}</div></div>
+    <div class="row"><div class="col-md-6 text-right">Produit: </div><div class="col-md-6 text-left text-warning"> {{software.LABEL}}</div></div>
+    <div class="row"><div class="col-md-6 text-right">Version Actuelle: </div><div class="col-md-6 text-left text-warning"> {{software.CURRENT_VERSION}}</div></div>
+    <div class="row"><div class="col-md-6 text-right">Prochaine version: </div><div class="col-md-6 text-left text-warning"> {{software.NEXT_VERSION}}</div></div>
+    <div class="row"><div class="col-md-6 text-right">Service Pack: </div><div class="col-md-6 text-left text-warning"> {{software.SERVICE_PACK}}</div></div>
+    <div class="row"><div class="col-md-6 text-right">A faire: </div><div class="col-md-6 text-left text-warning"> {{software.TO_DO}}</div></div>
+    <p class="text-center light-margin-top">
+      <button type="submit" class="btn btn-danger btn-lg" ng-click="addNew()">Oui</button>
+    	<button type="submit" class="btn btn-warning btn-lg col-md-offset-1 " name='addButton2' ng-model="addButton" btn-radio="'0'">Annuler</button>
+    </p>
+  </div>
+
+</div>

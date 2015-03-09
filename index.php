@@ -23,11 +23,13 @@ global $gTblConfig;
   <link rel="stylesheet" href="bower_components/angular-gantt/dist/angular-gantt-plugins.css">
   <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css">
   <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css">
+  <link rel="stylesheet" href="bower_components/ng-table/dist/ng-table.css">
   <link rel="stylesheet" href="css/selectize.default.css">
 
 <!--  scripts-->
   <script type="text/javascript" src="bower_components/angularjs/angular.js"></script>
-  <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+  <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="bower_components/angular-resource/angular-resource.min.js"></script>
   <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
   <script type="text/javascript" src="lib/node_modules/angular-bootstrap/dist/ui-bootstrap-tpls.js"></script> 
@@ -39,6 +41,7 @@ global $gTblConfig;
   <script type="text/javascript" src="bower_components/angular-moment/angular-moment.js"></script>
   <script type="text/javascript" src="bower_components/angular-gantt/dist/angular-gantt.js"></script>
   <script type="text/javascript" src="bower_components/angular-gantt/dist/angular-gantt-plugins.js"></script>
+  <script type="text/javascript" src="bower_components/ng-table/dist/ng-table.js"></script>
   
 <!-- Application -->
   <script src="js/simplify.js"></script>
@@ -77,16 +80,19 @@ global $gTblConfig;
 <!--route et configuration-->
   <script src="js/routes.js"></script>
   <script src="js/config.js"></script>
-
 </head> 
 <body> 
-  <div ng-app="simplify" >
+  <div ng-app="simplify" class="container-fluid" >
+  <div ng-controller="globalCtrl" > 
   <!-- NAVBAR -->
-      <div class=" col-md-12" ng-include="'templates/header.html'"></div>
-      <div class=" col-md-2" ng-include="'templates/nav.html'"></div>
-  <!-- UI-VIEW -->
-      <div class=" col-md-9 reveal-animation" ui-view></div>
+      <div class="row" ng-include="'templates/header.html'"></div>
+      <div class="row" style="margin-top:-20px">
+        <div class="col-md-1" ng-include="'templates/nav.html'"></div>
+    <!-- UI-VIEW --> 
+        <div class="col-md-9 col-md-offset-1  light-margin-top reveal-animation" ui-view></div>
+      </div>
       <!-- <footer class="col-xs-12 col-md-12 sticky-footer" ng-include="'templates/footer.html'"></footer> -->
+  </div>
   </div>
 </body>
 </html>   

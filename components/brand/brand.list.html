@@ -1,0 +1,22 @@
+<legend>Liste des Marques</legend>
+<div ng-controller="BrandListCtrl">
+  <div class='row'><div class="col-md-4 "><input  class='form-control' type="text" name='listSearch' ng-model="brandSearch" class="form-control" placeholder="Rechercher..." ng-change="searchBrand()"/></div>
+  </div>
+  <table class="table table-striped table-bordered table-hover tbl-list light-margin-top">
+  	<thead>
+  		<tr class="info"><th>ID</th><th>Modifié le</th><th>Libéllé</th></tr>
+  	</thead>
+  	<tbody>
+  		<tr class="reveal-animation" ng-repeat="brand in brands" ng-click="viewBrand(brand)" >
+  			<td>{{brand.ID}}</td>
+        <td>{{brand.EDITION_DATE | tsDateTime}}</td>
+  			<td>{{brand.LABEL}}</td>
+  		</tr>
+  	</tbody>
+  </table>
+  
+  
+  
+  
+  
+</div>  

@@ -1,0 +1,27 @@
+<div ng-controller="ProviderCrudCtrl">
+  <!-- New provider form -->      
+  <legend>Nouveau Prestataire</legend> 
+  <form class="col-md-6 row" >
+    <div class="col-md-7">     
+      <label for="providerLabel">Libéllé</label>
+      <input type="text" class="form-control" id="providerLabel" ng-model="newProviderForm.LABEL" placeholder="entrez le libéllé ...">
+    </div>
+    <div class="col-md-7">
+      <label for="providerContact">Contact</label>
+      <input type="text" class="form-control" id="providerContact" ng-model="newProviderForm.CONTACT" placeholder="entrez le contact ...">
+    </div>
+    <div class="col-md-7">
+      <label for="providerDescription">Description</label>
+      <input type="text" class="form-control" id="providerDescription" ng-model="newProviderForm.DESCRIPTION" placeholder="entrez la description ...">
+    </div> 
+    <div class="col-md-7">
+      <label for="providerWebAddress">Site web</label>
+      <input type="text" class="form-control" id="providerWebAddress" ng-model="newProviderForm.WEB_ADDRESS" placeholder="site web ...">
+    </div> 
+    <div class="row col-md-12 light-margin-top">
+      <button class="btn btn-danger" ng-model="addProvider" ng-click="add()"><i class="fa fa-floppy-o"></i> Ajouter</button>
+      <button class="btn btn-warning col-md-offset-1" ng-model="newProvider" ng-click="cancelAdd()"><i class="fa fa-undo"></i> Annuler</button>
+    </div> 
+  </form>
+</div>
+</div>

@@ -1,55 +1,125 @@
 <div ng-controller="VersionningCrudCtrl">
+  <div ng-show="formDone == 0 && addButton != '1' && newEnterprise !=1">
   <legend>Nouveau</legend>
-  <div ng-show="formDone == 0 && addButton != 1 && newProvider !=1">
-    <form class="col-md-6 " >
-      <div class="form-group">
-        <label for="versionProduct">Nom du produit</label>
-        <input type="text" class="form-control" id="versionProduct" ng-model="version.PRODUCT" placeholder="Nom du produit ...">
+      <!-- New Form -->
+    <form class="col-md-6">
+      <!-- Enterprise or brand name -->
+      <div class="form-group  row">
+        <div class="col-md-3 text-right">
+          <label for="version">Marque</label> 
+        </div>
+        <div class="col-md-7">
+          <ui-select ng-model="version.ENTERPRISE" theme="selectize"> 
+            <ui-select-match placeholder="Selectionnez ou recherchez une Marque dans la liste...">{{$select.selected.LABEL}}</ui-select-match>
+            <ui-select-choices repeat="enterprise in enterprises | filter: $select.search">
+              <strong> ID :</strong> 
+              <span ng-bind-html="enterprise.ID | highlight: $select.search" class="text-info"></span> 
+              <strong> Marque :</strong> 
+              <span ng-bind-html="enterprise.LABEL | highlight: $select.search" class="text-success"></span> 
+            </ui-select-choices>
+          </ui-select>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-info" ng-model="newEnterprise" btn-radio="'1'">Nouveau</button>
+        </div>       
       </div>
-      <div class="form-group">
-        <label for="versionProduct">Mise à jour</label>
-        <input type="text" class="form-control" id="versionProduct" ng-model="version.PRODUCT_UPDATE" placeholder="...">
+      <!-- Product name -->
+      <div class="form-group row text-right">
+        <div class="col-md-3">
+          <label for="versionLabel">Nom du produit</label>
+        </div>   
+        <div class="col-md-9">
+        	<input type="text" class="form-control" ng-model="version.LABEL" placeholder="Nom du produit ...">
+      	</div>
       </div>
-      <div class="form-group">
-        <label for="versionProduct">Service Pack</label>
-        <input type="text" class="form-control" id="versionProduct" ng-model="version.SERVICE_PACK" placeholder="...">
+      <!-- Update -->
+      <div class="form-group row text-right">
+        <div class="col-md-3">
+          <label for="versionLabel">Mise à jour</label>
+        </div>   
+        <div class="col-md-3">
+        	<input type="text" class="form-control" ng-model="version.PRODUCT_UPDATE" placeholder="Mise à jour ...">
+      	</div>
+      <!-- Service Pack -->
+        <div class="col-md-3">
+          <label for="versionSP">Service Pack</label>
+        </div>   
+        <div class="col-md-3">
+        	<input type="text" class="form-control" ng-model="version.SERVICE_PACK" placeholder="Service Pack ...">
+      	</div>
       </div>
-      <div class="form-group">
-        <label for="versionProduct">Patch Produit</label>
-        <input type="text" class="form-control" id="versionProduct" ng-model="version.PATCH" placeholder="Patch ...">
+      <!-- Patch Produit -->
+      <div class="form-group row text-right">
+        <div class="col-md-3">
+          <label for="versionPatch">Patch Produit</label>
+        </div>   
+        <div class="col-md-3">
+        	<input type="text" class="form-control" ng-model="version.PATCH" placeholder="Patch Produit ...">
+      	</div>
+      <!-- Version actuelle -->
+        <div class="col-md-3">
+          <label for="versionCurrentVersion">Version actuelle</label>
+        </div>   
+        <div class="col-md-3">
+        	<input type="text" class="form-control" ng-model="version.CURRENT_VERSION" placeholder="Version actuelle ...">
+      	</div>
       </div>
-      <div class="form-group">
-        <label for="versionProduct">Version actuelle</label>
-        <input type="text" class="form-control" id="versionProduct" ng-model="version.CURRENT_VERSION" placeholder="Version actuelle ...">
+      <!-- A faire -->
+      <div class="form-group row text-right">
+        <div class="col-md-3">
+          <label for="versionTODO">A faire</label>
+        </div>   
+        <div class="col-md-9">
+        	<input type="text" class="form-control" ng-model="version.TODO" placeholder="A faire ...">
+      	</div>
       </div>
-      <div class="form-group">
-        <label for="versionProduct">A faire</label>
-        <input type="text" class="form-control" id="versionProduct" ng-model="version.TODO" placeholder="...">
-      </div>
-      <button type="submit" class="btn btn-danger col-md-offset-1 " name='addButton' ng-model="addButton" btn-radio="'1'">Ajouter</button>
-      <button type="submit" class="btn btn-warning col-md-offset-1" ng-click="showList()">Annuler</button>
+      <div class="row light-margin-top">
+    		<button type="submit" class="btn btn-success" name='addButton' ng-model="addButton" btn-radio="'1'">Créer</button>
+	      <button type="submit" class="btn btn-warning col-md-offset-1" ng-click="showList()">Annuler</button>
+  		</div>
     </form> 
-  </div>
-  
+  	</div>
   <!-- we display the choice options when the form add is completed -->
-  <div class="col-md-12 jumbotron text-center" ng-show="status == 'addVersion' && formDone == 1">
+  <div class="col-md-12 jumbotron text-center" ng-show="formDone == 1">
     <legend>Une nouvelle entrée a été ajoutée, que souhaitez-vous faire ?</legend>
     </br>
-      <p class="text-center">
-        <button type="submit" class="btn btn-default btn-lg" ng-click="showList()"  >Liste</button>
-        <button type="submit" class="btn btn-default btn-lg col-md-offset-1" ng-click="viewVersion()"  >Afficher les détails</button>
-        <button type="submit" class="btn btn-default btn-lg col-md-offset-1" ng-click="newVersion()"  >Nouvelle Licence</button>
+      <p class="text-center"> 
+        <button type="submit" class="btn btn-info btn-lg" ng-click="showList()"  >Liste</button>
+        <button type="submit" class="btn btn-primary btn-lg col-md-offset-1" ng-click="viewVersion()"  >Afficher les détails</button>
+        <button type="submit" class="btn btn-default btn-lg col-md-offset-1" ng-click="newVersion()"  >Nouvelle entrée</button>
       </p>
+  </div>
+  <!-- newEnterprise form -->      
+  <div class="col-md-6"  ng-show="newEnterprise ==1"> 
+  <legend>Nouvelle entreprise / Marque</legend> 
+    <div class="col-md-7">     
+      <label for="enterpriseLabel">Libéllé</label>
+        <input type="text" class="form-control" id="enterpriseLabel" ng-model="enterpriseForm.LABEL" placeholder="entrez le libéllé ...">
+    </div>
+    <div class="col-md-7">
+      <label for="enterpriseURL">Site Web</label>
+      <input type="text" class="form-control" id="enterpriseURL" ng-model="enterpriseForm.URL" placeholder="entrez le contact ...">
+    </div>
+    <div class="row col-md-12 light-margin-top">
+      <button class="btn btn-success" ng-model="addEnterprise" ng-click="addEnterprise()">Créer</button>
+      <button class="btn btn-warning col-md-offset-1" ng-model="newEnterprise" btn-radio="'0'">Annuler</button>
+    </div>
   </div>
 
   <!-- we display the add confirmation options when the add button is pushed -->
-  <div class="col-md-12 jumbotron" ng-show="addButton ==1">
+  <div class="col-md-12 jumbotron" ng-show="addButton == 1">
     <legend>Êtes-vous sûr des informations suivantes ?</legend>
-      <div class="row"><div class="col-md-6 text-right">Produit: </div><div class="col-md-6 text-left text-warning"> {{version.PRODUCT}}</div></div>
-      <p class="text-center light-margin-top">
-        <button type="submit" class="btn btn-danger btn-lg" ng-click="addNewversion()">Oui</button>
-      	<button type="submit" class="btn btn-warning btn-lg col-md-offset-1 " name='addButton2' ng-model="addButton" btn-radio="'0'" ng-click="">Annuler</button>
-      </p>
+    <div class="row"><div class="col-md-6 text-right">Marque: </div><div class="col-md-6 text-left text-warning"> {{version.ENTERPRISE.LABEL}}</div></div>
+    <div class="row"><div class="col-md-6 text-right">Produit: </div><div class="col-md-6 text-left text-warning"> {{version.LABEL}}</div></div>
+    <div class="row"><div class="col-md-6 text-right">Mise à jour: </div><div class="col-md-6 text-left text-warning"> {{version.PRODUCT_UPDATE}}</div></div>
+    <div class="row"><div class="col-md-6 text-right">Service Pack: </div><div class="col-md-6 text-left text-warning"> {{version.SERVICE_PACK}}</div></div>
+    <div class="row"><div class="col-md-6 text-right">Patch Produit: </div><div class="col-md-6 text-left text-warning"> {{version.PATCH}}</div></div>
+    <div class="row"><div class="col-md-6 text-right">Version Actuelle: </div><div class="col-md-6 text-left text-warning"> {{version.CURRENT_VERSION}}</div></div>
+    <div class="row"><div class="col-md-6 text-right">A faire: </div><div class="col-md-6 text-left text-warning"> {{version.TODO}}</div></div>
+    <p class="text-center light-margin-top">
+      <button type="submit" class="btn btn-danger btn-lg" ng-click="addNewVersion()">Oui</button>
+    	<button type="submit" class="btn btn-warning btn-lg col-md-offset-1 " name='addButton2' ng-model="addButton" btn-radio="'0'">Annuler</button>
+    </p>
   </div>
 
 </div>

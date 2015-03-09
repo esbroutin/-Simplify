@@ -1,34 +1,34 @@
 //License List Controller
 angular
   .module('simplify')
-  .controller('LicenseListCtrl', ['$scope','$state','$http','licenseService', function($scope, $state, $http, licenseService) {
+  .controller('LicenseListCtrl', ['$scope','$rootScope','$state','$q','$http','$filter','licenseService','ngTableParams', function($scope, $rootScope, $state,$q, $http,$filter, licenseService, ngTableParams) {
 
-  //on load, we get licences list
-  licenseService.list().then(function(response){
-  	$scope.licenses = response.data; 
-    // console.log('list licenses : ' + JSON.stringify($scope.licenses));
-  });
+	//list
+	$scope.listLicense = function(license){
+	  licenseService.list().then(function(response){
+	  	$scope.licenses = response.data; 
+	  });
+	}
+	//go to detailed license view
+	$scope.viewLicense = function(license){
 
-//go to detailed license view
-$scope.viewLicense = function(license){
+		// console.log('license : ' + JSON.stringify(license.ID));
+	  $state.go('viewLicense',{recordId:license.ID}); 
 
-	// console.log('license : ' + JSON.stringify(license.ID));
-  $state.go('viewLicense',{recordId:license.ID}); 
+	}
 
-}
-
-//search function
-$scope.searchLicense = function () {
-
-	if ($scope.licenseSearch != 'undefined' && $scope.licenseSearch != ''){
-
-		licenseService.list($scope.licenseSearch).then(function(response){
-			$scope.licenses = response.data;
-			// console.log('licenses : ' + JSON.stringify($scope.licenses));
-
-		});
-	};
-}
-		
+	//search function
+	$scope.searchLicense = function () {
+			if ($scope.licenseSearch == '' || $scope.licenseSearch == 'undefined') {
+				$scope.listLicense();
+			}else{
+				licenseService.list($scope.licenseSearch).then(function(response){
+					$scope.licenses = response.data;
+					// console.log('licenses : ' + JSON.stringify($scope.licenses));
+				});	
+			}
+	};	
+	
+	$scope.listLicense();
 
 }]);

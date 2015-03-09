@@ -1,11 +1,18 @@
 //License CRUD Controller
 angular
   .module('simplify')
-  .controller('LicenseCrudCtrl', ['$scope','$state','$stateParams', '$http', 'licenseService', function($scope, $state,$stateParams, $http, licenseService){
+  .controller('LicenseCrudCtrl', ['$scope',
+								'$state',
+								'$stateParams',
+								'$http',
+								'licenseService',
+								'providerService',
+								'brandService',
+								 function($scope, $state,$stateParams, $http, licenseService, providerService, brandService){
 
 //we initialize our values
 	$scope.formDone = 0;
-	$scope.deleteButton = 0;
+	$scope.addButton = 0;
 	$scope.status =$state.current.name;
 
 	//show list function
@@ -20,52 +27,40 @@ angular
 		$state.transitionTo('viewLicense',{recordId:$scope.newLicenseId});
 	}
 
-/***************************
-*
-*VIEW LICENSE MODE (state : VIEW)
-*
-****************************/
-
-if ($state.current.name == 'viewLicense') {
-
-	//we get details for selected license
-	licenseService.get($stateParams.recordId).then(function(response){
-		$scope.license = response.data;
-	});
-
-	$scope.deleteLicense = function(){
-
-		$scope.confirmDelete = 1;
-
-		licenseService.delete($scope.license.LICENSE_ID).then(function(response){
-			$scope.response = response.data;
-			$scope.showList();
-		});
-	}
-}
-
-/***************************
-*
-*ADD LICENSE MODE (state : ADD)
-*
-****************************/
-
-else{
 	$scope.license = {};
 
 	// we load the provider list
-	licenseService.listProvider().then(function(response){
+	providerService.list(undefined).then(function(response){
 		$scope.providers = response.data;
+			});
+	// we load the brand list
+	brandService.list(undefined).then(function(response){
+		$scope.brands = response.data;
 			});
 
 	$scope.addProvider = function () {
 
 		//we add the new provider then reload the providers list
-		licenseService.addProvider($scope.newProviderForm).then(function(response){
+		providerService.add($scope.newProviderForm).then(function(response){
 			//reloading & hide the provider form
-			licenseService.listProvider().then(function(response){
+			providerService.list(undefined).then(function(response){
 				$scope.providers = response.data;
 				$scope.newProvider = 0;
+				$scope.newProviderForm = {};
+
+			});
+		});
+	};
+
+	$scope.addBrand = function () {
+
+		//we add the new provider then reload the providers list
+		brandService.add($scope.newBrandForm).then(function(response){
+			//reloading & hide the provider form
+			brandService.list(undefined).then(function(response){
+				$scope.brands = response.data;
+				$scope.newBrand = 0;
+				$scope.newBrandForm = {};
 
 			});
 		});
@@ -77,7 +72,7 @@ else{
 *
 ****************************/
 
-	$scope.$watchCollection('[license.DATE_START, license.DATE_END, license.PROVIDER, license.LABEL]', function(newValues) {
+	$scope.$watchCollection('[license.DATE_START, license.DATE_END, license.PROVIDER, license.BRAND, license.LABEL]', function(newValues) {
 		var countDefined='';
 
 		for (var i = newValues.length - 1; i >= 0; i--) {
@@ -92,7 +87,39 @@ else{
 		$scope.remainingProgress = 100 - $scope.completeForm;
 	});
 
-// datePicker
+
+	//redirection to addLicense
+	$scope.newLicense = function(){   
+		$scope.license = {};   
+		$scope.formDone = 0;
+	}
+
+	//return to list when cancelling license creation
+	$scope.addNewLicense = function(){
+
+		$scope.license.PROVIDER_ID = $scope.license.PROVIDER.ID 
+		$scope.license.BRAND_ID = $scope.license.BRAND.ID 
+			console.log('license.PROVIDER_ID : ' + $scope.license.PROVIDER_ID);
+
+		licenseService.add($scope.license).then(function(response){
+			$scope.addButton = 0;
+			$scope.formDone = 1;
+			$scope.newLicenseId = response.data;
+
+			//ugly temporary algorithm to remove double quotes because angularjs suddendly added stuff, bitch is crazy ...
+			var str = '';
+			str = $scope.newLicenseId;
+			str = str.replace('"','');
+			$scope.newLicenseId = str.replace('"',''); 
+			// console.log('newLicenseId : ' + $scope.newLicenseId);
+		});
+
+	}
+	
+/**********************
+* datePicker
+**********************/
+
 	$scope.today = function() {
     $scope.license.DATE_START = new Date();
   };
@@ -126,34 +153,5 @@ else{
 
   $scope.today();
   $scope.toggleMin();
-
-	//redirection to addLicense
-	$scope.newLicense = function(){   
-		$scope.license = {};   
-		$scope.formDone = 0;
-	}
-
-	//return to list when cancelling license creation
-	$scope.addNewLicense = function(){
-
-		$scope.license.PROVIDER_ID = $scope.license.PROVIDER.ID 
-
-		licenseService.add($scope.license).then(function(response){
-			$scope.response = response.data;
-			$scope.addButton = 0;
-			$scope.formDone = 1;
-			$scope.newLicenseId = $scope.response;
-
-			//ugly temporary algorithm to remove double quotes because angularjs suddendly added stuff, bitch is crazy ...
-			var str = '';
-			str = $scope.newLicenseId;
-			str = str.replace('"','');
-			$scope.newLicenseId = str.replace('"',''); 
-			console.log('newLicenseId : ' + $scope.newLicenseId);
-		});
-
-	}
-}
-
 }]);
 

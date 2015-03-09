@@ -1,19 +1,28 @@
 
-<nav class="navbar nav-justified text-center" ng-controller="HeaderCtrl">
-	<div class="container-fluid" ng-show="userName != undefined">
+<nav class="navbar" ng-controller="HeaderCtrl">
+	<div class="container-fluid fullHeight" ng-show="userName != undefined">
 		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class="navbar-header">		
+		<div class=" text-center">		
 			<div class="btn-group">
-				<a class="btn btn-info btn-lg" href="#/home"><i class="fa fa-home fa-lg"></i><span class="label label-info">!Simplify v0.1</span></a>
-				<a class="btn btn-info btn-lg" target="_new" href="http://ufi.pnord.nc/"><i class="fa fa-windows fa-lg"></i><span class="label label-info">SharePoint</span></a>
+				<a class="btn btn-info btn-lg" href="#/home"><i class="fa fa-home fa-lg"></i><span class="label label-info">!Simplify 1.1.1</span></a>
+				<a class="btn btn-info btn-lg" target="_new" href="http://ufi.pnord.nc/equipes/DSI"><i class="fa fa-windows fa-lg"></i><span class="label label-info">SharePoint</span></a>
 				<a class="btn btn-info btn-lg" target="_new" href="http://centreon/centreon/main.php"><i class="fa fa-cube fa-lg"></i><span class="label label-info">Centreon</span></a>
 				<a class="btn btn-info btn-lg" target="_new" href="https://kuru.pnord.nc:4343/officescan/console/html/cgi/cgiChkMasterPwd.exe"><i class="fa fa-bullhorn fa-lg"></i></span><span class="label label-info">Trend Micro </span></a>
 				<a class="btn btn-info btn-lg" target="_new" href="https://10.16.32.30:9443/triton/login/pages/loginPage.jsf"><i class="fa fa-eye fa-lg"></i><span class="label label-info">WebSense</span></a>
 				<a class="btn btn-info btn-lg" target="_new" href="https://10.16.7.254:12369/"><i class="fa fa-fire fa-lg"></i><span class="label label-info">Astaro</span></a>
 				<a class="btn btn-info btn-lg" target="_new" href="https://10.16.25.3/admin/public/index.html"><i class="fa fa-fire fa-lg"></i><span class="label label-info">ASA</span></a>
-				<a class="btn btn-info btn-lg disabled" href="#"><i class="fa fa-user fa-lg"></i><span class="label label-info">Bonjour {{userName}}</span></a>
+				<a class="btn btn-default btn-lg active"><i class="fa fa-user fa-lg"></i><span class="label label-default"> Bonjour {{userName}}</span></a>
 				<a class="btn btn-default btn-lg" href="/logout.php"><span class="label label-default"> Déconnexion</span><i class="fa fa-sign-out fa-lg"></i></a>
 			</div>
+				<!-- alerts display -->	
+				<div class="btn-group col-md-offset-1" ng-show='noAlerts == 0'>
+			  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+			    <i class="fa fa-exclamation-circle fa-lg"></i> Alertes: {{alerts.COUNT_ALERTS}} <span class="caret"></span>
+			  </button>
+			  <ul class="dropdown-menu" role="menu">
+			    <li ng-repeat="alert in alerts"><a ng-click="viewData(alert.TYPE,alert.ID)">{{alert.ID}}</a></li>
+			  </ul>
+				</div>
 		</div>
 	</div><!-- /.container-fluid -->
 </nav>

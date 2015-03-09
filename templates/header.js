@@ -1,4 +1,4 @@
-simplify.controller('HeaderCtrl', ['$scope','$rootScope','contextService','errorService', function($scope,$rootScope,contextService,errorService) {
+simplify.controller('HeaderCtrl', ['$scope','$rootScope','$q','$state','contextService','errorService', function($scope,$rootScope,$q,$state,contextService,errorService) {
 
 //we get the username for the current user
   contextService.getContext().then(function(contextInfo){  
@@ -11,6 +11,9 @@ simplify.controller('HeaderCtrl', ['$scope','$rootScope','contextService','error
   
   $scope.clearErrors = function(){
     errorService.clearAll();
+  }
+  $scope.viewData = function(type, id){
+      $state.go(type,{recordId:id}); 
   }
  
 }]);

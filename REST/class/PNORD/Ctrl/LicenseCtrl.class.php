@@ -39,7 +39,7 @@ class LicenseCtrl extends BaseSimplifyObject{
   }
 
   /**
-  * get the license list
+  * get a license
   * @return array(array())
   **/
   function listLicense($search){
@@ -63,7 +63,7 @@ class LicenseCtrl extends BaseSimplifyObject{
   }
 
   /**
-  * add a new license list
+  * add a new license
   * @return array(array())
   **/
   function addLicense($license){
@@ -71,6 +71,18 @@ class LicenseCtrl extends BaseSimplifyObject{
     $this->app->log->info(__CLASS__ . '::' . __METHOD__);
     $dao = new \PNORD\Model\LicenseDAO($this->app);  
     return $dao->addLicense($license);   
+     
+  }
+
+  /**
+  * update an existing license
+  * @return array(array())
+  **/
+  function updateLicense($license){
+
+    $this->app->log->info(__CLASS__ . '::' . __METHOD__);
+    $dao = new \PNORD\Model\LicenseDAO($this->app);  
+    return $dao->updateLicense($license);   
      
   }
     

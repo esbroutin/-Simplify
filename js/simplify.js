@@ -1,5 +1,16 @@
 //Angular APPLICATION FILE
-var simplify = angular.module('simplify', ['ui.router','ui.bootstrap','ngResource','ui.select','ngSanitize','gantt','ngAnimate','angular-loading-bar','angularMoment']);
+var simplify = angular.module('simplify', ['ui.router',
+                                            'ui.bootstrap',
+                                            'ngResource',
+                                            'ui.select',
+                                            'ngSanitize',
+                                            'gantt',
+                                            'gantt.table',
+                                            'ngAnimate',
+                                            'ngTable',
+                                            'angular-loading-bar',
+                                            'angularMoment']);
+
 
 if(navigator.appVersion.indexOf("Chrome")==-1 && navigator.appVersion.indexOf("Firefox") ==-1){
   alert("Merci d'utiliser Google Chrome ou Firefox pour un fonctionnement optimal");

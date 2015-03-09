@@ -1,26 +1,21 @@
 <legend>Liste des licences</legend>
 <div ng-controller="LicenseListCtrl">
-  <div class='row'><div class="col-md-4 "><input  class='form-control' type="text" name='listSearch' ng-model="licenseSearch" class="form-control" placeholder="Rechercher..." ng-change="searchLicense()"/></div>
+  <div class='row'><div class="col-md-4 "><input  class='form-control' type="text" name='listSearch' ng-model="licenseSearch" class="form-control" placeholder="Rechercher..." ng-change="searchLicense()"/></div><div class="col-md-6 text-info"> Recherchez par Libellé, Marque/Entreprise,Prestataire, ID</div>
   </div>
   <table class="table table-striped table-bordered table-hover tbl-list light-margin-top">
   	<thead>
-  		<tr class="info"><th>ID</th><th>Date de création</th><th>Libéllé</th><th>Prestataire</th><th>Marque</th><th>Date de début</th><th>Date de fin</th></tr>
+  		<tr class="info"><th>ID</th><th>Date de création</th><th>Libellé</th><th>Prestataire</th><th>Marque</th><th>Date de début</th><th>Date de fin</th></tr>
   	</thead>
   	<tbody>
   		<tr class="reveal-animation" ng-repeat="license in licenses" ng-click="viewLicense(license)" >
   			<td>{{license.ID}}</td>
         <td>{{license.DATE_CREATION | tsDateTime}}</td>
   			<td>{{license.LABEL}}</td>
-        <td>{{license.PROVIDER_LABEL}}</td>
-        <td>{{license.BRAND}}</td>
+        <td>{{license.PROVIDER.LABEL}}</td>
+        <td>{{license.BRAND.LABEL}}</td>
   			<td>{{license.DATE_START | tsDate}}</td>
         <td>{{license.DATE_END | tsDate}}</td>
   		</tr>
   	</tbody>
-  </table>
-  
-  
-  
-  
-  
+  </table>  
 </div>  
