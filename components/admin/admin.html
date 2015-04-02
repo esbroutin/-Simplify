@@ -1,0 +1,28 @@
+<div ng-controller="AdminCtrl">
+  <!-- New brand form -->      
+  <legend><i class="fa fa-sliders fa-lg"></i> Paramètres</legend> 
+    <div class="row col-md-12 light-margin-top">
+    <div class="col-md-4" ng-hide='saved == 1'>
+      <div>
+        <button class="btn btn-danger" ng-hide='editPassword == 1' ng-click="editPassword = 1"><i class="fa fa-pencil"></i> Changer le mot de passe</button>
+        <div ng-show="editPassword == 1">
+          <div class="col-md-12">
+            <label class="">Changer le mot de passe</label>
+            <input type="password" class="form-control" ng-model="admin.PASSWORD">
+          </div>
+          <div class="col-md-12 light-margin-top">
+            <button class="btn btn-danger" ng-click="update()"><i class="fa fa-floppy-o"></i> Enregistrer</button>
+            <button class="btn btn-warning" ng-click="editPassword = 0"><i class="fa fa-undo"></i> Annuler</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- we display the delete comfirmation dialog when the delete button is pushed -->
+    <div class="col-md-12 jumbotron text-center" ng-show="saved == '1'">
+      <legend>Votre mot de passe à été changé ! <i class="fa fa-smile-o"></i></legend>
+        <p class="text-center">
+          <button type="submit" class="btn btn-danger btn-lg" ng-click="ok()"  ><i class="fa fa-trash"></i> OK</button>
+        </p>
+    </div>
+    </div> 
+</div>

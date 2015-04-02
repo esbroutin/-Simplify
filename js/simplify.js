@@ -7,13 +7,12 @@ var simplify = angular.module('simplify', ['ui.router',
                                             'gantt',
                                             'gantt.table',
                                             'ngAnimate',
-                                            'ngTable',
                                             'angular-loading-bar',
                                             'angularMoment']);
 
 
-if(navigator.appVersion.indexOf("Chrome")==-1 && navigator.appVersion.indexOf("Firefox") ==-1){
-  alert("Merci d'utiliser Google Chrome ou Firefox pour un fonctionnement optimal");
+if(navigator.appVersion.indexOf("Chrome")==-1){
+  alert("Merci d'utiliser Google Chrome pour fonctionnement optimal ;) ");
 }
 
 //Utiliser pour accéder à l'objet $state depuis les templates - permet de connaitre le menu en cours
@@ -38,8 +37,3 @@ simplify.factory('LoginInterceptor', ['$q','$rootScope','$location','errorServic
 simplify.config(['$httpProvider', function($httpProvider) {  
     $httpProvider.interceptors.push('LoginInterceptor');
 }]);
-
-simplify.constant('angularMomentConfig', {
-    preprocess: 'unix', // optional
-    timezone: 'Europe/London' // optional
-});

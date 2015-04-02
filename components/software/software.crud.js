@@ -14,6 +14,27 @@ angular
 	$scope.addButton = 0;
 	$scope.software = {};
 
+/****************************
+*
+*WATCH FORM VALIDITY
+*
+****************************/
+
+	$scope.$watchCollection('[software.LABEL, software.CURRENT_VERSION, software.BRAND]', function(newValues) {
+		var countDefined='';
+
+		for (var i = newValues.length - 1; i >= 0; i--) {
+
+			if(newValues[i] !=0 && newValues[i] !=undefined) {
+				countDefined++;
+			}
+		};
+
+		$scope.completeForm = ((countDefined) *100)/(newValues.length);
+		$scope.completeForm = Math.round($scope.completeForm);
+		$scope.remainingProgress = 100 - $scope.completeForm;
+	});
+
 	//we list the brands
 	brandService.list(undefined).then(function(response){
 		$scope.brands = response.data;

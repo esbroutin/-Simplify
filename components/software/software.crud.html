@@ -1,12 +1,13 @@
 <div ng-controller="SoftwareCrudCtrl">
   <div ng-show="formDone == 0 && addButton != '1' && newBrand !=1">
-  <legend>Nouveau Logiciel</legend>
+  <legend><i class="fa fa-newspaper-o fa-lg"></i> Versionning</legend>
+  <h4><i class="fa fa-file-o"></i> Nouveau</h4>
       <!-- New Form -->
-    <form class="col-md-6">
+    <form class="col-md-10">
       <!-- Brand or brand name -->
       <div class="form-group  row">
-        <div class="col-md-3 text-right">
-          <label for="software">Marque</label> 
+        <div class="col-md-2 text-right">
+          <label for="software"><i ng-hide='software.BRAND ==undefined' class="fa fa-check text-success"></i><i ng-show='software.BRAND ==undefined' class="fa fa-times text-danger"></i> Marque</label> 
         </div>
         <div class="col-md-7">
           <ui-select ng-model="software.BRAND" theme="selectize"> 
@@ -23,14 +24,14 @@
       </div>
       <!-- Product name -->
       <div class="form-group row text-right">
-        <div class="col-md-3">
-          <label for="softwareLabel">Nom du produit</label>
+        <div class="col-md-2">
+          <label for="softwareLabel"><i ng-hide='software.LABEL ==undefined' class="fa fa-check text-success"></i><i ng-show='software.LABEL ==undefined' class="fa fa-times text-danger"></i> Nom du produit</label>
         </div>   
         <div class="col-md-3">
         	<input type="text" class="form-control" ng-model="software.LABEL" placeholder="Nom du produit ...">
       	</div>
       <!-- Service Pack -->
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label for="softwareSP">Service Pack</label>
         </div>   
         <div class="col-md-3">
@@ -38,15 +39,15 @@
       	</div>
       </div>
       <div class="form-group row text-right">
-      <!-- current version -->
-        <div class="col-md-3">
-          <label for="softwareCurrentVersion">Version actuelle</label>
+      <!-- current software -->
+        <div class="col-md-2">
+          <label for="softwareCurrentVersion"><i ng-hide='software.CURRENT_VERSION ==undefined' class="fa fa-check text-success"></i><i ng-show='software.CURRENT_VERSION ==undefined' class="fa fa-times text-danger"></i> Version actuelle</label>
         </div>   
         <div class="col-md-3">
           <input type="text" class="form-control" ng-model="software.CURRENT_VERSION" placeholder="Version actuelle ...">
         </div>
-      <!-- Next version -->
-        <div class="col-md-3">
+      <!-- Next software -->
+        <div class="col-md-2">
           <label for="softwareNextVersion">Mise à jour</label>
         </div>   
         <div class="col-md-3">
@@ -55,7 +56,7 @@
       </div>
       <!-- To do-->
       <div class="form-group row text-right">
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label for="softwareToDo">A faire</label>
         </div>   
         <div class="col-md-9">
@@ -64,7 +65,7 @@
       </div>
       <!-- web link -->
       <div class="form-group row text-right">
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label for="softwareWebAddress">Lien Web</label>
         </div>   
         <div class="col-md-9">
@@ -72,8 +73,8 @@
       	</div>
       </div>
       <div class="row light-margin-top">
-    		<button type="submit" class="btn btn-success" name='addButton' ng-model="addButton" btn-radio="'1'">Créer</button>
-	      <button type="submit" class="btn btn-warning col-md-offset-1" ng-click="showList()">Annuler</button>
+    		<button type="submit" class="btn btn-danger" name='addButton' ng-disabled="completeForm < 100" ng-model="addButton" btn-radio="'1'"><i class="fa fa-floppy-o"></i> Ajouter</button>
+	      <button type="submit" class="btn btn-warning col-md-offset-1" ng-click="showList()"><i class="fa fa-undo"></i> Annuler</button>
   		</div>
     </form> 
   	</div>
@@ -110,7 +111,7 @@
     <div class="row"><div class="col-md-6 text-right">Marque: </div><div class="col-md-6 text-left text-warning"> {{software.BRAND.LABEL}}</div></div>
     <div class="row"><div class="col-md-6 text-right">Produit: </div><div class="col-md-6 text-left text-warning"> {{software.LABEL}}</div></div>
     <div class="row"><div class="col-md-6 text-right">Version Actuelle: </div><div class="col-md-6 text-left text-warning"> {{software.CURRENT_VERSION}}</div></div>
-    <div class="row"><div class="col-md-6 text-right">Prochaine version: </div><div class="col-md-6 text-left text-warning"> {{software.NEXT_VERSION}}</div></div>
+    <div class="row"><div class="col-md-6 text-right">Prochaine software: </div><div class="col-md-6 text-left text-warning"> {{software.NEXT_VERSION}}</div></div>
     <div class="row"><div class="col-md-6 text-right">Service Pack: </div><div class="col-md-6 text-left text-warning"> {{software.SERVICE_PACK}}</div></div>
     <div class="row"><div class="col-md-6 text-right">A faire: </div><div class="col-md-6 text-left text-warning"> {{software.TO_DO}}</div></div>
     <p class="text-center light-margin-top">

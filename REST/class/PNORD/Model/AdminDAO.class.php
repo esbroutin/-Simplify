@@ -70,6 +70,50 @@ class AdminDAO extends BaseSimplifyObject{
       $alerts['COUNT_ALERTS'] = count($alerts);
 
     return ($alerts) ;           
-  } 
+  }
+
   
+  /***************************************
+  * UPDATE ADMIN DATA
+  *
+  * @return brandId
+  ***************************************/
+
+  function update($data){
+
+    $this->app->log->info(__CLASS__ . '::' . __METHOD__);
+    
+    $this->app->log->info('****data **** -> '.$this->dumpRet($data));
+
+    $password = md5($data->PASSWORD);
+    $current_user = $_SESSION['userid'];
+
+    $sql = "UPDATE TUSER
+                    SET PASSWORD='$password'
+                    WHERE LOGIN='$current_user';";
+
+    $this->app->log->info('****sql **** -> '.$this->dumpRet($sql));
+    $query = $this->db()->query($sql);
+    return('changed');
+
+  }
+  /***************************************
+  * GET USER INFO
+  *
+  * @return brandId
+  ***************************************/
+
+  function getUser($data){
+
+    $this->app->log->info(__CLASS__ . '::' . __METHOD__);
+
+    $sql = "SELECT name, family_name, role FROM TUSER WHERE login='$data'" ;
+
+    $user = $this->db()->query($sql);
+    $userInfo = $user->fetch(PDO::FETCH_ASSOC); 
+    $this->app->log->info('userInfo'.$this->dumpRet($userInfo));
+    $this->app->log->info('sql'.$this->dumpRet($sql));
+    return($userInfo);
+
+  }
 }

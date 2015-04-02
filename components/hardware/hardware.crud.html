@@ -1,18 +1,19 @@
 <div ng-controller="HardwareCrudCtrl">
   <div ng-show="formDone == 0 && addButton != 1 && newProvider !=1&& newBrand !=1">
-  <legend>Ajouter un nouveau Matériel</legend>
-    <form class="col-md-6 " >
+<legend><i class="fa fa-barcode fa-lg"></i> Matériel</legend>
+  <h4><i class="fa fa-file-o"></i> Nouveau </h4>
+    <form class="col-md-10 " >
       <!-- label -->
       <div class="form-group row text-left">
         <div class="col-md-2">
-          <label for="hardwareLabel">Libéllé</label>
+          <label for="hardwareLabel"><i ng-hide='hardware.LABEL ==undefined' class="fa fa-check text-success"></i><i ng-show='hardware.LABEL ==undefined' class="fa fa-times text-danger"></i> Libéllé</label>
         </div>   
         <div class="col-md-4">
           <input type="text" class="form-control" ng-model="hardware.LABEL" placeholder="entrez le libéllé ...">
         </div>
       <!-- type -->
         <div class="col-md-2">
-          <label for="hardwareType">Type</label>
+          <label for="hardwareType"><i ng-hide='hardware.TYPE ==undefined' class="fa fa-check text-success"></i><i ng-show='hardware.TYPE ==undefined' class="fa fa-times text-danger"></i> Type</label>
         </div>   
         <div class="col-md-4">
           <select class="form-control" id="select" ng-model="hardware.TYPE">
@@ -27,7 +28,7 @@
       <!-- Web link -->
       <div class="form-group row text-left">
         <div class="col-md-2">
-          <label for="hardwareStartWarranty">Début de garantie</label>
+          <label for="hardwareStartWarranty"><i ng-hide='hardware.WARRANTY_START ==undefined' class="fa fa-check text-success"></i><i ng-show='hardware.WARRANTY_START ==undefined' class="fa fa-times text-danger"></i> Début de garantie</label>
         </div>   
         <div class="col-md-4">
             <p class="input-group">
@@ -38,7 +39,7 @@
             </p>
         </div>
         <div class="col-md-2">
-          <label for="hardwareEndWarranty">Fin de garantie</label>
+          <label for="hardwareEndWarranty"><i ng-hide='hardware.WARRANTY_END ==undefined' class="fa fa-check text-success"></i><i ng-show='hardware.WARRANTY_END ==undefined' class="fa fa-times text-danger"></i> Fin de garantie</label>
         </div>   
         <div class="col-md-4">
             <p class="input-group">
@@ -70,7 +71,7 @@
       <!-- provider BLOC-->
       <div class="form-group row" ng-hide="newProvider ==1">
         <div class="col-md-2">
-          <label for="hardware">Prestataire</label>
+          <label for="hardware"><i ng-hide='hardware.PROVIDER ==undefined' class="fa fa-check text-success"></i><i ng-show='hardware.PROVIDER ==undefined' class="fa fa-times text-danger"></i> Prestataire</label>
         </div>
         <div class="col-md-7">
           <ui-select ng-model="hardware.PROVIDER" theme="selectize" ng-disabled="disabled"> 
@@ -90,7 +91,7 @@
       <!-- brand BLOC-->
       <div class="form-group row" ng-hide="newBrand ==1">
         <div class="col-md-2">
-          <label for="hardware">Marque</label>
+          <label for="hardware"><i ng-hide='hardware.BRAND ==undefined' class="fa fa-check text-success"></i><i ng-show='hardware.BRAND ==undefined' class="fa fa-times text-danger"></i> Marque</label>
         </div>
         <div class="col-md-7">
           <ui-select ng-model="hardware.BRAND" theme="selectize" ng-disabled="disabled"> 
@@ -130,6 +131,12 @@
         </div>   
         <div class="col-md-10">
           <input type="text" class="form-control" ng-model="hardware.WEB_ADDRESS" placeholder=" http://www.*****.*** ">
+        </div>
+      </div>
+      <div class="col-md-12 light-margin-top">
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped progress-bar-info active" role="progressbar" aria-valuenow="{{completeForm}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completeForm}}%">Formulaire complet à {{completeForm}}% 
+          </div>
         </div>
       </div>
       <button type="submit" class="btn btn-danger col-md-offset-1 " ng-disabled="completeForm < 100"  name='addButton' ng-model="addButton" btn-radio="'1'"><i class="fa fa-floppy-o"></i> Ajouter</button>

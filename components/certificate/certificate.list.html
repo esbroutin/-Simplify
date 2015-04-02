@@ -1,0 +1,23 @@
+<legend><i class="fa fa-certificate fa-lg"></i> Certificats</legend>
+  <h4><i class="fa fa-list"></i> Liste </h4>
+<div ng-controller="CertificateListCtrl">
+  <div class='row'><div class="col-md-4 "><input  class='form-control' type="text" name='listSearch' ng-model="certificateSearch" class="form-control" placeholder="Rechercher..." ng-change="search()"/></div><div class="col-md-6 text-info"> Recherchez par Libellé, Marque/Entreprise,Prestataire, ID</div>
+  </div>
+  <table class="table table-striped table-bordered table-hover tbl-list light-margin-top">
+  	<thead>
+  		<tr class="info"><th>ID</th><th>Date de création</th><th>Nom</th><th>Organisation</th><th>Unité d'organisation</th><th>Date de début</th><th>Date de fin</th><th>Auto-signé ?</th></tr>
+  	</thead>
+  	<tbody>
+  		<tr class="reveal-animation" ng-repeat="certificate in certificates" ng-click="view(certificate.ID)" >
+  			<td>{{certificate.ID}}</td>
+        <td>{{certificate.CREATION_DATE | tsDateTime}}</td>
+  			<td>{{certificate.COMMON_NAME}}</td>
+        <td>{{certificate.ORGANIZATION}}</td>
+        <td>{{certificate.ORGANIZATION_UNIT}}</td>
+  			<td>{{certificate.DATE_START | tsDate}}</td>
+        <td>{{certificate.DATE_END | tsDate}}</td>
+        <td><span class='text-info' th-code="{{certificate.AUTO_SIGNED}}" th-cat="STATUS"/></td>
+  		</tr>
+  	</tbody>
+  </table>  
+</div>  

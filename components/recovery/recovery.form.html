@@ -1,0 +1,66 @@
+<div ng-controller="RecoveryFormCtrl">
+  <legend><i class="fa fa-bed fa-lg"></i> Récupération</legend>
+  <h4><i class="fa fa-file-o"></i> Nouvelle demande </h4>
+    <form class="col-md-6 row" ng-hide="addButton == 1 || formDone == 1">
+        <!-- DATE -->
+      <div class="col-md-7 light-margin-top">
+        <div class="col-md-3">
+          <label for="recoveryFormLabel">Date</label>
+        </div>   
+        <div class="col-md-9">
+            <p class="input-group">
+              <input type="text" class="form-control" datepicker-popup="dd-MM-yy" ng-model="recoveryForm.DATE" is-open="openedDate" min-date="2000-01-01" max-date="'2099-06-22'" close-text="Close" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-success" ng-click="openDate($event)"><i class="fa fa-calendar fa-lg"></i></button>
+              </span>
+            </p>
+        </div>
+      </div>
+        <!-- TOTAL -->
+      <div class="col-md-7 light-margin-top">
+        <div class="col-md-4 text-left"><label for="recoveryFormLauchPause">Temps souhaité</label></div>
+        <div class="col-md-4 text-left">
+          <input ng-show='recoveryForm.TO_USE <= 7' type="number" class="form-control" ng-model="recoveryForm.TO_USE" ng-change='switchHourDay()' placeholder="nombres d'heures à utiliser ...">
+          <p ng-show='recoveryForm.TO_USE > 7'> Journée complète <a href=""><i class="fa fa-undo" ng-click="recoveryForm.TO_USE = 7"></i></a></p>
+
+          </div>
+      </div>
+        <!-- AVAILABLE -->
+      <div class="col-md-7 light-margin-top">
+        <div class="col-md-4 text-left"><label for="recoveryFormLauchPause">Heures disponibles</label></div>
+        <div class="col-md-8 text-left text-success">{{available}} heure(s)</div>
+      </div>
+        <!-- AVAILABLE -->
+      <div class="col-md-7 light-margin-top" >
+        <div class="col-md-4 text-left"><label for="recoveryFormLauchPause">Restant</label></div>
+        <div class="col-md-8 text-left text-danger" ng-show='left < 0'><i class="fa fa-exclamation-circle"></i> {{left}} heure(s) <i class="fa fa-exclamation-circle"></i></div>
+        <div class="col-md-8 text-left text-info" ng-show='left >= 0'>{{left}} heure(s)</div>
+      </div>
+        <!-- BUTTONS -->
+      <div class="row col-md-12 light-margin-top">
+        <button type="submit" class="btn btn-danger col-md-offset-1 " ng-disabled="invalidForm == 1"  name='addButton' ng-model="addButton" btn-radio="'1'"><i class="fa fa-floppy-o"></i> Valider</button>
+        <button type="submit" class="btn btn-warning col-md-offset-1" ng-click="showList()"><i class="fa fa-undo"></i> Annuler</button>
+      </div> 
+    </form>
+  <!-- we display the add confirmation options when the add button is pushed -->
+  <div class="col-md-12 jumbotron" ng-show="addButton ==1">
+    <legend>Êtes-vous sûr des informations suivantes ?</legend>
+    <div class="row light-margin-top "><div class="col-md-6 text-right">Jour de récupération: </div><div class="col-md-6 text-left text-warning"> {{recoveryForm.DATE | tsDate}} </div></div>
+    <div class="row light-margin-top "><div class="col-md-6 text-right">Temps de récupération: </div><div class="col-md-6 text-left text-warning"><span th-code="{{recoveryForm.TO_USE}}" /></div></div>
+    <div class="row light-margin-top "><div class="col-md-6 text-right">Temps disponible: </div><div class="col-md-6 text-left text-warning"><span th-code="{{available}}" /></div></div>
+    <div class="row light-margin-top "><div class="col-md-6 text-right">Temps restant: </div><div class="col-md-6 text-left text-warning"><span th-code="{{left}}" /></div></div>
+    <p class="text-center light-margin-top">
+      <button type="submit" class="btn btn-danger btn-lg" ng-click="add()"><i class="fa fa-floppy-o"></i> Oui</button>
+      <button type="submit" class="btn btn-warning btn-lg col-md-offset-1 " name='addButton2' ng-model="addButton" btn-radio="'0'"><i class="fa fa-undo"></i> Annuler</button>
+    </p>
+  </div>
+  <!-- we display the choice options when the form add is completed -->
+  <div class="col-md-12 jumbotron text-center" ng-show="formDone == 1">
+    <legend>Une nouvelle entrée a été ajoutée, que souhaitez-vous faire ?</legend>
+    </br>
+      <p class="text-center"> 
+        <button type="submit" class="btn btn-info btn-lg" ng-click="show()">Liste</button>
+        <button type="submit" class="btn btn-default btn-lg col-md-offset-1" ng-click="new()">Nouvelle entrée</button>
+      </p>
+  </div>
+</div>

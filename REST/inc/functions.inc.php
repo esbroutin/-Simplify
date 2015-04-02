@@ -25,7 +25,9 @@ function checkAuth($app,$module=""){
   }else{
     $app->log->info("Access not granted to the application");     
   }
+  // $app->log->info('bRet : ' . $bRet);
   
+  // return ('azdazdazdadazdadazdz');
   return $bRet;
 }
 

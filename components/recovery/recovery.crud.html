@@ -1,0 +1,80 @@
+<div ng-controller="RecoveryCrudCtrl">
+  <!-- New recovery form -->      
+  <legend><i class="fa fa-bed fa-lg"></i> Récupération</legend>
+  <h4><i class="fa fa-file-o"></i> Nouveau </h4>
+    <form class="col-md-10" ng-show="addButton != 1 && formDone == 0" >
+        <!-- LABEL -->
+      <div class="col-md-7 light-margin-top">   
+        <div class="col-md-4"><label for="recoveryLabel"><i ng-hide='recovery.LABEL ==undefined' class="fa fa-check text-success"></i><i ng-show='recovery.LABEL ==undefined' class="fa fa-times text-danger"></i> Libéllé</label></div>
+        <div class="col-md-8"><input type="text" class="form-control" id="recoveryLabel" ng-model="recovery.LABEL" placeholder="entrez la description ..."></div>
+      </div> 
+        <!-- DATE -->
+      <div class="col-md-7 light-margin-top">
+        <div class="col-md-4">
+          <label for="recoveryLabel"><i ng-hide='recovery.DATE ==undefined' class="fa fa-check text-success"></i><i ng-show='recovery.DATE ==undefined' class="fa fa-times text-danger"></i> Date</label>
+        </div>   
+        <div class="col-md-8">
+            <p class="input-group">
+              <input type="text" class="form-control" datepicker-popup="dd-MM-yy" ng-model="recovery.DATE" is-open="openedDate" min-date="2000-01-01" max-date="'2099-06-22'" close-text="Close" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-success" ng-click="openDate($event)"><i class="fa fa-calendar fa-lg"></i></button>
+              </span>
+            </p>
+        </div>
+      </div>
+        <!-- START TIME -->
+      <div class="col-md-7 light-margin-top">     
+        <div class="col-md-4 text-left"><label for="recoveryStartTime"><i ng-hide='recovery.START_TIME ==undefined' class="fa fa-check text-success"></i><i ng-show='recovery.START_TIME ==undefined' class="fa fa-times text-danger"></i> Heure de début</label></div>
+        <div class="col-md-6 text-left"><input class="form-control" type="time" ng-model='recovery.START_TIME'/></div>
+      </div>
+        <!-- END TIME -->
+      <div class="col-md-7 light-margin-top">
+        <div class="col-md-4 text-left"><label for="recoveryStartTime"><i ng-hide='recovery.END_TIME ==undefined' class="fa fa-check text-success"></i><i ng-show='recovery.END_TIME ==undefined' class="fa fa-times text-danger"></i> Heure de fin</label></div>
+        <div class="col-md-6 text-left"><input class="form-control" type="time" ng-model='recovery.END_TIME'/></div>
+      </div>
+        <!-- LUNCH TIME -->
+      <div class="col-md-7 light-margin-top">
+        <div class="col-md-4 text-left"><label for="recoveryLauchPause"> Pause déjeuner</label></div>
+        <div class="col-md-4 text-left"><input type="checkbox" ng-model="recovery.LUNCH_PAUSE"></div>
+      </div>
+        <!-- IS SATURDAY -->
+      <div class="col-md-7 light-margin-top">
+        <div class="col-md-4 text-left"><label for="recoveryLauchPause">Samedi ?</label></div>
+        <div class="col-md-4 text-left"><input type="checkbox" ng-model="recovery.IS_SATURDAY"></div>
+      </div>
+        <!-- SPECIAL_DAY -->
+      <div class="col-md-7 light-margin-top">
+        <div class="col-md-4 text-left"><label for="recoveryLauchPause">Dimanche/Jour Férié ?</label></div>
+        <div class="col-md-4 text-left"><input type="checkbox" ng-model="recovery.SPECIAL_DAY"></div>
+      </div> 
+        <!-- BUTTONS -->
+      <div class="row col-md-12 light-margin-top">
+        <button type="submit" class="btn btn-danger col-md-offset-1 " ng-disabled="completeForm < 100"  name='addButton' ng-model="addButton" btn-radio="'1'"><i class="fa fa-floppy-o"></i> Ajouter</button>
+        <button type="submit" class="btn btn-warning col-md-offset-1" ng-click="show()"><i class="fa fa-undo"></i> Annuler</button>
+      </div> 
+    </form>
+  <!-- we display the add confirmation options when the add button is pushed -->
+  <div class="col-md-12 jumbotron" ng-show="addButton ==1">
+    <legend>Êtes-vous sûr des informations suivantes ?</legend>
+    <div class="row"><div class="col-md-6 text-right">Libellé: </div><div class="col-md-6 text-left text-warning"> {{recovery.LABEL}}</div></div>
+    <div class="row light-margin-top "><div class="col-md-6 text-right">Heure de début: </div><div class="col-md-6 text-left text-warning"> {{recovery.START_TIME | tsTimeLocal}}</div></div>
+    <div class="row light-margin-top "><div class="col-md-6 text-right">Heure de fin: </div><div class="col-md-6 text-left text-warning">  {{recovery.END_TIME | tsTimeLocal}}</div></div>
+    <div class="row light-margin-top "><div class="col-md-6 text-right">Pause déjeuner: </div><div class="col-md-6 text-left text-warning"><span th-code="{{recovery.LUNCH_PAUSE}}" th-cat="STATUS"/></div></div>
+    <div class="row light-margin-top "><div class="col-md-6 text-right">Samedi: </div><div class="col-md-6 text-left text-warning"><span th-code="{{recovery.IS_SATURDAY}}" th-cat="STATUS"/></div></div>
+    <div class="row light-margin-top "><div class="col-md-6 text-right">Dimanche/Jour Férié : </div><div class="col-md-6 text-left text-warning"><span th-code="{{recovery.SPECIAL_DAY}}" th-cat="STATUS"/></div></div>
+    <p class="text-center light-margin-top">
+      <button type="submit" class="btn btn-danger btn-lg" ng-click="add()"><i class="fa fa-floppy-o"></i> Oui</button>
+      <button type="submit" class="btn btn-warning btn-lg col-md-offset-1 " name='addButton2' ng-model="addButton" btn-radio="'0'"><i class="fa fa-undo"></i> Annuler</button>
+    </p>
+  </div>
+  <!-- we display the choice options when the form add is completed -->
+  <div class="col-md-12 jumbotron text-center" ng-show="formDone == 1">
+    <legend>Une nouvelle entrée a été ajoutée, que souhaitez-vous faire ?</legend>
+    </br>
+      <p class="text-center"> 
+        <button type="submit" class="btn btn-info btn-lg" ng-click="show()">Liste</button>
+        <button type="submit" class="btn btn-primary btn-lg col-md-offset-1" ng-click="view()">Afficher les détails</button>
+        <button type="submit" class="btn btn-default btn-lg col-md-offset-1" ng-click="new()">Nouvelle entrée</button>
+      </p>
+  </div>
+</div>

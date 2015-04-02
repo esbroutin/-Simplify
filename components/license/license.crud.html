@@ -1,12 +1,13 @@
 <div ng-controller="LicenseCrudCtrl">
   <div ng-show="formDone == 0 && addButton != 1 && newProvider !=1&& newBrand !=1">
-  <legend>Ajouter une nouvelle Licence</legend>
+<legend><i class="fa fa-list fa-lg"></i> Licence</legend>
+  <h4><i class="fa fa-file-o"></i> Nouveau </h4>
   <!-- we display the form only when in Add Mode -->
-    <form class="col-md-6 " >
+    <form class="col-md-10 " >
       <!-- label -->
       <div class="form-group row text-left">
         <div class="col-md-2">
-          <label for="licenseLabel">Libéllé</label>
+          <label for="licenseLabel"><i ng-hide='license.LABEL ==undefined' class="fa fa-check text-success"></i><i ng-show='license.LABEL ==undefined' class="fa fa-times text-danger"></i> Libéllé</label>
         </div>   
         <div class="col-md-10">
           <input type="text" class="form-control" ng-model="license.LABEL" placeholder="entrez le libéllé ...">
@@ -15,7 +16,7 @@
       <!-- Web link -->
       <div class="form-group row text-left">
         <div class="col-md-2">
-          <label for="licenseLabel">Date de début</label>
+          <label for="licenseLabel"><i ng-hide='license.DATE_START ==undefined' class="fa fa-check text-success"></i><i ng-show='license.DATE_START ==undefined' class="fa fa-times text-danger"></i> Date de début</label>
         </div>   
         <div class="col-md-4">
             <p class="input-group">
@@ -26,7 +27,7 @@
             </p>
         </div>
         <div class="col-md-2">
-          <label for="licenseLabel">Date de fin</label>
+          <label for="licenseLabel"><i ng-hide='license.DATE_END ==undefined' class="fa fa-check text-success"></i><i ng-show='license.DATE_END ==undefined' class="fa fa-times text-danger"></i> Date de fin</label>
         </div>   
         <div class="col-md-4">
             <p class="input-group">
@@ -58,7 +59,7 @@
       <!-- provider BLOC-->
       <div class="form-group row" ng-hide="newProvider ==1">
         <div class="col-md-2">
-          <label for="license">Prestataire</label>
+          <label for="license"><i ng-hide='license.PROVIDER ==undefined' class="fa fa-check text-success"></i><i ng-show='license.PROVIDER ==undefined' class="fa fa-times text-danger"></i> Prestataire</label>
         </div>
         <div class="col-md-7">
           <ui-select ng-model="license.PROVIDER" theme="selectize" ng-disabled="disabled"> 
@@ -78,7 +79,7 @@
       <!-- brand BLOC-->
       <div class="form-group row" ng-hide="newBrand ==1">
         <div class="col-md-2">
-          <label for="license">Marque</label>
+          <label for="license"><i ng-hide='license.BRAND ==undefined' class="fa fa-check text-success"></i><i ng-show='license.BRAND ==undefined' class="fa fa-times text-danger"></i> Marque</label>
         </div>
         <div class="col-md-7">
           <ui-select ng-model="license.BRAND" theme="selectize" ng-disabled="disabled"> 
@@ -109,6 +110,12 @@
         </div>   
         <div class="col-md-10">
           <input type="text" class="form-control" ng-model="license.WEB_ADDRESS" placeholder=" http://www.*****.*** ">
+        </div>
+      </div>
+      <div class="col-md-12 light-margin-top">
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped progress-bar-info active" role="progressbar" aria-valuenow="{{completeForm}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completeForm}}%">Formulaire complet à {{completeForm}}% 
+          </div>
         </div>
       </div>
       <button type="submit" class="btn btn-danger col-md-offset-1 " ng-disabled="completeForm < 100"  name='addButton' ng-model="addButton" btn-radio="'1'"><i class="fa fa-floppy-o"></i> Ajouter</button>

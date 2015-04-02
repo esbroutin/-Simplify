@@ -1,5 +1,6 @@
 simplify.controller('HeaderCtrl', ['$scope','$rootScope','$q','$state','contextService','errorService', function($scope,$rootScope,$q,$state,contextService,errorService) {
 
+  $scope.today = new Date();
 //we get the username for the current user
   contextService.getContext().then(function(contextInfo){  
     $scope.userName = contextInfo.data.userInfo.user;

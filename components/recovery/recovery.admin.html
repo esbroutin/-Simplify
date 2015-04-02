@@ -1,0 +1,24 @@
+<div acl-show='recoveryAdmin' ng-controller="RecoveryAdminCtrl">
+  <legend><i class="fa fa-bed fa-lg"></i> Récupération</legend>
+  <h4><i class="fa fa-tasks"></i> Demandes<span class='text-info' ng-show="countFormsOnHold > 0"> - {{countFormsOnHold}} demande(s) en attente </span></h4>
+<!--   <div class='row'><div class="col-md-4 "><input  class='form-control' type="text" name='listSearch' ng-model="recoverySearch" class="form-control" placeholder="Rechercher..." ng-change="searchRecovery()"/></div>
+  </div> -->
+  <table class="table table-striped table-bordered table-hover tbl-list light-margin-top">
+    <thead>
+      <tr class="info not-allowed"><th>ID</th><th>Demande créée le</th><th>Date de récupération</th><th>Temps de récupération (h)</th><th>Agent</th><th>Status</th><th>Action</th></tr>
+    </thead>
+    <tbody>
+      <tr class="reveal-animation" ng-repeat="form in forms" ng-click="viewRecovery(form)" >
+        <td>{{form.ID}}</td>
+        <td>{{form.CREATION_DATE | tsDateTime}}</td>
+        <td>{{form.DATE | tsDate}}</td>
+        <td>{{form.TO_USE}}</td>
+        <td>{{form.USER_ID}}</td>
+        <td ng-show='form.STATUS == "ON_HOLD"'><span class='text-info' th-code="{{form.STATUS}}" th-cat="STATUS"/></td>
+        <td ng-show='form.STATUS == "DENIED"'><span class='text-warning' th-code="{{form.STATUS}}" th-cat="STATUS"/></td>
+        <td ng-show='form.STATUS == "VALIDATED"'><span class='text-success' th-code="{{form.STATUS}}" th-cat="STATUS"/></td>
+        <td><button type="submit" class="btn btn-success " ng-disabled="form.STATUS == 'VALIDATED'" ng-click="validate(form)">Valider</button><button type="submit" class="btn btn-danger col-md-offset-1" ng-disabled="form.STATUS == 'VALIDATED' || form.STATUS == 'DENIED'" ng-click="refuse(form)">Refuser</button></td>
+      </tr>
+    </tbody>
+  </table>  
+</div>  

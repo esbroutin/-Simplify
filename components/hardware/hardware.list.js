@@ -1,7 +1,7 @@
 //Hardware List Controller
 angular
   .module('simplify')
-  .controller('HardwareListCtrl', ['$scope','$state','$q','$http','$filter','hardwareService','ngTableParams', function($scope, $state,$q, $http,$filter, hardwareService, ngTableParams) {
+  .controller('HardwareListCtrl', ['$scope','$state','$q','$http','$filter','hardwareService', function($scope, $state,$q, $http,$filter, hardwareService ) {
   //on load, we get hardwares list
   $scope.qView = $q.defer(); //promise qui peut être utilisée pour savoir quand les données sont dispos (used to avoid undefined variables or empty one)
 

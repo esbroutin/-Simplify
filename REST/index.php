@@ -36,8 +36,14 @@ $app->log->setWriter(new \PNORD\LogWriter($app));
 
 $app->log->info("******* REQUEST START - " . $_SERVER['REQUEST_METHOD'] . " ". $_SERVER["REQUEST_URI"] . " - " . (isset($_SESSION['userid'])?$_SESSION['userid']:"No active session") . " - **********");
 
+/********ACL******************************************************************************************/
+//Does the current user has access to the 'moduleName' module ?
+$app->get('/acl/module/:moduleName', function($moduleName) use($app){
+  echo $bAuth = checkAuth($app,$moduleName);
+});
+
 // **************************************************
-// *  ALERTS
+// *  ADMIN (ALERTS)
 // **************************************************
 
 $app->get('/admin/alert/list', function () use ($app) {
@@ -45,6 +51,17 @@ $app->get('/admin/alert/list', function () use ($app) {
       $admin = new \PNORD\Ctrl\AdminCtrl($app);    
       $ret = $admin->listAlert();
       echo json_encode($ret);  
+    }else{
+      $app->response->setStatus(403); 
+    }
+}); 
+
+$app->post('/admin/update', function () use ($app) {
+    if(checkAuth($app)){
+      $admin = new \PNORD\Ctrl\AdminCtrl($app);  
+      $data = json_decode($app->request->getBody());  
+      $ret = $admin->update($data);
+      echo json_encode($ret);   
     }else{
       $app->response->setStatus(403); 
     }
@@ -162,21 +179,148 @@ $app->get('/hardware/get/:hardwareId', function($hardwareId) use($app)  {
     } 
 });
 
-//GANTT OVERVIEW
-$app->get('/hardware/gantt', function() use($app)  {
+$app->delete('/hardware/delete/:hardwareId', function($hardwareId) use($app)  {
     if(checkAuth($app)){
       $hardware = new \PNORD\Ctrl\HardwareCtrl($app);  
-      $ret = $hardware->getGantt();
+      $ret = $hardware->deleteHardware($hardwareId);
+      echo json_encode($ret);   
+    }else{
+      $app->response->setStatus(403); 
+    } 
+});
+
+// **************************************************
+// *  RECOVERY
+// **************************************************
+
+$app->get('/recovery/list/:search', function ($search) use ($app) {
+    if(checkAuth($app)){
+      $recovery = new \PNORD\Ctrl\RecoveryCtrl($app);    
+      $ret = $recovery->listRecovery($search);
+      echo json_encode($ret);  
+    }else{
+      $app->response->setStatus(403); 
+    }
+}); 
+
+$app->get('/recovery/form/list', function () use ($app) {
+    if(checkAuth($app)){
+      $recovery = new \PNORD\Ctrl\RecoveryCtrl($app);    
+      $ret = $recovery->listForm();
+      echo json_encode($ret);  
+    }else{
+      $app->response->setStatus(403); 
+    }
+}); 
+
+$app->get('/recovery/admin/count', function () use ($app) {
+    if(checkAuth($app)){
+      $recovery = new \PNORD\Ctrl\RecoveryCtrl($app);    
+      $ret = $recovery->countForms();
+      echo json_encode($ret);  
+    }else{
+      $app->response->setStatus(403); 
+    }
+}); 
+
+$app->get('/recovery/admin/list', function () use ($app) {
+    if(checkAuth($app)){
+      $recovery = new \PNORD\Ctrl\RecoveryCtrl($app);    
+      $ret = $recovery->listFormAdmin();
+      echo json_encode($ret);  
+    }else{
+      $app->response->setStatus(403); 
+    }
+}); 
+
+$app->post('/recovery/add', function() use($app)  {
+    if(checkAuth($app)){
+      $recovery = new \PNORD\Ctrl\RecoveryCtrl($app);  
+      $data = json_decode($app->request->getBody());  
+      $ret = $recovery->addRecovery($data);
+      echo json_encode($ret);   
+    }else{
+      $app->response->setStatus(403); 
+    }
+});
+
+$app->post('/recovery/admin/validate', function() use($app)  {
+    if(checkAuth($app)){
+      $recovery = new \PNORD\Ctrl\RecoveryCtrl($app);  
+      $data = json_decode($app->request->getBody());  
+      $ret = $recovery->validate($data);
+      echo json_encode($ret);   
+    }else{
+      $app->response->setStatus(403); 
+    }
+});
+
+$app->post('/recovery/admin/refuse', function() use($app)  {
+    if(checkAuth($app)){
+      $recovery = new \PNORD\Ctrl\RecoveryCtrl($app);  
+      $data = json_decode($app->request->getBody());  
+      $ret = $recovery->refuse($data);
+      echo json_encode($ret);   
+    }else{
+      $app->response->setStatus(403); 
+    }
+});
+
+$app->post('/recovery/addForm', function() use($app)  {
+    if(checkAuth($app)){
+      $recovery = new \PNORD\Ctrl\RecoveryCtrl($app);  
+      $data = json_decode($app->request->getBody());  
+      $ret = $recovery->addForm($data);
+      echo json_encode($ret);   
+    }else{
+      $app->response->setStatus(403); 
+    }
+});
+
+$app->post('/recovery/update', function() use($app)  {
+    if(checkAuth($app)){
+      $recovery = new \PNORD\Ctrl\RecoveryCtrl($app);  
+      $data = json_decode($app->request->getBody());  
+      $ret = $recovery->updateRecovery($data);
+      echo json_encode($ret);   
+    }else{
+      $app->response->setStatus(403); 
+    }
+});
+
+$app->get('/recovery/get/:recoveryId', function($recoveryId) use($app)  {
+    if(checkAuth($app)){
+      $recovery = new \PNORD\Ctrl\RecoveryCtrl($app);  
+      $ret = $recovery->getRecovery($recoveryId);
       echo json_encode($ret);  
     }else{
       $app->response->setStatus(403); 
     } 
 });
 
-$app->delete('/hardware/delete/:hardwareId', function($hardwareId) use($app)  {
+$app->get('/recovery/pdf/:recoveryId', function($recoveryId) use($app)  {
     if(checkAuth($app)){
-      $hardware = new \PNORD\Ctrl\HardwareCtrl($app);  
-      $ret = $hardware->deleteHardware($hardwareId);
+      $recovery = new \PNORD\Ctrl\PDFCtrl($app);  
+      $ret = $recovery->generatePDF($recoveryId);
+      echo json_encode($ret);  
+    }else{
+      $app->response->setStatus(403); 
+    } 
+});
+
+$app->get('/recovery/pdf/read/:formId', function($formId) use($app)  {
+      $recovery = new \PNORD\Ctrl\PDFCtrl($app);  
+      $ret = $recovery->readPDF($formId);
+
+      $app->log->info('recovery/pdf/read ');
+
+      echo json_encode($ret);  
+});
+
+$app->delete('/recovery/delete/:recoveryId', function($recoveryId) use($app)  {
+    if(checkAuth($app)){
+      $recovery = new \PNORD\Ctrl\RecoveryCtrl($app);  
+      $ret = $recovery->deleteRecovery($recoveryId);
       echo json_encode($ret);   
     }else{
       $app->response->setStatus(403); 

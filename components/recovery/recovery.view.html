@@ -1,0 +1,93 @@
+<div ng-controller="RecoveryViewCtrl">
+  <legend><i class="fa fa-bed fa-lg"></i> Récupération</legend>
+  <h4><i class="fa fa-eye"></i> Récupération N° {{recovery.ID}} - {{recovery.LABEL}} </h4>
+  <div  ng-show="deleteButton == '0' && editButton != 1">
+    <div class="blocBorder col-md-6">
+    <legend><i class="fa fa-info-circle fa-lg"></i> Informations</legend>
+      <div class='row'>
+        <label class="col-md-4 text-right control-label"> ID Récupération:</label>
+        <div class="col-md-4">
+          {{recovery.ID}}
+        </div>
+      </div>
+      <div class='row'>
+        <label class="col-md-4 text-right control-label"> Date :</label>
+        <div class="col-md-4">
+          {{recovery.DATE | tsDate}}
+        </div>
+      </div>
+      <div class='row borderTop'>
+        <label class="col-md-4 text-right control-label"> Libellé:</label>
+        <div class="col-md-8">
+          {{recovery.LABEL}}
+        </div>
+      </div>
+      <div class='row borderTop'>
+        <label class="col-md-4 text-right control-label"> Début:</label>
+        <div class="col-md-8">
+          {{recovery.START_TIME | tsTime}}
+        </div>
+      </div>
+      <div class='row borderTop'>
+        <label class="col-md-4 text-right control-label"> Fin:</label>
+        <div class="col-md-8">
+          {{recovery.END_TIME | tsTime}}
+        </div>
+      </div>
+      <div class='row borderTop'>
+        <label class="col-md-4 text-right control-label"> Temps obtenu (h):</label>
+        <div class="col-md-8">
+          {{recovery.RECOVERY_STOCK | hourConv}}
+        </div>
+      </div>
+      <div class='row borderTop'>
+        <label class="col-md-4 text-right control-label"> Temps utilisé (h):</label>
+        <div class="col-md-8">
+          {{recovery.RECOVERY_USED | hourConv}}
+        </div>
+      </div>
+      <div class='row borderTop'>
+        <label class="col-md-4 text-right control-label"> Temps disponible (h) :</label>
+        <div class="col-md-8 text-success">
+          {{available_time | hourConv}}
+        </div>
+      </div>
+    </div>
+    <div class='row col-md-12 light-margin-top text-left button-group'>
+      <button type="submit" class="btn btn-info " ng-click="showList()"><i class="fa fa-list"></i> Liste</button>
+      <!-- <button type="submit" class="btn btn-primary col-md-offset-1 " ng-click="edit()"><i class="fa fa-pencil"></i> Modifier</button> -->
+      <button type="submit" class="btn btn-danger col-md-offset-1 " ng-click="deleteButton = 1"><i class="fa fa-trash-o"></i> Supprimer</button>
+    </div>
+  </div>
+
+  <!-- we display the edit form only if the edit button is pushed and mask the rest -->
+    <!-- <form class="col-md-6" ng-show="editButton == '1'">
+      <div class="form-group">
+        <label for="recoveryLabel">Libéllé</label>
+        <input type="text" class="form-control" id="recoveryLabel" ng-model="recovery.LABEL">
+      </div>
+      <div class="form-group">
+        <label for="recovery">Description</label>
+        <input type="text" class="form-control" id="recoveryDesc" ng-model="recovery.DESCRIPTION">
+      </div>
+      <div class="form-group">
+        <label for="recovery">Contact</label>
+        <input type="text" class="form-control" id="recoverybrand" ng-model="recovery.CONTACT">
+      </div>
+      <div class="form-group">
+        <label for="recovery">Lien Web</label>
+        <input type="text" class="form-control" id="recoveryWeb" ng-model="recovery.WEB_ADDRESS">
+      </div>
+      <button type="submit" class="btn btn-danger col-md-offset-1 " ng-click="save()"><i class="fa fa-floppy-o"></i> Enregistrer</button>
+      <button type="submit" class="btn btn-warning col-md-offset-1" ng-click="cancelEdit()"><i class="fa fa-undo"></i> Annuler</button>
+    </form>  -->
+
+  <!-- we display the delete comfirmation dialog when the delete button is pushed -->
+  <div class="col-md-12 jumbotron text-center" ng-show="deleteButton == '1'">
+    <legend>Êtes-vous sûr de vouloir supprimer cette entrée {{recovery.ID}} -- <span class="text-warning ">{{recovery.LABEL}}</span> ?</legend>
+      <p class="text-center">
+        <button type="submit" class="btn btn-danger btn-lg" ng-click="delete()"  ><i class="fa fa-trash-o"></i> Oui</button>
+        <button type="submit" class="col-md-offset-1 btn btn-success btn-lg" ng-model="deleteButton" btn-radio="'0'"><i class="fa fa-undo"></i>Non</button>
+      </p>
+  </div>
+</div>

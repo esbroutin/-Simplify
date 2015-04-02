@@ -72,7 +72,7 @@ angular
 *
 ****************************/
 
-	$scope.$watchCollection('[hardware.WARRANTY_START, hardware.WARRANTY_END, hardware.PROVIDER,hardware.BRAND, hardware.LABEL]', function(newValues) {
+	$scope.$watchCollection('[hardware.WARRANTY_START, hardware.WARRANTY_END, hardware.PROVIDER,hardware.TYPE,hardware.BRAND, hardware.LABEL]', function(newValues) {
 		var countDefined='';
 
 		for (var i = newValues.length - 1; i >= 0; i--) {

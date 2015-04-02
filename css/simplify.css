@@ -24,7 +24,26 @@
 	height: 60px;
 	bottom: 0;
 }
+.table tr:hover {
+    cursor: pointer;
+}
 
+.not-allowed{
+  cursor: not-allowed  !important;
+
+}
+.navTitle{
+  height: 60px  !important;
+
+}
+.force-left{
+  text-align: left  !important;
+
+}
+.force-right{
+  text-align: right  !important;
+
+}
 .vcenter {
     display: inline-block;
     vertical-align: middle;
@@ -33,6 +52,7 @@
 html,body, .fullHeight{
   height:100%;
 }
+.hide-me { display: none !important;}
 
 .image-custom{
 

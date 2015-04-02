@@ -1,6 +1,7 @@
 <div ng-controller="HardwareViewCtrl">
   <!-- we display the details only when in View Mode -->
-  <legend>Matériel N° {{hardware.ID}} - {{hardware.LABEL}}</legend>
+  <legend><i class="fa fa-barcode fa-lg"></i> Matériel</legend>
+  <h4><i class="fa fa-eye"></i> Matériel N° {{hardware.ID}} - {{hardware.LABEL}} </h4>
   <div  ng-show="deleteButton == '0' && editButton != 1">
     <div class="blocBorder col-md-6">
     <legend><i class="fa fa-info-circle fa-lg"></i> Informations</legend>

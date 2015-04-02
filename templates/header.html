@@ -1,28 +1,103 @@
 
 <nav class="navbar" ng-controller="HeaderCtrl">
-	<div class="container-fluid fullHeight" ng-show="userName != undefined">
-		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class=" text-center">		
-			<div class="btn-group">
-				<a class="btn btn-info btn-lg" href="#/home"><i class="fa fa-home fa-lg"></i><span class="label label-info">!Simplify 1.1.1</span></a>
-				<a class="btn btn-info btn-lg" target="_new" href="http://ufi.pnord.nc/equipes/DSI"><i class="fa fa-windows fa-lg"></i><span class="label label-info">SharePoint</span></a>
-				<a class="btn btn-info btn-lg" target="_new" href="http://centreon/centreon/main.php"><i class="fa fa-cube fa-lg"></i><span class="label label-info">Centreon</span></a>
-				<a class="btn btn-info btn-lg" target="_new" href="https://kuru.pnord.nc:4343/officescan/console/html/cgi/cgiChkMasterPwd.exe"><i class="fa fa-bullhorn fa-lg"></i></span><span class="label label-info">Trend Micro </span></a>
-				<a class="btn btn-info btn-lg" target="_new" href="https://10.16.32.30:9443/triton/login/pages/loginPage.jsf"><i class="fa fa-eye fa-lg"></i><span class="label label-info">WebSense</span></a>
-				<a class="btn btn-info btn-lg" target="_new" href="https://10.16.7.254:12369/"><i class="fa fa-fire fa-lg"></i><span class="label label-info">Astaro</span></a>
-				<a class="btn btn-info btn-lg" target="_new" href="https://10.16.25.3/admin/public/index.html"><i class="fa fa-fire fa-lg"></i><span class="label label-info">ASA</span></a>
-				<a class="btn btn-default btn-lg active"><i class="fa fa-user fa-lg"></i><span class="label label-default"> Bonjour {{userName}}</span></a>
-				<a class="btn btn-default btn-lg" href="/logout.php"><span class="label label-default"> Déconnexion</span><i class="fa fa-sign-out fa-lg"></i></a>
-			</div>
-				<!-- alerts display -->	
-				<div class="btn-group col-md-offset-1" ng-show='noAlerts == 0'>
-			  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-			    <i class="fa fa-exclamation-circle fa-lg"></i> Alertes: {{alerts.COUNT_ALERTS}} <span class="caret"></span>
-			  </button>
-			  <ul class="dropdown-menu" role="menu">
-			    <li ng-repeat="alert in alerts"><a ng-click="viewData(alert.TYPE,alert.ID)">{{alert.ID}}</a></li>
-			  </ul>
-				</div>
-		</div>
+	<div class="container-fluid text-center" ng-show="userName != undefined">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a class='btn btn-info' href="#/home"><strong><i class="fa fa-home fa-lg"></i> !Simplify </strong></a></li>
+        <li class="dropdown" acl-show='software' >
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						<i class="fa fa-newspaper-o fa-lg"></i> 
+            <strong ng-show="$state.current.name == 'listSoftware' || $state.current.name == 'addSoftware' || $state.current.name == 'viewSoftware'" class='text-warning'> Versionning</strong>
+            <strong ng-show="$state.current.name != 'listSoftware' && $state.current.name != 'addSoftware' && $state.current.name != 'viewSoftware'"> Versionning</strong><span class="caret"></span>
+					</a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a ng-class="{active:$state.includes('listSoftware')}" href="#/software/list"><i class="fa fa-hand-o-right fa-lg" ng-show="$state.current.name == 'listSoftware'"></i> Liste</a></li>
+            <li><a ng-class="{active:$state.includes('addSoftware')}" href="#/software/add"><i class="fa fa-hand-o-right fa-lg" ng-show="$state.current.name == 'addSoftware'"></i> Nouveau</a></li>
+          </ul>
+        </li>
+        <li class="dropdown" acl-show='license' >
+          <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">
+						<i class="fa fa-list fa-lg"></i>
+            <strong ng-show="$state.current.name == 'listLicense' || $state.current.name == 'addLicense' || $state.current.name == 'viewLicense'" class='text-warning'> Licences</strong>
+            <strong ng-show="$state.current.name != 'listLicense' && $state.current.name != 'addLicense' && $state.current.name != 'viewLicense'"> Licences</strong> <span class="caret"></span>
+					</a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a ng-class="{active:$state.includes('listLicense')}" href="#/license/list"><i class="fa fa-hand-o-right fa-lg" ng-show="$state.current.name == 'listLicense'"></i> Liste</a></li>
+            <li><a ng-class="{active:$state.includes('addLicense')}" href="#/license/add"><i class="fa fa-hand-o-right fa-lg" ng-show="$state.current.name == 'addLicense'"></i> Nouveau</a></li>
+            <li class="divider"></li>
+            <li><a ng-class="{active:$state.includes('overviewLicense')}"  href="#/license/overview"><i class="fa fa-hand-o-right fa-lg" ng-show="$state.current.name == 'overviewLicense'"></i> Vue d'ensemble</a></li>
+          </ul>
+        </li>
+        <li class="dropdown" acl-show='certificate' >
+          <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">
+						<i class="fa fa-certificate fa-lg"></i> 
+            <strong ng-show="$state.current.name == 'listCertificate' || $state.current.name == 'addCertificate' || $state.current.name == 'viewCertificate'" class='text-warning'> Certificats</strong>
+            <strong ng-show="$state.current.name != 'listCertificate' && $state.current.name != 'addCertificate' && $state.current.name != 'viewCertificate'"> Certificats</strong> <span class="caret"></span>
+					</a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a ng-class="{active:$state.includes('listCertificate')}" href="#/certificate/list"><i class="fa fa-hand-o-right fa-lg" ng-show="$state.current.name == 'listCertificate'"></i> Liste</a></li>
+            <li><a ng-class="{active:$state.includes('addCertificate')}"  href="#/certificate/add"><i class="fa fa-hand-o-right fa-lg" ng-show="$state.current.name == 'addCertificate'"></i> Nouveau</a></li>
+          </ul>
+        </li>
+        <li class="dropdown" acl-show='hardware' >
+          <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">
+						<i class="fa fa-barcode fa-lg"></i> 
+            <strong ng-show="$state.current.name == 'listHardware' || $state.current.name == 'addHardware' || $state.current.name == 'viewHardware'" class='text-warning'> Matériel</strong>
+            <strong ng-show="$state.current.name != 'listHardware' && $state.current.name != 'addHardware' && $state.current.name != 'viewHardware'"> Matériel</strong> <span class="caret"></span>
+					</a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a ng-class="{active:$state.includes('listHardware')}" href="#/hardware/list"><i class="fa fa-hand-o-right fa-lg" ng-show="$state.current.name == 'listHardware'"></i> Liste</a></li>
+            <li><a ng-class="{active:$state.includes('addHardware')}"  href="#/hardware/add"><i class="fa fa-hand-o-right fa-lg" ng-show="$state.current.name == 'addHardware'"></i> Nouveau</a></li>
+          </ul>
+        </li>
+        <li class="dropdown" acl-show='provider' >
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						<i class="fa fa-users fa-lg"></i> 
+            <strong ng-show="$state.current.name == 'listProvider' || $state.current.name == 'addProvider' || $state.current.name == 'viewProvider'" class='text-warning'> Prestataire</strong>
+            <strong ng-show="$state.current.name != 'listProvider' && $state.current.name != 'addProvider' && $state.current.name != 'viewProvider'"> Prestataire</strong> <span class="caret"></span>
+					</a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a ng-class="{active:$state.includes('listProvider')}"  href="#/provider/list"><i class="fa fa-hand-o-right fa-lg" ng-show="$state.current.name == 'listProvider'"></i> Liste</a></li>
+            <li><a ng-class="{active:$state.includes('addProvider')}"  href="#/provider/add"><i class="fa fa-hand-o-right fa-lg" ng-show="$state.current.name == 'addProvider'"></i> Nouveau</a></li>
+          </ul>
+        </li>
+        <li class="dropdown" acl-show='brand' >
+          <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">
+						<i class="fa fa-building fa-lg"></i>
+            <strong ng-show="$state.current.name == 'listBrand' || $state.current.name == 'addBrand' || $state.current.name == 'viewBrand'" class='text-warning'> Marques/Entreprises</strong>
+            <strong ng-show="$state.current.name != 'listBrand' && $state.current.name != 'addBrand' && $state.current.name != 'viewBrand'"> Marques/Entreprises</strong> <span class="caret"></span>
+					</a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a ng-class="{active:$state.includes('listBrand')}"  href="#/brand/list"><i class="fa fa-hand-o-right fa-lg" ng-show="$state.current.name == 'listBrand'"></i> Liste</a></li>
+            <li><a ng-class="{active:$state.includes('addBrand')}"  href="#/brand/add"><i class="fa fa-hand-o-right fa-lg" ng-show="$state.current.name == 'addBrand'"></i> Nouveau</a></li>
+          </ul>
+        </li>
+        <li class="dropdown" acl-show='recovery' >
+          <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">
+						<i class="fa fa-bed fa-lg"></i>
+            <strong ng-show="$state.current.name == 'listRecovery' || $state.current.name == 'addRecovery' || $state.current.name == 'formRecovery' || $state.current.name == 'recoveryAdmin'" class='text-warning'> Récupération</strong>
+            <strong ng-show="$state.current.name != 'listRecovery' && $state.current.name != 'addRecovery' && $state.current.name != 'formRecovery' && $state.current.name != 'recoveryAdmin'"> Récupération</strong> <span class="caret"></span>
+					</a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a ng-class="{active:$state.includes('listRecovery')}"  href="#/recovery/list"><i class="fa fa-hand-o-right fa-lg" ng-show="$state.current.name == 'listRecovery'"></i> Liste</a></li>
+            <li><a ng-class="{active:$state.includes('addRecovery')}"  href="#/recovery/add"><i class="fa fa-hand-o-right fa-lg" ng-show="$state.current.name == 'addRecovery'"></i> Nouveau</a></li>
+            <li><a ng-class="{active:$state.includes('formRecovery')}"  href="#/recovery/form"><i class="fa fa-hand-o-right fa-lg" ng-show="$state.current.name == 'formRecovery'"></i> Demande de récupération</a></li>
+            <li acl-show='recoveryAdmin' ><a ng-class="{active:$state.includes('recoveryAdmin')}"  href="#/recovery/admin/list"><i class="fa fa-hand-o-right fa-lg" ng-show="$state.current.name == 'recoveryAdmin'"></i> Gestion</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a class='' href="/logout.php">Déconnexion <i class="fa fa-power-off fa-lg"></i> </a></li>
+        <li><a href="#/admin"><i class="fa fa-sliders fa-lg"></i>  Paramètres </a></li>
+        <li class="dropdown" ng-show='noAlerts == 0'>
+          <a href="#" class="dropdown-toggle text-danger" data-toggle="dropdown" role="button" aria-expanded="false">
+            <i class="fa fa-exclamation-circle fa-lg"></i> <strong>Alertes: {{alerts.COUNT_ALERTS}}</strong>  <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li ng-repeat="alert in alerts"><a ng-click="viewData(alert.TYPE,alert.ID)">{{alert.ID}}</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
 	</div><!-- /.container-fluid -->
 </nav>

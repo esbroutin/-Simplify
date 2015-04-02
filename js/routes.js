@@ -20,18 +20,39 @@ simplify.config(['$stateProvider', '$urlRouterProvider', function($stateProvider
        url: "/simplify",
        template: "<ui-view />" 
     })
-  //Maintenance routing
-    .state('maintenance', {
-      url: '/maintenance', 
-      templateUrl: 'components/maintenance/maintenance.html',
+  //Admin routing
+    .state('admin', {
+      url: '/admin', 
+      templateUrl: 'components/admin/admin.html',
     }) 
-    .state('listMaintenance', {
-      url: '/maintenance/list',
-      templateUrl: 'components/maintenance/maintenance.list.html',
+  //Recovery routing
+    .state('recovery', {
+      url: '/recovery', 
+      templateUrl: 'components/recovery/recovery.html',
     }) 
-    .state('addMaintenance', {
-      url: '/maintenance/add', 
-      templateUrl: 'components/maintenance/maintenance.crud.html' ,
+    .state('listRecovery', {
+      url: '/recovery/list',
+      templateUrl: 'components/recovery/recovery.list.html',
+    }) 
+    .state('recoveryAdmin', {
+      url: '/recovery/admin/list',
+      templateUrl: 'components/recovery/recovery.admin.html',
+    }) 
+    .state('recoveryAdminView', {
+      url: '/recovery/admin/view',
+      templateUrl: 'components/recovery/recovery.admin.view.html',
+    }) 
+    .state('addRecovery', {
+      url: '/recovery/add', 
+      templateUrl: 'components/recovery/recovery.crud.html' ,
+    })
+    .state('formRecovery', {
+      url: '/recovery/form', 
+      templateUrl: 'components/recovery/recovery.form.html' ,
+    })
+    .state('viewRecovery', {
+      url: '/recovery/view/:recordId', 
+      templateUrl: 'components/recovery/recovery.view.html' ,
     })
   //License routing
     .state('license', {
@@ -70,6 +91,23 @@ simplify.config(['$stateProvider', '$urlRouterProvider', function($stateProvider
     .state('addHardware', {
       url: '/hardware/add', 
       templateUrl: 'components/hardware/hardware.crud.html' ,
+    })
+  //Certificate routing
+    .state('certificate', {
+      url: '/certificate',
+      templateUrl: 'components/certificate/certificate.html',
+    }) 
+    .state('listCertificate', {
+      url: '/certificate/list',
+      templateUrl: 'components/certificate/certificate.list.html',
+    })
+    .state('viewCertificate', {
+      url: '/certificate/view/:recordId',
+      templateUrl: 'components/certificate/certificate.view.html',
+    })
+    .state('addCertificate', {
+      url: '/certificate/add', 
+      templateUrl: 'components/certificate/certificate.crud.html' ,
     })
   //Inventory routing
     .state('inventory', {

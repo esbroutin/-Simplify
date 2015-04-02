@@ -27,18 +27,6 @@ class HardwareCtrl extends BaseSimplifyObject{
   }
 
   /**
-  * get the gantt overview
-  * @return array(array())
-  **/
-  function getGantt(){
-
-    $this->app->log->info(__CLASS__ . '::' . __METHOD__);
-    $dao = new \PNORD\Model\HardwareDAO($this->app);  
-    return $dao->getGantt();   
-     
-  }
-
-  /**
   * get a hardware
   * @return array(array())
   **/

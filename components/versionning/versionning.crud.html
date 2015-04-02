@@ -4,9 +4,10 @@
       <!-- New Form -->
     <form class="col-md-6">
       <!-- Enterprise or brand name -->
+      {{version.ENTERPRISE}}
       <div class="form-group  row">
         <div class="col-md-3 text-right">
-          <label for="version">Marque</label> 
+          <label for="version"><i ng-hide='version.ENTERPRISE ==undefined' class="fa fa-check text-success"></i><i ng-show='version.ENTERPRISE ==undefined' class="fa fa-times text-danger"></i>Marque</label> 
         </div>
         <div class="col-md-7">
           <ui-select ng-model="version.ENTERPRISE" theme="selectize"> 
@@ -26,7 +27,7 @@
       <!-- Product name -->
       <div class="form-group row text-right">
         <div class="col-md-3">
-          <label for="versionLabel">Nom du produit</label>
+          <label for="versionLabel"><i ng-hide='version.LABEL ==undefined' class="fa fa-check text-success"></i><i ng-show='version.LABEL ==undefined' class="fa fa-times text-danger"></i>Nom du produit</label>
         </div>   
         <div class="col-md-9">
         	<input type="text" class="form-control" ng-model="version.LABEL" placeholder="Nom du produit ...">
@@ -58,7 +59,7 @@
       	</div>
       <!-- Version actuelle -->
         <div class="col-md-3">
-          <label for="versionCurrentVersion">Version actuelle</label>
+          <label for="versionCurrentVersion"><i ng-hide='version.CURRENT_VERSION ==undefined' class="fa fa-check text-success"></i><i ng-show='version.CURRENT_VERSION ==undefined' class="fa fa-times text-danger"></i>Version actuelle</label>
         </div>   
         <div class="col-md-3">
         	<input type="text" class="form-control" ng-model="version.CURRENT_VERSION" placeholder="Version actuelle ...">
@@ -82,7 +83,6 @@
   <!-- we display the choice options when the form add is completed -->
   <div class="col-md-12 jumbotron text-center" ng-show="formDone == 1">
     <legend>Une nouvelle entrée a été ajoutée, que souhaitez-vous faire ?</legend>
-    </br>
       <p class="text-center"> 
         <button type="submit" class="btn btn-info btn-lg" ng-click="showList()"  >Liste</button>
         <button type="submit" class="btn btn-primary btn-lg col-md-offset-1" ng-click="viewVersion()"  >Afficher les détails</button>

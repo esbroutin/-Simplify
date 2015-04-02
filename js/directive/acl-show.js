@@ -6,10 +6,8 @@ simplify.directive('aclShow', function(aclService){
         var moduleName = attrs.aclShow;
         
         aclService.getACL(moduleName).then(function(response){
-          if(response.data==1){
-            element.show();
-          }else{
-            element.hide();
+          if(response.data!=1){
+            element.addClass('hide-me');
           }          
         });
       }

@@ -1,7 +1,7 @@
 //License List Controller
 angular
   .module('simplify')
-  .controller('LicenseListCtrl', ['$scope','$rootScope','$state','$q','$http','$filter','licenseService','ngTableParams', function($scope, $rootScope, $state,$q, $http,$filter, licenseService, ngTableParams) {
+  .controller('LicenseListCtrl', ['$scope','$rootScope','$state','$q','$http','$filter','licenseService', function($scope, $rootScope, $state,$q, $http,$filter, licenseService) {
 
 	//list
 	$scope.listLicense = function(license){

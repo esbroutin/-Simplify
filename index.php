@@ -1,5 +1,5 @@
 <?
-include("config.inc.php");
+include('config.inc.php');
 global $gTblConfig;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -17,6 +17,8 @@ global $gTblConfig;
   <!-- <link rel="stylesheet" href="css/custom_darkly_bootstrap.css"> -->
   <link rel="stylesheet" href="css/custom_slate_bootstrap.css">
   <!-- <link rel="stylesheet" href="css/custom_spacelab_bootstrap.min.css"> -->
+  <!-- <link rel="stylesheet" href="css/bootstrap-yeti.min.css"> -->
+  <!-- <link rel="stylesheet" href="css/bootstrap-superhero.min.css"> -->
   <!-- <link rel="stylesheet" href="css/custom_cerulean_bootstrap.css"> -->
   <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.min.css">
   <link rel="stylesheet" href="bower_components/angular-gantt/dist/angular-gantt.css">
@@ -25,7 +27,6 @@ global $gTblConfig;
   <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css">
   <link rel="stylesheet" href="bower_components/ng-table/dist/ng-table.css">
   <link rel="stylesheet" href="css/selectize.default.css">
-
 <!--  scripts-->
   <script type="text/javascript" src="bower_components/angularjs/angular.js"></script>
   <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
@@ -86,10 +87,11 @@ global $gTblConfig;
   <div ng-controller="globalCtrl" > 
   <!-- NAVBAR -->
       <div class="row" ng-include="'templates/header.html'"></div>
+      <!-- <div class="row" ng-include="'templates/nav.html'" style="margin-top:-20px"></div> -->
+
       <div class="row" style="margin-top:-20px">
-        <div class="col-md-1" ng-include="'templates/nav.html'"></div>
     <!-- UI-VIEW --> 
-        <div class="col-md-9 col-md-offset-1  light-margin-top reveal-animation" ui-view></div>
+        <div class="col-md-10 col-md-offset-1  light-margin-top reveal-animation" ui-view></div>
       </div>
       <!-- <footer class="col-xs-12 col-md-12 sticky-footer" ng-include="'templates/footer.html'"></footer> -->
   </div>

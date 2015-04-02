@@ -1,6 +1,6 @@
 <div ng-controller="LicenseViewCtrl">
-  <!-- we display the details only when in View Mode -->
-  <legend>Licence N° {{license.LICENSE_ID}} - {{license.LICENSE_LABEL}}</legend>
+  <legend><i class="fa fa-list fa-lg"></i> Licence</legend>
+  <h4><i class="fa fa-eye"></i> Licence N° {{license.LICENSE_ID}} - {{license.LICENSE_LABEL}} </h4>
   <div  ng-show="deleteButton == '0' && editButton != 1">
     <div class="blocBorder col-md-6">
     <legend><i class="fa fa-info-circle fa-lg"></i> Informations</legend>
