@@ -32,9 +32,9 @@ class CertificateDAO extends BaseSimplifyObject{
       $conditionSql = "";
     }else{
           $conditionSql = "WHERE CERTIFICATE.ID LIKE '%$search%' 
-            OR CERTIFICATE.COMMON_NAME LIKE '%".strtoupper($search)."' 
+            OR CERTIFICATE.COMMON_NAME LIKE '%".strtoupper($search)."%' 
             OR CERTIFICATE.COMMON_NAME LIKE '%".strtolower($search)."%'
-            OR CERTIFICATE.ORGANIZATION LIKE '%".strtoupper($search)."' 
+            OR CERTIFICATE.ORGANIZATION LIKE '%".strtoupper($search)."%' 
             OR CERTIFICATE.ORGANIZATION LIKE '%".strtolower($search)."%'
             OR CERTIFICATE.ORGANIZATION_UNIT LIKE '%".strtoupper($search)."' 
             OR CERTIFICATE.ORGANIZATION_UNIT LIKE '%".strtolower($search)."%'";
@@ -87,7 +87,7 @@ class CertificateDAO extends BaseSimplifyObject{
   function getCertificate($certificateId){
   
     $this->app->log->info(__CLASS__ . '::' . __METHOD__);
-    $this->app->log->info('certificateId : '.$certificateId);
+    // $this->app->log->info('certificateId : '.$certificateId);
 
     $sql = "SELECT *          
               FROM certificate
@@ -127,7 +127,7 @@ class CertificateDAO extends BaseSimplifyObject{
     if ($delta < 2629743){
       $result['ALERT'] = 1;
     }
-    $this->app->log->info('result : '. $this->dumpRet($result));
+    // $this->app->log->info('result : '. $this->dumpRet($result));
     return $result;            
   } 
  
@@ -140,7 +140,7 @@ class CertificateDAO extends BaseSimplifyObject{
 
     $this->app->log->notice(__CLASS__ . '::' . __METHOD__);
     
-    $this->app->log->info('****certificate **** -> '.$this->dumpRet($certificate));
+    // $this->app->log->info('****certificate **** -> '.$this->dumpRet($certificate));
 
     //we check for undefined variables
     if (!isset($certificate->CERTIFICATE_AUTHORITY)) {
@@ -233,7 +233,16 @@ class CertificateDAO extends BaseSimplifyObject{
 
     $this->app->log->info(__CLASS__ . '::' . __METHOD__);
     
-    $this->app->log->info('****certificate **** -> '.$this->dumpRet($certificate));
+    // $this->app->log->info('****certificate **** -> '.$this->dumpRet($certificate));
+    if ($certificate->AUTO_SIGNED == 'true') {
+      $certificate->AUTO_SIGNED = 'true';
+      $brand_Id = '-';
+      $provider_Id = '-';
+    }else{
+      $provider_Id = $certificate->PROVIDER->ID;
+      $brand_Id = $certificate->BRAND->ID;
+      $certificate->AUTO_SIGNED = 'false';
+    };
 
 
     $certificateId =  $certificate->ID;
@@ -244,15 +253,15 @@ class CertificateDAO extends BaseSimplifyObject{
                       DATE_END='$certificate->DATE_END',
                       ORGANIZATION='$certificate->ORGANIZATION',
                       ORGANIZATION_UNIT='$certificate->ORGANIZATION_UNIT',
-                      BRAND_ID='$certificate->BRAND_ID',
-                      PROVIDER_ID='$certificate->PROVIDER_ID',
+                      BRAND_ID='$brand_Id',
+                      PROVIDER_ID='$provider_Id',
                       TOWN='$certificate->TOWN',
                       REGION='$certificate->REGION',
                       COUNTRY='$certificate->COUNTRY',
                       CERTIFICATE_AUTHORITY='$certificate->CERTIFICATE_AUTHORITY',
                       COMMENTS='$certificate->COMMENTS'
                   WHERE ID='$certificate->ID';";
-    $this->app->log->info('****sqlCertificate **** -> '.$this->dumpRet($sqlCertificate));
+    // $this->app->log->info('****sqlCertificate **** -> '.$this->dumpRet($sqlCertificate));
     $queryCertificate = $this->db()->query($sqlCertificate);
     return($certificateId);
 

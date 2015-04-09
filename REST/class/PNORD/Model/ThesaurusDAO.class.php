@@ -44,7 +44,7 @@ class ThesaurusDAO extends BaseSimplifyObject{
     $query = "SELECT DISTINCT CAT, COUNT(CODE) AS CODE_COUNT
               FROM THESAURUS
               GROUP BY CAT";
-    $this->app->log->info($query);
+    // $this->app->log->info($query);
     $result = $this->db()->query($query);
     return $result->fetchAll(PDO::FETCH_ASSOC);
   }  

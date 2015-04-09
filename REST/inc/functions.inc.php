@@ -9,7 +9,7 @@
 * @return boolean
 **/
 function checkAuth($app,$module=""){
-  $app->log->info(__METHOD__ . " ($module)" . (isset($_SESSION['userid'])?$_SESSION['userid']:"user id not set"));
+  // $app->log->info(__METHOD__ . " ($module)" . (isset($_SESSION['userid'])?$_SESSION['userid']:"user id not set"));
   $bRet = false;
   if(isset($_SESSION['userid']) && isset($app->environment['APP_CONFIG']['auth']['acl'][$_SESSION['userid']])){
     //User has access to the app
@@ -20,7 +20,7 @@ function checkAuth($app,$module=""){
                              $app->environment['APP_CONFIG']['auth']['acl']['modules'][$module][$_SESSION['userid']]){
       $bRet = true;
     }else{
-      $app->log->info($_SESSION['userid'] . " does not have access to module $module - " . $_SERVER["REQUEST_URI"]);
+      // $app->log->info($_SESSION['userid'] . " does not have access to module $module - " . $_SERVER["REQUEST_URI"]);
     }  
   }else{
     $app->log->info("Access not granted to the application");     

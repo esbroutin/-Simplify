@@ -32,10 +32,10 @@ class HardwareDAO extends BaseSimplifyObject{
       $conditionSql = "";
     }else{
           $conditionSql = "AND (HARDWARE.ID LIKE '%$search%' 
-            OR HARDWARE.LABEL LIKE '%".strtoupper($search)."' 
+            OR HARDWARE.LABEL LIKE '%".strtoupper($search)."%' 
             OR HARDWARE.LABEL LIKE '%".strtolower($search)."%'
             OR HARDWARE.BARCODE LIKE '%$search'
-            OR PROVIDER.LABEL LIKE '%".strtoupper($search)."' 
+            OR PROVIDER.LABEL LIKE '%".strtoupper($search)."%' 
             OR PROVIDER.LABEL LIKE '%".strtolower($search)."%' 
             OR PROVIDER.STATUS LIKE '%".strtoupper($search)."' 
             OR PROVIDER.STATUS LIKE '%".strtolower($search)."%' 

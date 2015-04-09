@@ -38,6 +38,18 @@ class RecoveryCtrl extends BaseSimplifyObject{
      
   }
 
+  /**
+  * get a recovery
+  * @return array(array())
+  **/
+  function listAdmin($userId){
+
+    $this->app->log->info(__CLASS__ . '::' . __METHOD__);
+    $dao = new \PNORD\Model\RecoveryDAO($this->app);  
+    return $dao->listAdmin($userId);   
+     
+  }
+
 
   /**
   * countForms

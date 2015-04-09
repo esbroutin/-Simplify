@@ -55,6 +55,19 @@ $app->get('/admin/alert/list', function () use ($app) {
       $app->response->setStatus(403); 
     }
 }); 
+// **************************************************
+// *  ADMIN (USERS)
+// **************************************************
+
+$app->get('/admin/user/list/:search', function ($search) use ($app) {
+    if(checkAuth($app)){
+      $admin = new \PNORD\Ctrl\AdminCtrl($app);    
+      $ret = $admin->listUsers($search);
+      echo json_encode($ret);  
+    }else{
+      $app->response->setStatus(403); 
+    }
+}); 
 
 $app->post('/admin/update', function () use ($app) {
     if(checkAuth($app)){
@@ -223,10 +236,21 @@ $app->get('/recovery/admin/count', function () use ($app) {
     }
 }); 
 
-$app->get('/recovery/admin/list', function () use ($app) {
+$app->get('/recovery/admin/form/list', function () use ($app) {
     if(checkAuth($app)){
       $recovery = new \PNORD\Ctrl\RecoveryCtrl($app);    
       $ret = $recovery->listFormAdmin();
+      echo json_encode($ret);  
+    }else{
+      $app->response->setStatus(403); 
+    }
+}); 
+
+
+$app->get('/recovery/admin/list/:userid', function ($userId) use ($app) {
+    if(checkAuth($app)){
+      $recovery = new \PNORD\Ctrl\RecoveryCtrl($app);    
+      $ret = $recovery->listAdmin($userId);
       echo json_encode($ret);  
     }else{
       $app->response->setStatus(403); 
@@ -328,7 +352,7 @@ $app->delete('/recovery/delete/:recoveryId', function($recoveryId) use($app)  {
 });
 
 // **************************************************
-// *	VERSIONNNING (SOFTWARE)
+// *  VERSIONNNING (SOFTWARE)
 // **************************************************
 
 $app->get('/software/list/:search', function ($search) use ($app) {
@@ -377,6 +401,62 @@ $app->delete('/software/delete/:softwareId', function($softwareId) use($app)  {
     if(checkAuth($app)){
       $software = new \PNORD\Ctrl\SoftwareCtrl($app);  
       $ret = $software->deleteSoftware($softwareId);
+      echo json_encode($ret);   
+    }else{
+      $app->response->setStatus(403); 
+    } 
+});
+
+// **************************************************
+// *	CERTIFICATE
+// **************************************************
+
+$app->get('/certificate/list/:search', function ($search) use ($app) {
+    if(checkAuth($app)){
+      $software = new \PNORD\Ctrl\CertificateCtrl($app);    
+      $ret = $software->listCertificate($search);
+      echo json_encode($ret);  
+    }else{
+      $app->response->setStatus(403); 
+    }
+}); 
+
+$app->post('/certificate/add', function() use($app)  {
+    if(checkAuth($app)){
+      $certificate = new \PNORD\Ctrl\CertificateCtrl($app);  
+      $data = json_decode($app->request->getBody());  
+      $ret = $certificate->addCertificate($data);
+      echo json_encode($ret);   
+    }else{
+      $app->response->setStatus(403); 
+    }
+});
+
+$app->post('/certificate/update', function() use($app)  {
+    if(checkAuth($app)){
+      $certificate = new \PNORD\Ctrl\CertificateCtrl($app);  
+      $data = json_decode($app->request->getBody());  
+      $ret = $certificate->updateCertificate($data);
+      echo json_encode($ret);   
+    }else{
+      $app->response->setStatus(403); 
+    }
+});
+
+$app->get('/certificate/get/:certificateId', function($certificateId) use($app)  {
+    if(checkAuth($app)){
+      $certificate = new \PNORD\Ctrl\CertificateCtrl($app);  
+      $ret = $certificate->getCertificate($certificateId);
+      echo json_encode($ret);  
+    }else{
+      $app->response->setStatus(403); 
+    } 
+});
+
+$app->delete('/certificate/delete/:certificateId', function($certificateId) use($app)  {
+    if(checkAuth($app)){
+      $certificate = new \PNORD\Ctrl\CertificateCtrl($app);  
+      $ret = $certificate->deleteCertificate($certificateId);
       echo json_encode($ret);   
     }else{
       $app->response->setStatus(403); 

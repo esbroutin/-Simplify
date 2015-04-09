@@ -27,6 +27,18 @@ class AdminCtrl extends BaseSimplifyObject{
 
   }
   /**
+  * list all alerts
+  * @return array(array())
+  **/
+
+  function listUsers($search){
+
+    $this->app->log->info(__CLASS__ . '::' . __METHOD__);
+    $dao = new \PNORD\Model\AdminDAO($this->app);  
+    return $dao->listUsers($search);   
+
+  }
+  /**
   * update admin data
   * @return array(array())
   **/

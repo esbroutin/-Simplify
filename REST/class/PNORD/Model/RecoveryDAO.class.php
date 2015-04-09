@@ -9,11 +9,21 @@ namespace PNORD\Model;
 use PDO;
 
 use PNORD\BaseSimplifyObject;
+include("/var/www/webapp-simplify/config.inc.php");
+include("/var/www/webapp-simplify/REST/lib/PHPMailer-master/PHPMailerAutoload.php");
+global $gTblConfig;
+    
+use PHPMailer;
 
 class RecoveryDAO extends BaseSimplifyObject{
   
   function __construct($app){
     parent::__construct($app,true); 
+  }
+  function formatDates($str){
+    $str = explode("-", substr($str, 0,10));
+    $formated =  $str[2].'/'.$str[1].'/'.$str[0];
+    return $formated;
   }
   
   /***************************************
@@ -32,7 +42,7 @@ class RecoveryDAO extends BaseSimplifyObject{
       $conditionSql = "";
     }else{
           $conditionSql = "AND (RECOVERY.ID LIKE '%$search%' 
-            OR RECOVERY.LABEL LIKE '%".strtoupper($search)."' 
+            OR RECOVERY.LABEL LIKE '%".strtoupper($search)."%' 
             OR RECOVERY.LABEL LIKE '%".strtolower($search)."%')";
     }
       $user_id = $_SESSION['userid'];
@@ -42,6 +52,32 @@ class RecoveryDAO extends BaseSimplifyObject{
                       recovery.recovery_stock,
                       recovery.recovery_used
               FROM recovery  WHERE USER_ID='$user_id' ".$conditionSql." ORDER BY DATE DESC";
+
+      // $this->app->log->info('sql : '.$sql);
+
+      $recoveryData = $this->db()->query($sql);
+      $recoveriesData = $recoveryData->fetchAll(PDO::FETCH_ASSOC); 
+
+      // $this->app->log->info('recoverysData : '. $this->dumpRet($recoverysData));
+      return $recoveriesData ;          
+  } 
+      
+  /***************************************
+  * List Recovery
+  *parameter -> search string
+  * @return array[{object}]
+  ***************************************/
+
+  function listAdmin($userId){
+  
+    $this->app->log->info(__CLASS__ . '::' . __METHOD__);
+
+      $sql = "SELECT recovery.id ,
+                      recovery.label,
+                      recovery.date,
+                      recovery.recovery_stock,
+                      recovery.recovery_used
+              FROM recovery  WHERE USER_ID='$userId' ORDER BY DATE DESC";
 
       // $this->app->log->info('sql : '.$sql);
 
@@ -107,7 +143,6 @@ class RecoveryDAO extends BaseSimplifyObject{
       return $forms ;          
   } 
      
-     
   /***************************************
   * Count On Hold Recovery Forms (all of then since we are administrator of recovery)
   *parameter -> search string
@@ -157,7 +192,7 @@ class RecoveryDAO extends BaseSimplifyObject{
 
     $this->app->log->notice(__CLASS__ . '::' . __METHOD__);
     
-    $this->app->log->info('****recovery **** -> '.$this->dumpRet($recovery));
+    // $this->app->log->info('****recovery **** -> '.$this->dumpRet($recovery));
 
     //we check for undefined variables
     if (!isset($recovery->LABEL)) {
@@ -177,21 +212,29 @@ class RecoveryDAO extends BaseSimplifyObject{
     $worktime_duration = $worktime_end - $worktime_start;
     $night_start = 72000;
     $current_overtime = 0;
-    if (isset($recovery->SPECIAL_DAY) ) {
-      $is_special_day = $recovery->SPECIAL_DAY;
-    }else{
-       $is_special_day = false;
-    };
-    if (isset($recovery->IS_SATURDAY) ) {
-      $is_saturday = $recovery->IS_SATURDAY;
-    }else{
-       $is_saturday = false;
-    };
     $launch_pause = $recovery->LUNCH_PAUSE;
-    $this->app->log->info('recovery->DATE : '. $this->dumpRet($recovery->DATE));
+    // $this->app->log->info('recovery->DATE : '. $this->dumpRet($recovery->DATE));
     $date_recovery = strtotime($recovery->DATE);
     $date_recovery = date(DATE_ATOM,$date_recovery);
     $this->app->log->info('date_recovery : '. $this->dumpRet($date_recovery));
+    if(date('w', strtotime($date_recovery)) == 6) {
+       $is_saturday = true;
+    }else{
+       $is_saturday = false;
+    }
+    $this->app->log->info('date("w", strtotime(date_recovery)) : '. $this->dumpRet(date('w', strtotime($date_recovery))));
+    if(date('w', strtotime($date_recovery)) == 0) {
+       $is_special_day = true;
+    }else{
+       $is_special_day = false;
+    }
+    $this->app->log->info('is_special_day : '. $this->dumpRet($is_special_day));
+    if (isset($recovery->SPECIAL_DAY) && $is_special_day == false) {
+      $is_special_day = $recovery->SPECIAL_DAY;
+    }
+    $this->app->log->info('is_saturday : '. $this->dumpRet($is_saturday));
+    $this->app->log->info('is_special_day : '. $this->dumpRet($is_special_day));
+    // $this->app->log->info('date_recovery : '. $this->dumpRet($date_recovery));
     $rule_version = 00001;
     $label = $recovery->LABEL;
     $user_id = $recovery->USER_ID;
@@ -258,17 +301,17 @@ class RecoveryDAO extends BaseSimplifyObject{
       $night_amount_morning = ceil($night_amount_morning/3600);
       $day_amount = ceil($day_amount/3600);
       $night_amount = ceil($night_amount/3600);
-    $this->app->log->info('current_overtime : '. $this->dumpRet($current_overtime));
+    // $this->app->log->info('current_overtime : '. $this->dumpRet($current_overtime));
 
       //we calculate the recovery hours (with/without overrate)
       if ($current_overtime > $max_tl) { // we already did more than 8 hours overtime this week
-    $this->app->log->info('current_overtime > max_tl');
+    // $this->app->log->info('current_overtime > max_tl');
         $recovery_amount = ($day_amount * $rate_day_plus) + ($night_amount * $rate_night_plus) + ($night_amount_morning * $rate_night_plus) ;
         $overtime = $day_amount + $night_amount  + $night_amount_morning ;
       }else{
-    $this->app->log->info('current_overtime < max_tl');
+    // $this->app->log->info('current_overtime < max_tl');
         $delta = $max_tl - $current_overtime;
-        $this->app->log->info('current_overtime < max_tl');
+        // $this->app->log->info('current_overtime < max_tl');
         if ($delta >= $night_amount_morning) {
           $night_rate_amount = $night_rate_amount + $night_amount_morning;
           $delta = $delta - $night_amount_morning;
@@ -300,15 +343,15 @@ class RecoveryDAO extends BaseSimplifyObject{
         $overtime = $day_overrate_amount + $day_rate_amount  + $night_overrate_amount  + $night_rate_amount ;
       }
 
-    $this->app->log->info('night_rate_amount hours: '.$night_rate_amount);
-    $this->app->log->info('night_overrate_amount hours: '.$night_overrate_amount);
-    $this->app->log->info('day_rate_amount hours: '.$day_rate_amount);
-    $this->app->log->info('day_overrate_amount hours: '.$day_overrate_amount);
+    // $this->app->log->info('night_rate_amount hours: '.$night_rate_amount);
+    // $this->app->log->info('night_overrate_amount hours: '.$night_overrate_amount);
+    // $this->app->log->info('day_rate_amount hours: '.$day_rate_amount);
+    // $this->app->log->info('day_overrate_amount hours: '.$day_overrate_amount);
 
-    $this->app->log->info('night_amount_morning hours: '.$night_amount_morning);
-    $this->app->log->info('day_amount hours: '.$day_amount);
-    $this->app->log->info('night_amount hours: '.$night_amount);
-    $this->app->log->info('recovery_amount hours: '.$recovery_amount);
+    // $this->app->log->info('night_amount_morning hours: '.$night_amount_morning);
+    // $this->app->log->info('day_amount hours: '.$day_amount);
+    // $this->app->log->info('night_amount hours: '.$night_amount);
+    // $this->app->log->info('recovery_amount hours: '.$recovery_amount);
 
 
     //Adding new entry & updating user current recovery stock
@@ -316,7 +359,7 @@ class RecoveryDAO extends BaseSimplifyObject{
     //we generate an custom id
     $recoveryId = $this->generateId('REC');
     
-    $this->app->log->info('****new id **** -> '.$this->dumpRet($recoveryId));
+    // $this->app->log->info('****new id **** -> '.$this->dumpRet($recoveryId));
 
     $this->db()->beginTransaction();
 
@@ -363,16 +406,16 @@ class RecoveryDAO extends BaseSimplifyObject{
                             ':rule_version'=>$rule_version
                             ));
     
-    $this->app->log->info('****result **** -> '.$this->dumpRet($result));
+    // $this->app->log->info('****result **** -> '.$this->dumpRet($result));
  
       $return = $query->fetch(PDO::FETCH_ASSOC);
       $this->db()->commit(); // commit global pour éviter les Entrées orphelines ou incomplète en cas d'erreur
       return ($recoveryId);
     }
     else{
-    $this->app->log->info('****overtime_duration **** -> '.$this->dumpRet($overtime_duration));
-    $this->app->log->info('****worktime_duration **** -> '.$this->dumpRet($worktime_duration));
-    $this->app->log->info('****day_duration **** -> '.$this->dumpRet($day_duration));
+    // $this->app->log->info('****overtime_duration **** -> '.$this->dumpRet($overtime_duration));
+    // $this->app->log->info('****worktime_duration **** -> '.$this->dumpRet($worktime_duration));
+    // $this->app->log->info('****day_duration **** -> '.$this->dumpRet($day_duration));
 
     // we calculate all the time outside normal time.
     if ($start_time <= $morning_night_end) { // is morning night ?
@@ -418,7 +461,7 @@ class RecoveryDAO extends BaseSimplifyObject{
     }
     //If it's morning but after night time and before worktime
     else if ($start_time > $morning_night_end && $start_time <= $worktime_start) {
-      $this->app->log->info('BF_W_D start !  ');
+      // $this->app->log->info('BF_W_D start !  ');
       $BF_W_N = 0;
       $BF_W_Time =  $worktime_start - $start_time;
         // BF_W_D calculation
@@ -450,7 +493,7 @@ class RecoveryDAO extends BaseSimplifyObject{
       }
     }
     else if ($start_time > $worktime_start && $start_time <= $worktime_end) {
-      $this->app->log->info('Workday start !  ');
+      // $this->app->log->info('Workday start !  ');
       $BF_W_N = 0;
       $BF_W_D = 0;
       $AF_W_Time =  $night_start - $worktime_end;
@@ -469,7 +512,7 @@ class RecoveryDAO extends BaseSimplifyObject{
       }
     }
     else if ($start_time > $worktime_end && $start_time <= $night_start) {
-      $this->app->log->info('AF_W_D start !  ');
+      // $this->app->log->info('AF_W_D start !  ');
       $BF_W_N = 0;
       $BF_W_D = 0;
       $AF_W_Time =  $night_start - $start_time;
@@ -487,7 +530,7 @@ class RecoveryDAO extends BaseSimplifyObject{
       }
     }
     else if ($start_time > $night_start) {
-      $this->app->log->info('AF_W_N start !  ');
+      // $this->app->log->info('AF_W_N start !  ');
       $overtime_duration = $end_time - $night_start;
       $BF_W_N = 0;
       $BF_W_D = 0;
@@ -503,11 +546,11 @@ class RecoveryDAO extends BaseSimplifyObject{
       }
       $AF_W_D = ceil($AF_W_D/3600);
       $AF_W_N = ceil($AF_W_N/3600);
-      $this->app->log->info('BF_W_N : '.$this->dumpRet($BF_W_N));
-      $this->app->log->info('BF_W_D : '.$this->dumpRet($BF_W_D));
-      $this->app->log->info('AF_W_D : '.$this->dumpRet($AF_W_D));
-      $this->app->log->info('AF_W_N : '.$this->dumpRet($AF_W_N));
-      $this->app->log->info('current_overtime : '.$this->dumpRet($current_overtime));
+      // $this->app->log->info('BF_W_N : '.$this->dumpRet($BF_W_N));
+      // $this->app->log->info('BF_W_D : '.$this->dumpRet($BF_W_D));
+      // $this->app->log->info('AF_W_D : '.$this->dumpRet($AF_W_D));
+      // $this->app->log->info('AF_W_N : '.$this->dumpRet($AF_W_N));
+      // $this->app->log->info('current_overtime : '.$this->dumpRet($current_overtime));
 
     if ($current_overtime > $max_tl) { // we already did more than 8 hours overtime this week
       $day_overrate_amount = ($BF_W_D + $AF_W_D) ;
@@ -558,13 +601,13 @@ class RecoveryDAO extends BaseSimplifyObject{
 
     $overtime = $night_rate_amount + $night_overrate_amount + $day_overrate_amount + $day_rate_amount;
 
-    $this->app->log->info('night_rate_amount: '.$night_rate_amount);
-    $this->app->log->info('rate_night: '.$rate_night);
-    $this->app->log->info('night_overrate_amount: '.$night_overrate_amount);
-    $this->app->log->info('day_overrate_amount: '.$day_overrate_amount);
-    $this->app->log->info('day_rate_amount: '.$day_rate_amount);
-    $this->app->log->info('recovery_amount: '.$recovery_amount);
-    $this->app->log->info('overtime: '.$overtime);
+    // $this->app->log->info('night_rate_amount: '.$night_rate_amount);
+    // $this->app->log->info('rate_night: '.$rate_night);
+    // $this->app->log->info('night_overrate_amount: '.$night_overrate_amount);
+    // $this->app->log->info('day_overrate_amount: '.$day_overrate_amount);
+    // $this->app->log->info('day_rate_amount: '.$day_rate_amount);
+    // $this->app->log->info('recovery_amount: '.$recovery_amount);
+    // $this->app->log->info('overtime: '.$overtime);
 
     //adding entry & updating user amount
     
@@ -709,7 +752,7 @@ class RecoveryDAO extends BaseSimplifyObject{
 
     $this->app->log->info(__CLASS__ . '::' . __METHOD__);
     
-    $this->app->log->info('****form **** -> '.$this->dumpRet($form));
+    // $this->app->log->info('****form **** -> '.$this->dumpRet($form));
     $formData = $this->getForm($form->ID);
 
 
@@ -728,7 +771,7 @@ class RecoveryDAO extends BaseSimplifyObject{
                 WHERE user_id = '$user_id' AND STATUS='valid';";
     $sum = $this->db()->query($sqlSum)->fetch(PDO::FETCH_ASSOC);
     $sum =  $sum['SUM'];
-      $this->app->log->info('****sum **** -> '.$this->dumpRet($sum));
+      // $this->app->log->info('****sum **** -> '.$this->dumpRet($sum));
     if ($to_use > $sum) {
       return ('cant_afford');
     }
@@ -745,7 +788,7 @@ class RecoveryDAO extends BaseSimplifyObject{
           $new_recovery_used = $to_use + $recoveriesData[$i]['RECOVERY_USED'];
           $to_use = 0;
 
-          $this->app->log->info('**** IF new_recovery_used **** -> '.$this->dumpRet($new_recovery_used));
+          // $this->app->log->info('**** IF new_recovery_used **** -> '.$this->dumpRet($new_recovery_used));
 
           $sqlRecovery = "UPDATE RECOVERY
                 SET RECOVERY_USED='$new_recovery_used'
@@ -758,7 +801,7 @@ class RecoveryDAO extends BaseSimplifyObject{
             $to_use = $to_use - $available;
             $new_recovery_used = $recoveriesData[$i]['RECOVERY_STOCK'];
 
-            $this->app->log->info('****ELSE new_recovery_used **** -> '.$this->dumpRet($new_recovery_used));
+            // $this->app->log->info('****ELSE new_recovery_used **** -> '.$this->dumpRet($new_recovery_used));
             $sqlRecovery = "UPDATE RECOVERY
                   SET RECOVERY_USED='$new_recovery_used'
                   WHERE ID='$recoveryId';";
@@ -766,6 +809,7 @@ class RecoveryDAO extends BaseSimplifyObject{
             $result = $this->db()->query($sqlRecovery);
             if ($used_recovery_ids != "[") {$used_recovery_ids .= ",";};
             $used_recovery_ids .= '{"id":"'.$recoveriesData[$i]['ID'].'"}';
+
 
         }
       }
@@ -783,11 +827,135 @@ class RecoveryDAO extends BaseSimplifyObject{
           WHERE ID='$formId';";
 
     $result = $this->db()->query($sqlRecovery);
+    $this->informUser($form,'validated');
 
-    $this->app->log->info('****result **** -> '.$this->dumpRet($result));
-
+    // $this->app->log->info('****result **** -> '.$this->dumpRet($result));
     return($formId);
 
+  }
+
+  /***************************************
+  * SEND NOTIFICATION FUNCTION 
+  *
+  * @return 'sended'
+  ***************************************/
+
+  function sendNotification(){
+
+    $mail = new PHPMailer;
+
+    $mail->SMTPDebug = 3;                               // Enable verbose debug output
+
+    $mail->isSMTP();                                      // Set mailer to use SMTP
+    $mail->Host = 'balade.pnord.nc';  // Specify main and backup SMTP servers
+    $mail->SMTPAuth = true;                               // Enable SMTP authentication
+    $mail->Username = 'admin-administrator';                 // SMTP username
+    $mail->Password = 'v6aHdJUw';                           // SMTP password
+    $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+    $mail->Port = 587;                                      // TCP port to connect to
+
+    $mail->From = 'admin-administrator@province-nord.nc';
+    $mail->FromName = 'Mailer';
+    $mail->addAddress('e.broutin@province-nord.nc', 'Simplify account');     // Add a recipient
+    $mail->addAddress('e.broutin@province-nord.nc');
+    $mail->isHTML(true);                                  // Set email format to HTML
+
+    $mail->Subject = 'Demande de recuperation !Simplify';
+    $mail->Body    = 'Vous avez une nouvelle demande de recuperation a valider sur https://simplify.pnord.nc';
+    $mail->AltBody = 'Vous avez une nouvelle demande de recuperation a valider sur https://simplify.pnord.nc';
+
+    if(!$mail->send()) {
+      echo 'Message could not be sent.';
+
+      // $this->app->log->info('****mail->ErrorInfo **** -> '.$this->dumpRet($mail->ErrorInfo));
+    } else {
+
+      // $this->app->log->info('****Message has been sent **** -> ');
+    }
+  }
+
+  /***************************************
+  * SEND NOTIFICATION FUNCTION 
+  *
+  * @return 'sended'
+  ***************************************/
+
+  function informUser($form,$type){
+
+      $mail = new PHPMailer;
+
+        $this->app->log->info('****form **** -> '.$this->dumpRet($form));
+        $this->app->log->info('****type **** -> '.$this->dumpRet($type));
+
+      $mail->SMTPDebug = 3;                               // Enable verbose debug output
+      if ($type == 'refused' || $type == 'validated') {
+        $userMail = $form->USER_ID.'@province-nord.nc';
+      }else{
+        $userMail = $form['USER_ID'].'@province-nord.nc';
+      }
+        
+        $this->app->log->info('****userMail **** -> '.$this->dumpRet($userMail));
+
+      $mail->isSMTP();                                      // Set mailer to use SMTP
+      $mail->Host = 'balade.pnord.nc';  // Specify main and backup SMTP servers
+      $mail->SMTPAuth = true;                               // Enable SMTP authentication
+      $mail->Username = 'admin-administrator';                 // SMTP username
+      $mail->Password = 'v6aHdJUw';                           // SMTP password
+      $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+      $mail->Port = 587;                                      // TCP port to connect to
+
+      $mail->From = 'admin-administrator@province-nord.nc';
+      $mail->FromName = 'Mailer';
+      $mail->addAddress($userMail);     // Add a recipient
+      $mail->isHTML(true);    
+
+    if ($type == 'refused') {                                // Set email format to HTML
+
+      $mail->Subject = 'Demande de recuperation Refusee - !Simplify';
+      $mail->Body    = '<p> Votre demande '.$form->ID.' de recuperation pour le '.$this->formatDates($form->DATE).' a ete refusee -<br /> Raison : <strong>'.$form->REASON.'</strong></p>';
+      $mail->AltBody = '<p> Votre demande '.$form->ID.' de recuperation pour le '.$this->formatDates($form->DATE).' a ete refusee -<br /> Raison : <strong>'.$form->REASON.'</strong></p>';
+
+      if(!$mail->send()) {
+        echo 'Message could not be sent.';
+
+        $this->app->log->info('****mail->ErrorInfo **** -> '.$this->dumpRet($mail->ErrorInfo));
+      } else {
+
+        $this->app->log->info('****Message has been sent **** -> ');
+      }
+    }
+
+    if ($type == 'validated') {                              // Set email format to HTML
+
+      $mail->Subject = 'Demande de recuperation Validee - !Simplify';
+      $mail->Body    = '<p> Votre demande '.$form->ID.' de recuperation pour le '.$this->formatDates($form->DATE).' a ete validee </p>';
+      $mail->AltBody = '<p> Votre demande '.$form->ID.' de recuperation pour le '.$this->formatDates($form->DATE).' a ete validee </p>';
+
+      if(!$mail->send()) {
+        echo 'Message could not be sent.';
+
+        // $this->app->log->info('****mail->ErrorInfo **** -> '.$this->dumpRet($mail->ErrorInfo));
+      } else {
+
+        // $this->app->log->info('****Message has been sent **** -> ');
+      }
+    }
+
+    if ($type == 'recovery_deleted') {                              // Set email format to HTML
+
+      $mail->Subject = 'Operation supprimee - !Simplify';
+      $mail->Body    = '<p> Votre Operation '.$form['ID'].', "'.$form['LABEL'].'", du '.$this->formatDates($form['DATE']).' a ete supprimee par '.$_SESSION['userid'].' </p>';
+      $mail->AltBody = '<p> Votre Operation '.$form['ID'].', "'.$form['LABEL'].'", du '.$this->formatDates($form['DATE']).' a ete supprimee par '.$_SESSION['userid'].' </p>';
+
+      if(!$mail->send()) {
+        echo 'Message could not be sent.';
+
+        // $this->app->log->info('****mail->ErrorInfo **** -> '.$this->dumpRet($mail->ErrorInfo));
+      } else {
+
+        // $this->app->log->info('****Message has been sent **** -> ');
+      }
+    }
   }
 
   /***************************************
@@ -800,16 +968,18 @@ class RecoveryDAO extends BaseSimplifyObject{
 
     $this->app->log->info(__CLASS__ . '::' . __METHOD__);
     
-    $this->app->log->info('****form **** -> '.$this->dumpRet($form));
+    // $this->app->log->info('****form **** -> '.$this->dumpRet($form));
 
 
     $recoveryId =  $form->ID;
+    $refused_reason = str_replace('à', "a", str_replace('é', "e", str_replace('"', "", str_replace("'", "", $form->REASON))));
     $sqlRecovery = "UPDATE RECOVERY_FORM
                   SET STATUS='DENIED',
-                      REASON='JUSTIFICATION DE REFUS'
+                      REASON='$refused_reason'
                   WHERE ID='$recoveryId';";
     // $this->app->log->info('****sqlRecovery **** -> '.$this->dumpRet($sqlRecovery));
     $queryRecovery = $this->db()->query($sqlRecovery);
+    $this->informUser($form,'refused');
     return('refused');
 
   }
@@ -823,17 +993,17 @@ class RecoveryDAO extends BaseSimplifyObject{
 
     $this->app->log->info(__CLASS__ . '::' . __METHOD__);
     
-    $this->app->log->info('****getForm formId **** -> '.$this->dumpRet($formId));
+    // $this->app->log->info('****getForm formId **** -> '.$this->dumpRet($formId));
 
     $sqlRecovery = "SELECT * FROM RECOVERY_FORM WHERE ID='$formId';";
     $formdata = $this->db()->query($sqlRecovery)->fetch(PDO::FETCH_ASSOC);
-    $this->app->log->info('****formdata **** -> '.$this->dumpRet($formdata));
+    // $this->app->log->info('****formdata **** -> '.$this->dumpRet($formdata));
 
     $recoveriesId = $formdata['USED_RECOVERY_IDS'];
-    $this->app->log->info('****recoveriesId **** -> '.$this->dumpRet($recoveriesId));
+    // $this->app->log->info('****recoveriesId **** -> '.$this->dumpRet($recoveriesId));
     $formdata['RECOVERIES_ID'] = json_decode($recoveriesId);
 
-    $this->app->log->info('****recoveriesId **** -> '.$this->dumpRet($recoveriesId));
+    // $this->app->log->info('****recoveriesId **** -> '.$this->dumpRet($recoveriesId));
 
 
 
@@ -850,14 +1020,14 @@ class RecoveryDAO extends BaseSimplifyObject{
   function addForm($data){
 
     $this->app->log->info(__CLASS__ . '::' . __METHOD__);
-    $this->app->log->info("data : ".$this->dumpRet($data));
+    // $this->app->log->info("data : ".$this->dumpRet($data));
   
     //we generate an custom id
     $recoveryId = $this->generateId('R_F');
     $date = strtotime($data->DATE);
     $date = date(DATE_ATOM,$date);
     
-    $this->app->log->info('****new brand **** -> '.$this->dumpRet($recoveryId));
+    // $this->app->log->info('****new brand **** -> '.$this->dumpRet($recoveryId));
 
     $this->db()->beginTransaction();
     $status = "ON_HOLD";
@@ -893,6 +1063,7 @@ class RecoveryDAO extends BaseSimplifyObject{
 
       //we validate the form
       // $this->validate($data);
+    $this->sendNotification();
       return ($recoveryId);
 
   }
@@ -908,9 +1079,12 @@ class RecoveryDAO extends BaseSimplifyObject{
 
     $this->app->log->info(__CLASS__ . '::' . __METHOD__);
 
+    $sqlRecovery = "SELECT USER_ID, ID, DATE, LABEL FROM RECOVERY WHERE ID='$recoveryId';";
+    $resultInfo = $this->db()->query($sqlRecovery)->fetch(PDO::FETCH_ASSOC);
     $sql = "DELETE FROM recovery
                     WHERE id LIKE '$recoveryId'";
     $result = $this->db()->query($sql);
+    $this->informUser($resultInfo,'recovery_deleted');
     return ('deleted');
 
   }
@@ -924,6 +1098,7 @@ class RecoveryDAO extends BaseSimplifyObject{
   //FONCTION 
 
   function generateId($type) {
+    $salt = '$2a$07$MantaCaledoniavahinenoumeaTiare$';
 
 //we count all existing recoveryId to predict the next id
     if ($type=='REC') {
@@ -948,7 +1123,6 @@ class RecoveryDAO extends BaseSimplifyObject{
       }
 
       $recoveryId = date('ymd').$type.$newOrderInc;
-      $salt = '$2a$07$MantaCaledoniavahinenoumeaTiare$';
       $strCrypt = crypt($recoveryId,$salt);
       $strCrypt = substr($strCrypt,-2);
       $strCrypt = str_replace('/', 'A', $strCrypt);
@@ -981,7 +1155,6 @@ class RecoveryDAO extends BaseSimplifyObject{
       }
 
       $recoveryId = date('ymd').$type.$newOrderInc;
-      $salt = '$2a$07$MantaCaledoniavahinenoumeaTiare$';
       $strCrypt = crypt($recoveryId,$salt);
       $strCrypt = substr($strCrypt,-2);
       $strCrypt = str_replace('/', 'A', $strCrypt);
@@ -1003,24 +1176,24 @@ class RecoveryDAO extends BaseSimplifyObject{
     $strCrypted = str_replace('.', 'X', $strCrypted);
     $strCrypted = str_replace('\\', 'B', $strCrypted);
 
-      $this->app->log->info(__CLASS__ . "::" . __METHOD__ . "$ strCrypted(".$strCrypted.")");
+      // $this->app->log->info(__CLASS__ . "::" . __METHOD__ . "$ strCrypted(".$strCrypted.")");
 
     if ($strCrypted == $goldenKey){
       
       $validRequest = true; // the given goldenKey is valid
 
-      $this->app->log->info(__CLASS__ . "::" . __METHOD__ . "$ Good !(");
+      // $this->app->log->info(__CLASS__ . "::" . __METHOD__ . "$ Good !(");
 
     } elseif (mb_strtoupper($strCrypted) == $goldenKey){
 
       $validRequest = true; // the given goldenKey is valid
 
-      $this->app->log->info(__CLASS__ . "::" . __METHOD__ . "$mb_strtoupper Good !(");
+      // $this->app->log->info(__CLASS__ . "::" . __METHOD__ . "$mb_strtoupper Good !(");
 
     } elseif ($strCrypted != $goldenKey) {
 
       $validRequest = false; // the given goldenKey is not valid
-      $this->app->log->info(__CLASS__ . "::" . __METHOD__ . "$ Wrong !(");
+      // $this->app->log->info(__CLASS__ . "::" . __METHOD__ . "$ Wrong !(");
 
     }
 

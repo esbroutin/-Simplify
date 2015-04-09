@@ -13,10 +13,13 @@ global $gTblConfig;
 <!--  css & design-->
   <!-- <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"> -->
   <link rel="stylesheet" href="lib/font-awesome-4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="bower_components/font-awesome-animation/dist/font-awesome-animation.min.css">
   <link rel="stylesheet" href="css/simplify.css">
   <!-- <link rel="stylesheet" href="css/custom_darkly_bootstrap.css"> -->
   <link rel="stylesheet" href="css/custom_slate_bootstrap.css">
   <!-- <link rel="stylesheet" href="css/custom_spacelab_bootstrap.min.css"> -->
+  <!-- <link rel="stylesheet" href="css/bootstrap-journal.min.css"> -->
+  <!-- <link rel="stylesheet" href="css/bootstrap-sandstone.min.css"> -->
   <!-- <link rel="stylesheet" href="css/bootstrap-yeti.min.css"> -->
   <!-- <link rel="stylesheet" href="css/bootstrap-superhero.min.css"> -->
   <!-- <link rel="stylesheet" href="css/custom_cerulean_bootstrap.css"> -->
@@ -27,9 +30,11 @@ global $gTblConfig;
   <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css">
   <link rel="stylesheet" href="bower_components/ng-table/dist/ng-table.css">
   <link rel="stylesheet" href="css/selectize.default.css">
+  <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.css"/>
 <!--  scripts-->
-  <script type="text/javascript" src="bower_components/angularjs/angular.js"></script>
   <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="bower_components/jquery-ui/ui/jquery-ui.js"></script>
+  <script type="text/javascript" src="bower_components/angularjs/angular.js"></script>
   <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="bower_components/angular-resource/angular-resource.min.js"></script>
   <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
@@ -43,6 +48,11 @@ global $gTblConfig;
   <script type="text/javascript" src="bower_components/angular-gantt/dist/angular-gantt.js"></script>
   <script type="text/javascript" src="bower_components/angular-gantt/dist/angular-gantt-plugins.js"></script>
   <script type="text/javascript" src="bower_components/ng-table/dist/ng-table.js"></script>
+
+  <!-- Calendar -->
+  <script type="text/javascript" src="bower_components/angular-ui-calendar/src/calendar.js"></script>
+  <script type="text/javascript" src="bower_components/fullcalendar/fullcalendar.js"></script>
+  <script type="text/javascript" src="bower_components/fullcalendar/gcal.js"></script>
   
 <!-- Application -->
   <script src="js/simplify.js"></script>
@@ -81,8 +91,15 @@ global $gTblConfig;
 <!--route et configuration-->
   <script src="js/routes.js"></script>
   <script src="js/config.js"></script>
+  <!-- If not Chrome, we stop loading the page -->
+<!--   <script>
+    if(navigator.appVersion.indexOf("Chrome")==-1){
+       alert("Merci d'utiliser Google Chrome pour fonctionnement optimal ;) ");
+       window.stop();
+    }
+ </script>-->
 </head> 
-<body> 
+<body class='slate'> 
   <div ng-app="simplify" class="container-fluid" >
   <div ng-controller="globalCtrl" > 
   <!-- NAVBAR -->

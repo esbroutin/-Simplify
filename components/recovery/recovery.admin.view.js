@@ -1,7 +1,7 @@
 //Recovery CRUD Controller
 angular
   .module('simplify')
-  .controller('RecoveryAdminViewCtrl', ['$scope','$state','$stateParams', '$http', 'recoveryService', function($scope, $state,$stateParams, $http, recoveryService){
+  .controller('RecoveryAdminViewCtrl', ['$scope','$state','$stateParams', '$http', 'recoveryService','$window', function($scope, $state,$stateParams, $http, recoveryService, $window){
   	$scope.recoveryForm = {};
   	$scope.recoveryForm.AVAILABLE = 0;
   	$scope.recoveryForm.TO_USE = 0;

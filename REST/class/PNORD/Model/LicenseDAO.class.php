@@ -31,11 +31,11 @@ class LicenseDAO extends BaseSimplifyObject{
       $conditionSql = "";
     }else{
           $conditionSql = "AND (LICENSE.ID LIKE '%$search%' 
-            OR LICENSE.LABEL LIKE '%".strtoupper($search)."' 
+            OR LICENSE.LABEL LIKE '%".strtoupper($search)."%' 
             OR LICENSE.LABEL LIKE '%".strtolower($search)."%'
-            OR PROVIDER.LABEL LIKE '%".strtoupper($search)."' 
+            OR PROVIDER.LABEL LIKE '%".strtoupper($search)."%' 
             OR PROVIDER.LABEL LIKE '%".strtolower($search)."%' 
-            OR BRAND.LABEL LIKE '%".strtoupper($search)."' 
+            OR BRAND.LABEL LIKE '%".strtoupper($search)."%' 
             OR BRAND.LABEL LIKE '%".strtolower($search)."%')";
     }
 
@@ -178,7 +178,7 @@ $ganttData = '[';
         $color = 'green';        
       }
 
-    $ganttData .= '{"name":"row'.($i+1).'","tasks":[{"name":"'.$listLicenses[$i]["LICENSE_LABEL"].'","color":"'.$color.'","from":"'.$listLicenses[$i]["DATE_START"].'","to":"'.$listLicenses[$i]["DATE_END"].'"}]}';
+    $ganttData .= '{"title":"row'.($i+1).'","start":"'.$listLicenses[$i]["DATE_START"].'","end":"'.$listLicenses[$i]["DATE_END"].'"}';
       
     if ($i < count($listLicenses) -1) {
       $ganttData .= ','; 

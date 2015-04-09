@@ -31,7 +31,7 @@
         </div>   
         <div class="col-md-4">
             <p class="input-group">
-              <input type="text" class="form-control" datepicker-popup="dd-MM-yy" ng-model="license.DATE_END" is-open="openedEndDate" min-date="{{license.DATE_START | date : 'yyyy-MM-dd'}}" max-date="'2099-06-22'" close-text="Close" />
+              <input type="text" class="form-control" datepicker-popup="dd-MM-yy" ng-model="license.DATE_END" is-open="openedEndDate" min-date="{{license.DATE_START}}" max-date="'2099-06-22'" close-text="Close" />
               <span class="input-group-btn">
                 <button type="button" class="btn btn-danger" ng-click="openEndDate($event)"><i class="fa fa-calendar fa-lg"></i></button>
               </span>
@@ -109,7 +109,7 @@
           <label for="licenseLabel">Lien Web</label>
         </div>   
         <div class="col-md-10">
-          <input type="text" class="form-control" ng-model="license.WEB_ADDRESS" placeholder=" http://www.*****.*** ">
+          <input type="text" class="form-control" popover-placement="top" popover-trigger="focus" popover="rentrez l'URL complète (avec http:// ...)" Popover-animation="true" ng-model="license.WEB_ADDRESS" placeholder=" http://www.*****.*** ">
         </div>
       </div>
       <div class="col-md-12 light-margin-top">
@@ -118,7 +118,7 @@
           </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-danger col-md-offset-1 " ng-disabled="completeForm < 100"  name='addButton' ng-model="addButton" btn-radio="'1'"><i class="fa fa-floppy-o"></i> Ajouter</button>
+      <button type="submit" class="btn btn-danger col-md-offset-1 "ng-disabled="completeForm < 100"  name='addButton' ng-model="addButton" btn-radio="'1'"><i class="fa fa-floppy-o"></i> Ajouter</button>
       <button type="submit" class="btn btn-warning col-md-offset-1" ng-click="showList()"><i class="fa fa-undo"></i> Annuler</button>
     </form> 
   </div>

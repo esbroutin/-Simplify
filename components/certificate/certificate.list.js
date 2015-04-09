@@ -7,7 +7,7 @@ angular
 	$scope.list = function(certificate){
 	  certificateService.list().then(function(response){
 	  	$scope.certificates = response.data; 
-					console.log('certificates : ' + JSON.stringify($scope.certificates));
+					// console.log('certificates : ' + JSON.stringify($scope.certificates));
 	  });
 	}
 	//go to detailed certificate view

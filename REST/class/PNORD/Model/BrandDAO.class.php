@@ -99,7 +99,7 @@ class BrandDAO extends BaseSimplifyObject{
                             ':web_address'=>$web_address
                             ));
     
-    $this->app->log->info('****result **** -> '.$this->dumpRet($result));
+    // $this->app->log->info('****result **** -> '.$this->dumpRet($result));
  
       $return = $queryBrand->fetch(PDO::FETCH_ASSOC);
       $this->db()->commit(); // commit global pour éviter les Entrées orphelines ou incomplète en cas d'erreur

@@ -28,6 +28,9 @@ angular
 	$scope.new = function(){   
 		$scope.recovery = {};   
 		$scope.formDone = 0;
+		$scope.recovery.LUNCH_PAUSE = true;
+		$scope.recovery.IS_SATURDAY = false;
+		$scope.recovery.SPECIAL_DAY = false;
 	}
 
 	//return to list when cancelling license creation

@@ -28,7 +28,7 @@ class ProviderDAO extends BaseSimplifyObject{
     if ($search == 'undefined' || $search== ''){
       $conditionSql = "";
     }else{
-          $conditionSql = "AND (PROVIDER.CONTACT LIKE '%".strtoupper($search)."' 
+          $conditionSql = "AND (PROVIDER.CONTACT LIKE '%".strtoupper($search)."%' 
             OR PROVIDER.CONTACT LIKE '%".strtolower($search)."%' 
             OR PROVIDER.LABEL LIKE '%".strtoupper($search)."%' 
             OR PROVIDER.LABEL LIKE '%".strtolower($search)."%' 

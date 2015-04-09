@@ -4,8 +4,24 @@
 * Accept timestamp or Date object [dd-mm-yyyy hh:mm:ss] DOESNT WORK WITH FIREFOX OR IE
 **/
 simplify.filter('tsDateTime', function() {
+
   return function(input) {
-    if (input != undefined) {
+    if(navigator.appVersion.indexOf("Chrome")==-1 && input != undefined){
+
+      var dt;
+      console.log('input ' + input);
+      dt = input.substr(0, 19);
+      console.log('dt 1' + dt);
+      dt = dt.toLocaleString().toString();
+      dt = dt.split(' ');
+      date = dt[0].split('-');
+      time = dt[1];
+      dt = date[2]+'/'+date[1]+'/'+date[0]+' '+time;
+      console.log('dt 2 ' + dt);
+      return dt;
+      
+    }
+    else if (input != undefined) {
       var dt;
       // console.log('input ' + input);
       dt = new Date(input);
@@ -50,6 +66,18 @@ simplify.filter('tsTime', function() {
     return str;
   };
 });
+/**
+* Accept timestamp or Date object [dd-mm-yyyy hh:mm:ss] DOESNT WORK WITH FIREFOX OR IE
+**/
+simplify.filter('range', function() {
+  return function(input, min, max) {
+    min = parseInt(min); //Make string input int
+    max = parseInt(max);
+    for (var i=min; i<max; i++)
+      input.push(i);
+    return input;
+  };
+});
 
 /**
 * Accept timestamp or Date object [dd-mm-yyyy hh:mm:ss] DOESNT WORK WITH FIREFOX OR IE
@@ -84,7 +112,19 @@ simplify.filter('tsTimeLocal', function() {
 simplify.filter('tsDate', function() {
 
   return function(input) {
-    if (input !=undefined){
+    if(navigator.appVersion.indexOf("Chrome")==-1 && input != undefined){
+
+      var dt;
+      console.log('input ' + input);
+      dt = input.substr(0, 10);
+      console.log('dt 1' + dt);
+      dt = dt.toLocaleString().toString().split('-');
+      dt = dt[2]+'/'+dt[1]+'/'+dt[0];
+      console.log('dt 2 ' + dt);
+      return dt;
+    }
+    else if (input !=undefined){
+      
       var dt;
       dt = new Date(input).toLocaleString().toString();
       dt = dt.substr(0,dt.length-9).split('/');

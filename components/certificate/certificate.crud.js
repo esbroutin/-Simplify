@@ -24,7 +24,7 @@ angular
 	//redirection to view created certificate
 	$scope.view = function(){
 
-		console.log('$scope.newCertificateId : ' + $scope.newCertificateId);
+		// console.log('$scope.newCertificateId : ' + $scope.newCertificateId);
 		$state.transitionTo('viewCertificate',{recordId:$scope.newCertificateId});
 	}
 

@@ -23,18 +23,24 @@
   <h4>Demandes de récupération </h4>
   <table class="light-margin-top table table-striped table-bordered table-hover tbl-list light-margin-top">
   	<thead>
-  		<tr class="info not-allowed"><th>ID</th><th>Créé le </th><th>Date de récupération</th><th>Durée (h)</th><th>Status</th><th>PDF</th></tr>
+  		<tr class="info not-allowed"><th>ID</th><th>Créé le </th><th>Date de récupération</th><th>Durée</th><th>Statut</th><th>PDF</th></tr>
   	</thead>
   	<tbody>
   		<tr class="reveal-animation not-allowed" ng-repeat="form in forms" >
         <td>{{form.ID}}</td>
         <td>{{form.CREATION_DATE | tsDateTime}}</td>
         <td>{{form.DATE | tsDate}}</td>
-        <td>{{form.TO_USE}}</td>
+        <td>{{form.TO_USE | hourConv}}</td>
         <td class="text-info" ng-show='form.STATUS == "ON_HOLD"' ><span th-code="{{form.STATUS}}" th-cat="STATUS"/></td>
-        <td class="text-warning" ng-show='form.STATUS == "DENIED"' ><span th-code="{{form.STATUS}}" th-cat="STATUS"/></td>
+        <td class="text-warning" ng-show='form.STATUS == "DENIED"' >
+          <div class="col-md-6 text-left">
+            <span class='text-warning' th-code="{{form.STATUS}}" th-cat="STATUS"/>
+          </div>
+          <div class="col-md-6 text-right">
+            <button class="btn btn-default " popover-placement="right" popover-trigger="mouseenter" popover="{{form.REASON}}"><i class="fa fa-info fa-lg faa-pulse animated"></i></button>
+          </div></td>
   			<td class="text-success" ng-show='form.STATUS == "VALIDATED"' ><span th-code="{{form.STATUS}}" th-cat="STATUS"/></td>
-        <td><button type="submit" class="btn btn-success " ng-disabled="form.STATUS != 'VALIDATED'" ng-click="displayPDF(form.ID)"><i class="fa fa-file-pdf-o fa-lg"></i></button></td>
+        <td><button type="submit" class="btn btn-info " ng-disabled="form.STATUS != 'VALIDATED'" popover-placement="top" popover-trigger="mouseenter" popover="Afficher le PDF" ng-click="displayPDF(form.ID)"><i class="fa fa-file-pdf-o fa-lg"></i></button></td>
   		</tr>
   	</tbody>
   </table>

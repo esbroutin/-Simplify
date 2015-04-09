@@ -60,7 +60,7 @@
       </div>
       <div class='row borderTop'>
         <label class="col-md-4 text-right control-label"> Date de fin:</label>
-        <div class="col-md-8 text-danger" ng-show='certificate.ALERT == 1'><i class="fa fa-exclamation fa-spin"></i>
+        <div class="col-md-8 text-danger" ng-show='certificate.ALERT == 1'><i class="fa fa-bell faa-pulse faa-fast animated"></i>
           {{certificate.DATE_END | tsDate}}
         </div>
         <div class="col-md-8" ng-hide='certificate.ALERT == 1'>
@@ -139,7 +139,7 @@
 
   <!-- we display the delete comfirmation dialog when the delete button is pushed -->
   <div class="col-md-12 jumbotron text-center" ng-show="deleteButton == '1'">
-    <legend>Êtes-vous sûr de vouloir supprimer la licence {{certificate.CERTIFICATE_ID}} -- <span class="text-warning ">{{certificate.CERTIFICATE_LABEL}}</span> ?</legend>
+    <legend>Êtes-vous sûr de vouloir supprimer le certificat {{certificate.ID}} -- <span class="text-warning ">{{certificate.LABEL}}</span> ?</legend>
       <p class="text-center">
         <button type="submit" class="btn btn-danger btn-lg" ng-click="delete()"  ><i class="fa fa-trash"></i> Oui</button>
         <button type="submit" class="col-md-offset-1 btn btn-success btn-lg" ng-model="deleteButton" btn-radio="'0'"><i class="fa fa-undo"></i> Non</button>
@@ -249,7 +249,7 @@
             </ui-select>
           </div>     
         </div> 
-        <!-- brand -->{{certificate.AUTO_SIGNED}}
+        <!-- brand -->
         <div class="form-group row">
           <div class="col-md-2">
             <label for="certificate">Marque</label>

@@ -4,16 +4,11 @@ var simplify = angular.module('simplify', ['ui.router',
                                             'ngResource',
                                             'ui.select',
                                             'ngSanitize',
-                                            'gantt',
-                                            'gantt.table',
+                                            'ui.calendar', 
                                             'ngAnimate',
                                             'angular-loading-bar',
                                             'angularMoment']);
 
-
-if(navigator.appVersion.indexOf("Chrome")==-1){
-  alert("Merci d'utiliser Google Chrome pour fonctionnement optimal ;) ");
-}
 
 //Utiliser pour accéder à l'objet $state depuis les templates - permet de connaitre le menu en cours
 simplify.run(function ($rootScope, $state, $stateParams) {

@@ -31,7 +31,7 @@ angular
 	//we get details for selected certificate
 	certificateService.get($stateParams.recordId).then(function(response){
 		$scope.certificate = response.data;
-		console.log('certificate',$scope.certificate);
+		// console.log('certificate',$scope.certificate);
 	});
 
 	$scope.edit = function(){
@@ -75,7 +75,7 @@ angular
 		$scope.confirmDelete = 1;
 		certificateService.delete($scope.certificate.ID).then(function(response){
 			$scope.response = response.data;
-			$scope.showList();
+			$scope.list();
 		});
 	}
 

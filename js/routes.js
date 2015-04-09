@@ -54,6 +54,10 @@ simplify.config(['$stateProvider', '$urlRouterProvider', function($stateProvider
       url: '/recovery/view/:recordId', 
       templateUrl: 'components/recovery/recovery.view.html' ,
     })
+    .state('adminDetailsRecovery', {
+      url: '/recovery/admin/view/:recordId', 
+      templateUrl: 'components/recovery/recovery.admin.details.html' ,
+    })
   //License routing
     .state('license', {
       url: '/license', 

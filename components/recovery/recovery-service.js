@@ -9,11 +9,14 @@ simplify.factory('recoveryService', function($http) {
     listForm: function() {
          return $http.get("REST/recovery/form/list");
     },
+    listAdmin: function(userId) {
+         return $http.get("REST/recovery/admin/list/"+userId);
+    },
     countForms: function() {
          return $http.get("REST/recovery/admin/count");
     },
     listFormAdmin: function() {
-         return $http.get("REST/recovery/admin/list");
+         return $http.get("REST/recovery/admin/form/list");
     },
     add: function(recovery) {
          return $http.post("REST/recovery/add",recovery);

@@ -23,6 +23,13 @@ class PDFCtrl extends BaseSimplifyObject{
   * generate the pdf
   * @return array(array())
   **/
+  function formatDates($str){
+    $str = explode("-", substr($str, 0,10));
+    $formated =  $str[2].'/'.$str[1].'/'.$str[0];
+    return $formated;
+  }
+
+
   function generatePDF($formId){
 //on get informations for each recovery day associated with the form
       $formId = str_replace('"', '', $formId);
@@ -49,7 +56,11 @@ class PDFCtrl extends BaseSimplifyObject{
     QRcode::png($QRtext,$tempQRcode);
 
     $recoveries=$formData['RECOVERIES_ID']; // object weightOrders contenant les propriétés BRIDGE_ID , WEIGHT, TEMP, DATE, LOADED, MATERIAL_ID, INOUT, ID
-    $formData['DATE'] = substr($formData['DATE'], 0,10);
+
+    // We format the dates to french style nigga !
+    $formData['CREATION_DATE'] =  $this->formatDates($formData['CREATION_DATE']);
+    $formData['DATE'] =  $this->formatDates($formData['DATE']);
+
 /**************************************************************************************
 *
 * Préparation des données pour remplacement dans le template [DONNEES ADMINISTRATIVES]
@@ -71,7 +82,7 @@ class PDFCtrl extends BaseSimplifyObject{
                         $userInfo['FAMILY_NAME'],
                         $userInfo['NAME'],
                         $userInfo['ROLE'],
-                        substr($formData['CREATION_DATE'], 0,10)); 
+                        $formData['CREATION_DATE']); 
 
 /**************************************************************************************
 *
@@ -80,16 +91,16 @@ class PDFCtrl extends BaseSimplifyObject{
 ***************************************************************************************/
 
     $countRecoveries = count($recoveries);
-    $recoveryBloc = '';
+    $recoveryBloc = "<table class='infoTable' width ='100%'><tr><th>Date</th><th>Opération</th><th>Récupération utilisée (h)</th></tr>";
+
     for ($i=0; $i < $countRecoveries; $i++) {
       // for each recovery, we create a new table with all the recovery data
-      $recoveryBloc .= "<table class='infoTable' width ='100%'>
-      <tr><th>Date</th><th>Motif</th><th>Récupération utilisée (h)</th></tr>
-      <tr><td>".substr($recoveries[$i]['DATE'], 0,10)."</td><td>".$recoveries[$i]['LABEL']."</td><td class='text-danger'>".$recoveries[$i]['RECOVERY_USED']."</td></tr>
-      </table>";
-
+      $recoveryBloc .= "
+      <tr><td>".$this->formatDates($recoveries[$i]['DATE'])."</td><td>".$recoveries[$i]['LABEL']."</td><td class='text-danger'>".$recoveries[$i]['RECOVERY_USED']."</td></tr>";
     }
 
+    $recoveryBloc .= "</table>";
+    $this->app->log->info("recoveryBloc : ".$recoveryBloc);
     $blocSearch = "[[BLOC_RECOVERIES]]";
     $blocReplace = $recoveryBloc;
 
@@ -112,7 +123,6 @@ class PDFCtrl extends BaseSimplifyObject{
     $html = file_get_contents($this->app->environment['APP_CONFIG']['WWW_PATH'] . "templates/recovery.tmpl.html");
     $html = $html;
     $html = str_replace($tblSearch,$tblReplace,$html);
-        // $this->app->log->info("(tblReplace generatePDF -- html : ".$this->dumpRet($html).")");
     $html = str_replace($blocSearch,$blocReplace,$html);
     $mpdf->WriteHTML($html);
     $result=$mpdf->Output("/var/www/data/PDF/".md5($formId).".pdf","F");
