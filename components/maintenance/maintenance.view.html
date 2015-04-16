@@ -1,7 +1,7 @@
-<div ng-controller="HardwareViewCtrl">
+<div ng-controller="MaintenanceViewCtrl">
   <!-- we display the details only when in View Mode -->
   <legend><i class="fa fa-barcode fa-lg"></i> Matériel</legend>
-  <h4><i class="fa fa-eye"></i> Matériel N° {{hardware.ID}} - {{hardware.LABEL}} </h4>
+  <h4><i class="fa fa-eye"></i> Matériel N° {{maintenance.ID}} - {{maintenance.LABEL}} </h4>
   <div  ng-show="deleteButton == '0' && editButton != 1">
     <div class="blocBorder col-md-6">
     <legend><i class="fa fa-info-circle fa-lg"></i> Informations</legend>
@@ -9,138 +9,124 @@
       <div class='row'>
         <label class="col-md-4 text-right control-label"> ID Matériel:</label>
         <div class="col-md-4">
-          {{hardware.ID}}
+          {{maintenance.ID}}
         </div>
       </div>
     <!-- EDITION_DATE -->
       <div class='row'>
         <label class="col-md-4 text-right control-label"> Créé le :</label>
         <div class="col-md-4">
-          {{hardware.EDITION_DATE | tsDateTime}}
+          {{maintenance.EDITION_DATE | tsDateTime}}
         </div>
       </div>
     <!-- LABEL -->
       <div class='row borderTop'>
         <label class="col-md-4 text-right control-label"> Libellé:</label>
         <div class="col-md-8">
-          {{hardware.LABEL}}
+          {{maintenance.LABEL}}
         </div>
       </div>
     <!-- SITE -->
       <div class='row borderTop'>
         <label class="col-md-4 text-right control-label"> Site:</label>
         <div class="col-md-8">
-          {{hardware.SITE}}
-        </div>
-      </div>
-    <!-- DIRECTION -->
-      <div class='row borderTop'>
-        <label class="col-md-4 text-right control-label"> Direction:</label>
-        <div class="col-md-8">
-          {{hardware.DIRECTION}}
+          {{maintenance.SITE}}
         </div>
       </div>
     <!-- TYPE -->
       <div class='row borderTop'>
         <label class="col-md-4 text-right control-label"> Type:</label>
         <div class="col-md-8">
-          {{hardware.TYPE}}
+          {{maintenance.TYPE}}
         </div>
       </div>
     <!-- STATUS -->
       <div class='row borderTop'>
         <label class="col-md-4 text-right control-label"> Status:</label>
         <div class="col-md-8">
-          <span th-code="{{hardware.STATUS}}" th-cat="STATUS"/>
-        </div>
-      </div>
-    <!-- DEPLOYMENT -->
-      <div class='row borderTop'>
-        <label class="col-md-4 text-right control-label">Date de déploiement:</label>
-        <div class="col-md-8">
-          {{hardware.DEPLOYMENT_DATE | tsDate}}
+          <span th-code="{{maintenance.STATUS}}" th-cat="STATUS"/>
         </div>
       </div>
     <!-- WARRANTY_START -->
       <div class='row borderTop'>
         <label class="col-md-4 text-right control-label">Début de garantie:</label>
         <div class="col-md-8">
-          {{hardware.WARRANTY_START | tsDate}}
+          {{maintenance.WARRANTY_START | tsDate}}
         </div>
       </div>
     <!-- WARRANTY_END -->
       <div class='row borderTop'>
         <label class="col-md-4 text-right control-label">Fin de garantie:</label>
-        <div class="col-md-8 text-danger" ng-show="hardware.ALERT == 1"><i class="fa fa-bell faa-pulse faa-fast animated"></i>
-          {{hardware.WARRANTY_END | tsDate}}
+        <div class="col-md-8 text-danger" ng-show="maintenance.ALERT == 1"><i class="fa fa-bell faa-pulse faa-fast animated"></i>
+          {{maintenance.WARRANTY_END | tsDate}}
         </div>
-        <div class="col-md-8" ng-hide="hardware.ALERT == 1">
-          {{hardware.WARRANTY_END | tsDate}}
+        <div class="col-md-8" ng-hide="maintenance.ALERT == 1">
+          {{maintenance.WARRANTY_END | tsDate}}
         </div>
       </div>
     <!-- DESCRIPTION -->
       <div class='row borderTop'>
         <label class="col-md-4 text-right control-label"> Description:</label>
         <div class="col-md-8">
-          {{hardware.DESCRIPTION}}
+          {{maintenance.DESCRIPTION}}
         </div>
       </div>
     <!-- BARCODE -->
       <div class='row borderTop'>
         <label class="col-md-4 text-right control-label"> Code barre:</label>
         <div class="col-md-8">
-          {{hardware.BARCODE}}
+          {{maintenance.BARCODE}}
         </div>
       </div> 
     <!-- SERIAL_NUMBER -->
       <div class='row borderTop'>
         <label class="col-md-4 text-right control-label"> Numéro de série:</label>
         <div class="col-md-8">
-          {{hardware.SERIAL_NUMBER}}
+          {{maintenance.SERIAL_NUMBER}}
         </div>
       </div> 
     </div>
     <!-- PROVIDER BLOC -->
     <div class="blocBorder col-md-3">
-      <legend><i class="fa fa-users fa-lg"></i> Prestataire <span class="text-warning" ng-show="hardware.PROVIDER.STATUS == 'DELETED'"> Doit être changé !</span></legend>
+      <legend><i class="fa fa-users fa-lg"></i> Prestataire <span class="text-warning" ng-show="maintenance.PROVIDER.STATUS == 'DELETED'"> Doit être changé !</span></legend>
       <div class='row'>
         <label class="col-md-4 text-right control-label"> Nom:</label>
         <div class="col-md-8 row">
-          {{hardware.PROVIDER.LABEL}}
+          {{maintenance.PROVIDER.LABEL}}
         </div>
       </div>
       <div class='row'>
         <label class="col-md-4 text-right control-label"> Contact:</label>
         <div class="col-md-8 row">
-          {{hardware.PROVIDER.CONTACT}}
+          {{maintenance.PROVIDER.CONTACT}}
         </div>
       </div>
       <div class='row'>
         <label class="col-md-4 text-right control-label"> Description:</label>
         <div class="col-md-8 row">
-          {{hardware.PROVIDER.DESCRIPTION}}
+          {{maintenance.PROVIDER.DESCRIPTION}}
         </div>
       </div>
       <div class='row'>
         <label class="col-md-4 text-right control-label">Site Web:</label>
         <div class="col-md-4 light-margin-bot">
-          <a target="_new" href="http://{{hardware.PROVIDER.WEB_ADDRESS}}" class="btn btn-success "><i class="fa fa-globe"></i> Site Web</a>
+          <a target="_new" href="http://{{maintenance.PROVIDER.WEB_ADDRESS}}" class="btn btn-success "><i class="fa fa-globe"></i> Site Web</a>
         </div>
       </div>
     </div>
     <!-- BRAND BLOC -->
     <div class="blocBorder col-md-3">
-      <legend><i class="fa fa-building fa-lg"></i> Marque/Entreprise <span class="text-warning" ng-show="hardware.BRAND.STATUS == 'DELETED'"> Doit être changé !</span></legend>
+      <legend><i class="fa fa-building fa-lg"></i> Marque/Entreprise <span class="text-warning" ng-show="maintenance.BRAND.STATUS == 'DELETED'"> Doit être changé !</span></legend>
       <div class='row'>
         <label class="col-md-4 text-right control-label"> Nom:</label>
         <div class="col-md-8 row">
-          {{hardware.BRAND.LABEL}}
+          {{maintenance.BRAND.LABEL}}
         </div>
       </div>
       <div class='row'>
         <label class="col-md-4 text-right control-label">Site Web:</label>
         <div class="col-md-4 light-margin-bot">
-          <a target="_new" href="http://{{hardware.BRAND.WEB_ADDRESS}}" class="btn btn-success "><i class="fa fa-globe"></i> Site Web</a>
+          <a target="_new" href="http://{{maintenance.BRAND.WEB_ADDRESS}}" class="btn btn-success "><i class="fa fa-globe"></i> Site Web</a>
         </div>
       </div>
     </div>
@@ -148,15 +134,14 @@
       <button type="submit" class="btn btn-info " ng-click="showList()"><i class="fa fa-th-list"></i> Liste</button>
       <button type="submit" class="btn btn-primary col-md-offset-1 " ng-click="edit()"><i class="fa fa-pencil"></i> Modifier</button>
       <button type="submit" class="btn btn-danger col-md-offset-1 " ng-click="deleteButton = 1"><i class="fa fa-trash-o"></i> Supprimer</button>
-      <button type="submit" class="btn btn-success col-md-offset-1 " ng-click="generatePDF()"><i class="fa fa-pdf-o"></i> Générer le PDF</button>
     </div>
   </div>
 
   <!-- we display the delete comfirmation dialog when the delete button is pushed -->
   <div class="col-md-12 jumbotron text-center" ng-show="deleteButton == '1'">
-    <legend>Êtes-vous sûr de vouloir supprimer le matériel {{hardware.ID}} -- <span class="text-warning ">{{hardware.LABEL}}</span> ?</legend>
+    <legend>Êtes-vous sûr de vouloir supprimer le matériel {{maintenance.ID}} -- <span class="text-warning ">{{maintenance.LABEL}}</span> ?</legend>
       <p class="text-center">
-        <button type="submit" class="btn btn-danger btn-lg" ng-click="deleteHardware()"  ><i class="fa fa-trash"></i> Oui</button>
+        <button type="submit" class="btn btn-danger btn-lg" ng-click="deleteMaintenance()"  ><i class="fa fa-trash"></i> Oui</button>
         <button type="submit" class="col-md-offset-1 btn btn-success btn-lg" ng-model="deleteButton" btn-radio="'0'"><i class="fa fa-undo"></i> Non</button>
       </p>
   </div>
@@ -169,14 +154,14 @@
           <label for="licenseLabel">Libéllé</label>
         </div>   
         <div class="col-md-4">
-          <input type="text" class="form-control" ng-model="hardware.LABEL" placeholder="entrez le libéllé ...">
+          <input type="text" class="form-control" ng-model="maintenance.LABEL" placeholder="entrez le libéllé ...">
         </div>
       <!-- type -->
         <div class="col-md-2">
           <label for="licenseLabel">Type</label>
         </div>   
         <div class="col-md-4">
-          <select class="form-control" id="select" ng-model="hardware.TYPE">
+          <select class="form-control" id="select" ng-model="maintenance.TYPE">
               <option>Serveur</option>
               <option>Switch</option>
               <option>Astaro RED</option>
@@ -193,19 +178,19 @@
         <div class="col-md-8">
           <div class="col-md-4">
             <label>
-              <input type="radio" name="optionsRadios" id="optionsRadios2" value="IN_STOCK" ng-model="hardware.STATUS" checked>
+              <input type="radio" name="optionsRadios" id="optionsRadios2" value="IN_STOCK" ng-model="maintenance.STATUS" checked>
               <span th-code="IN_STOCK" th-cat="STATUS"/>
             </label>
           </div>
           <div class="col-md-4">
             <label>
-              <input type="radio" name="optionsRadios" id="optionsRadios1" value="IN_USE" ng-model="hardware.STATUS">
+              <input type="radio" name="optionsRadios" id="optionsRadios1" value="IN_USE" ng-model="maintenance.STATUS">
               <span th-code="IN_USE" th-cat="STATUS"/>
             </label>
           </div>
           <div class="col-md-4">
             <label>
-              <input type="radio" name="optionsRadios" id="optionsRadios3" value="OUT_OF_ORDER" ng-model="hardware.STATUS">
+              <input type="radio" name="optionsRadios" id="optionsRadios3" value="OUT_OF_ORDER" ng-model="maintenance.STATUS">
               <span th-code="OUT_OF_ORDER" th-cat="STATUS"/>
             </label>
           </div>
@@ -218,7 +203,7 @@
         </div>   
         <div class="col-md-4">
             <p class="input-group">
-              <input type="text" class="form-control" datepicker-popup="dd-MM-yy" ng-model="hardware.WARRANTY_START" is-open="openedStartDate" min-date="2000-01-01" max-date="'2099-06-22'" close-text="Close" />
+              <input type="text" class="form-control" datepicker-popup="dd-MM-yy" ng-model="maintenance.WARRANTY_START" is-open="openedStartDate" min-date="2000-01-01" max-date="'2099-06-22'" close-text="Close" />
               <span class="input-group-btn">
                 <button type="button" class="btn btn-success" ng-click="openStartDate($event)"><i class="fa fa-calendar fa-lg"></i></button>
               </span>
@@ -230,23 +215,9 @@
         </div>   
         <div class="col-md-4">
             <p class="input-group">
-              <input type="text" class="form-control" datepicker-popup="dd-MM-yy" ng-model="hardware.WARRANTY_END" is-open="openedEndDate" min-date="{{hardware.WARRANTY_START | date : 'yyyy-MM-dd'}}" max-date="'2099-06-22'" close-text="Close" />
+              <input type="text" class="form-control" datepicker-popup="dd-MM-yy" ng-model="maintenance.WARRANTY_END" is-open="openedEndDate" min-date="{{maintenance.WARRANTY_START | date : 'yyyy-MM-dd'}}" max-date="'2099-06-22'" close-text="Close" />
               <span class="input-group-btn">
                 <button type="button" class="btn btn-danger" ng-click="openEndDate($event)"><i class="fa fa-calendar fa-lg"></i></button>
-              </span>
-            </p>
-        </div>
-      </div>
-      <!-- deploiement -->
-      <div class="form-group row text-left">
-        <div class="col-md-2">
-          <label for="hardwareEndWarranty"><i ng-hide='hardware.DEPLOYMENT_DATE ==undefined' class="fa fa-check text-success"></i><i ng-show='hardware.DEPLOYMENT_DATE ==undefined' class="fa fa-times text-danger"></i>  Date de déploiement</label>
-        </div>   
-        <div class="col-md-4">
-            <p class="input-group">
-              <input type="text" class="form-control" datepicker-popup="dd-MM-yy" ng-model="hardware.DEPLOYMENT_DATE" is-open="openedDeployDate" max-date="'2099-06-22'" close-text="Close" />
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-danger" ng-click="openDeployDate($event)"><i class="fa fa-calendar fa-lg"></i></button>
               </span>
             </p>
         </div>
@@ -254,55 +225,46 @@
       <!-- Site -->
       <div class="form-group row text-left">
         <div class="col-md-2">
-          <label for="hardware">Site</label>
+          <label for="maintenance">Site</label>
         </div>   
         <div class="col-md-10">
-          <input type="text" class="form-control" ng-model="hardware.SITE" placeholder="entrez le site ...">
-        </div>
-      </div>
-      <!-- Direction -->
-      <div class="form-group row text-left">
-        <div class="col-md-2">
-          <label for="hardware">Direction</label>
-        </div>   
-        <div class="col-md-10">
-          <input type="text" class="form-control" ng-model="hardware.DIRECTION" placeholder="entrez la direction ...">
+          <input type="text" class="form-control" ng-model="maintenance.SITE" placeholder="entrez le site ...">
         </div>
       </div>
       <!-- description -->
       <div class="form-group row text-left">
         <div class="col-md-2">
-          <label for="hardware">Description</label>
+          <label for="maintenance">Description</label>
         </div>   
         <div class="col-md-10">
-          <input type="text" class="form-control" ng-model="hardware.DESCRIPTION" placeholder="entrez la description ...">
+          <input type="text" class="form-control" ng-model="maintenance.DESCRIPTION" placeholder="entrez la description ...">
         </div>
       </div>
       <!-- barcode -->
       <div class="form-group row text-left">
         <div class="col-md-2">
-          <label for="hardware">Code barre</label>
+          <label for="maintenance">Code barre</label>
         </div>   
         <div class="col-md-10">
-          <input type="text" class="form-control" ng-model="hardware.BARCODE" placeholder="code barre ...">
+          <input type="text" class="form-control" ng-model="maintenance.BARCODE" placeholder="code barre ...">
         </div>
       </div>
       <!-- serial number -->
       <div class="form-group row text-left">
         <div class="col-md-2">
-          <label for="hardware">numéro de série</label>
+          <label for="maintenance">numéro de série</label>
         </div>   
         <div class="col-md-10">
-          <input type="text" class="form-control" ng-model="hardware.SERIAL_NUMBER" placeholder="numéro de série ...">
+          <input type="text" class="form-control" ng-model="maintenance.SERIAL_NUMBER" placeholder="numéro de série ...">
         </div>
       </div>
       <!-- provider -->
       <div class="form-group row">
         <div class="col-md-2">
-          <label for="hardware">Prestataire</label>
+          <label for="maintenance">Prestataire</label>
         </div>
         <div class="col-md-7">
-          <ui-select ng-model="hardware.PROVIDER" theme="selectize"> 
+          <ui-select ng-model="maintenance.PROVIDER" theme="selectize"> 
             <ui-select-match placeholder="Selectionnez ou recherchez un prestataire dans la liste...">{{$select.selected.LABEL}}</ui-select-match>
             <ui-select-choices repeat="provider in providers | filter: $select.search">
               <strong> Nom :</strong> 
@@ -316,10 +278,10 @@
       <!-- brand -->
       <div class="form-group row">
         <div class="col-md-2">
-          <label for="hardware">Marque</label>
+          <label for="maintenance">Marque</label>
         </div>
         <div class="col-md-7">
-          <ui-select ng-model="hardware.BRAND" theme="selectize"> 
+          <ui-select ng-model="maintenance.BRAND" theme="selectize"> 
             <ui-select-match placeholder="Selectionnez ou recherchez une marque dans la liste...">{{$select.selected.LABEL}}</ui-select-match>
             <ui-select-choices repeat="brand in brands | filter: $select.search">
               <strong> Nom :</strong> 

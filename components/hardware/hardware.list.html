@@ -5,11 +5,10 @@
   </div>
   <table class="table table-striped table-bordered table-hover tbl-list light-margin-top">
   	<thead>
-  		<tr class="info not-allowed"><th>ID</th><th>Date de Modification</th><th>Libellé</th><th>Code barre</th><th>Site</th><th>Prestataire</th><th>Marque/Entreprise</th><th>Début de garantie</th><th>Fin de garantie</th><th>Status</th></tr>
+  		<tr class="info not-allowed"><th>Date de Modification</th><th>Libellé</th><th>Code barre</th><th>Site</th><th>Prestataire</th><th>Marque/Entreprise</th><th>Début de garantie</th><th>Fin de garantie</th><th>Status</th></tr>
   	</thead>
   	<tbody>
   		<tr class="reveal-animation" ng-repeat="hardware in hardwares" ng-click="viewHardware(hardware)" >
-  			<td>{{hardware.ID}}</td>
         <td>{{hardware.EDITION_DATE | tsDateTime}}</td>
         <td>{{hardware.LABEL}}</td>
         <td>{{hardware.BARCODE}}</td>

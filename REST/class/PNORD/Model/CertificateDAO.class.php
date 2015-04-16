@@ -140,7 +140,7 @@ class CertificateDAO extends BaseSimplifyObject{
 
     $this->app->log->notice(__CLASS__ . '::' . __METHOD__);
     
-    // $this->app->log->info('****certificate **** -> '.$this->dumpRet($certificate));
+    $this->app->log->info('****certificate **** -> '.$this->dumpRet($certificate));
 
     //we check for undefined variables
     if (!isset($certificate->CERTIFICATE_AUTHORITY)) {
@@ -235,7 +235,6 @@ class CertificateDAO extends BaseSimplifyObject{
     
     // $this->app->log->info('****certificate **** -> '.$this->dumpRet($certificate));
     if ($certificate->AUTO_SIGNED == 'true') {
-      $certificate->AUTO_SIGNED = 'true';
       $brand_Id = '-';
       $provider_Id = '-';
     }else{
@@ -243,29 +242,51 @@ class CertificateDAO extends BaseSimplifyObject{
       $brand_Id = $certificate->BRAND->ID;
       $certificate->AUTO_SIGNED = 'false';
     };
-
-
     $certificateId =  $certificate->ID;
 
     $sqlCertificate = "UPDATE CERTIFICATE
-                  SET COMMON_NAME='$certificate->COMMON_NAME',
+                  SET COMMON_NAME='".str_replace("'","",$certificate->COMMON_NAME)."',
                       DATE_START='$certificate->DATE_START',
                       DATE_END='$certificate->DATE_END',
-                      ORGANIZATION='$certificate->ORGANIZATION',
-                      ORGANIZATION_UNIT='$certificate->ORGANIZATION_UNIT',
-                      BRAND_ID='$brand_Id',
-                      PROVIDER_ID='$provider_Id',
-                      TOWN='$certificate->TOWN',
-                      REGION='$certificate->REGION',
-                      COUNTRY='$certificate->COUNTRY',
-                      CERTIFICATE_AUTHORITY='$certificate->CERTIFICATE_AUTHORITY',
-                      COMMENTS='$certificate->COMMENTS'
-                  WHERE ID='$certificate->ID';";
-    // $this->app->log->info('****sqlCertificate **** -> '.$this->dumpRet($sqlCertificate));
+                      ORGANIZATION='".str_replace("'","",$certificate->ORGANIZATION)."',
+                      ORGANIZATION_UNIT='".str_replace("'","",$certificate->ORGANIZATION_UNIT)."',
+                      BRAND_ID='".str_replace("'","",$brand_Id)."',
+                      PROVIDER_ID='".str_replace("'","",$provider_Id)."',
+                      TOWN='".str_replace("'","",$certificate->TOWN)."',
+                      REGION='".str_replace("'","",$certificate->REGION)."',
+                      COUNTRY='".str_replace("'","",$certificate->COUNTRY)."',
+                      CERTIFICATE_AUTHORITY='".str_replace("'","",$certificate->CERTIFICATE_AUTHORITY)."',
+                      COMMENTS='".str_replace("'","",$certificate->COMMENTS)."'
+                  WHERE ID LIKE '$certificateId';";
+    $this->app->log->info('****sqlCertificate **** -> '.$this->dumpRet($sqlCertificate));
     $queryCertificate = $this->db()->query($sqlCertificate);
     return($certificateId);
 
   }
+
+
+
+  /***************************************
+  * UPDATE FILE LOCATION
+  *
+  * @return licenceId
+  ***************************************/
+
+  function addFileLocation($data){
+
+    $this->app->log->info(__CLASS__ . '::' . __METHOD__);
+    $certificateId =  $data['ID'];
+    $certificateFileLocation =  $data['LOCATION'];
+
+    $sqlCertificate = "UPDATE CERTIFICATE
+                  SET FILES='$certificateFileLocation'
+                  WHERE ID LIKE '$certificateId';";
+    $queryCertificate = $this->db()->query($sqlCertificate);
+    return($certificateId);
+
+  }
+
+
 
 /******************************************************************************************
 *

@@ -35,22 +35,34 @@ angular
 
 	//return to list when cancelling license creation
 	$scope.add = function(){
-		$scope.recovery.USER_ID = $rootScope.userName;
 
-		// console.log('recovery : ' ,$scope.recovery);
+		if ($scope.recovery.START_TIME != undefined && $scope.recovery.END_TIME != undefined ) {
+			if ($scope.recovery.START_TIME > $scope.recovery.END_TIME) {
+				$scope.showAlert = 1;
+				$scope.formDone = 0;
+					$scope.addButton = 0;
 
-		recoveryService.add($scope.recovery).then(function(response){
-			$scope.addButton = 0;
-			$scope.formDone = 1;
-			$scope.newRecoveryId = response.data;
+			}else{
 
-			//ugly temporary algorithm to remove double quotes because angularjs suddendly added stuff, bitch is crazy ...
-			var str = '';
-			str = $scope.newRecoveryId;
-			str = str.replace('"','');
-			$scope.newRecoveryId = str.replace('"',''); 
-			console.log('newRecoveryId : ' + $scope.newRecoveryId);
-		});
+				$scope.recovery.USER_ID = $rootScope.userName;
+
+				// console.log('recovery : ' ,$scope.recovery);
+
+				recoveryService.add($scope.recovery).then(function(response){
+					$scope.addButton = 0;
+					$scope.formDone = 1;
+					$scope.newRecoveryId = response.data;
+
+					//ugly temporary algorithm to remove double quotes because angularjs suddendly added stuff, bitch is crazy ...
+					var str = '';
+					str = $scope.newRecoveryId;
+					str = str.replace('"','');
+					$scope.newRecoveryId = str.replace('"',''); 
+					console.log('newRecoveryId : ' + $scope.newRecoveryId);
+				});
+
+			};
+		};
 	}
 
 /****************************
@@ -59,7 +71,7 @@ angular
 *
 ****************************/
 
-	$scope.$watchCollection('[recovery.START_TIME, recovery.END_TIME, recovery.LABEL]', function(newValues) {
+	$scope.$watchCollection('[recovery.START_TIME, recovery.END_TIME, recovery.LABEL, recovery.DATE]', function(newValues) {
 		var countDefined='';
 
 		for (var i = newValues.length - 1; i >= 0; i--) {

@@ -23,7 +23,7 @@
         </div>
       </div>
       <div class='row borderTop'>
-        <label class="col-md-4 text-right control-label"> Unité d'organisation:</label>
+        <label class="col-md-4 text-right control-label"> Organisation:</label>
         <div class="col-md-8">
           {{certificate.ORGANIZATION}}
         </div>
@@ -77,6 +77,12 @@
         <label class="col-md-4 text-right control-label"> Autorité de certification:</label>
         <div class="col-md-8">
           {{certificate.CERTIFICATE_AUTHORITY}}
+        </div>
+      </div>
+      <div class='row'>
+        <label class="col-md-4 text-right control-label"><i class="fa fa-info animated text-info fa-lg faa-pulse faa-fast"  popover-placement="top" popover-trigger="mouseenter" popover="1 fichier au format ZIP uniquement (20 mb MAX)"></i>Fichier(s):</label>
+        <div class="col-md-4 light-margin-bot">
+          <div class="btn btn-success " ng-click='downloadFiles()'><i class="fa fa-download"></i> Télécharger</div>
         </div>
       </div>
       <div class='row borderTop'>
@@ -221,6 +227,26 @@
         </div>   
         <div class="col-md-10">
           <input type="text" class="form-control" ng-model="certificate.COUNTRY" placeholder="Pays ...">
+        </div>
+      </div>
+      <!-- files -->
+        <div class="row light-margin-top  light-margin-bot">
+          <div class="col-md-4 text-right">
+            <label for="certificateLabel"> Fichier(s)</label>
+          </div>   
+          <div class="col-md-8">
+            <div class="btn btn-default" ng-file-select ng-model="files" allow-dir="false" accept=".zip" ng-multiple="false"><i class="fa fa-upload"></i> Selectionnez un fichier ZIP</div>
+            <ul>
+                <li ng-repeat="f in files" style="font:smaller">{{f.name}}</li>
+            </ul>
+          </div>
+        </div>
+      <div class="form-group row text-left">
+        <div class="col-md-2">
+          <label for="certificate"> Commentaire</label>
+        </div>   
+        <div class="col-md-10">
+          <input type="text" class="form-control" ng-model="certificate.COMMENTS" placeholder="commentaires ...">
         </div>
       </div>
       <div ng-show="certificate.AUTO_SIGNED == 'false'">

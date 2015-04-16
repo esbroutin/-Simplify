@@ -5,12 +5,14 @@ angular
 								'$state',
 								'$stateParams',
 								'$http',
+								'$window',
 								'$rootScope',
 								'hardwareService',
 								'providerService',
-								'brandService', function($scope, $state,$stateParams, $http, $rootScope, hardwareService, providerService, brandService){
+								'brandService', function($scope, $state,$stateParams, $http, $window	, $rootScope, hardwareService, providerService, brandService){
 
 // angular.extend(this,$controller('BaseCRUDCtrl', { $scope: $scope, dataService: hardwareService }));
+			$rootScope.listAlerts ();
 
 //we initialize our values
 	$scope.deleteButton = 0;
@@ -84,6 +86,14 @@ angular
 		});
 	}
 
+	$scope.generatePDF = function(){
+
+		$scope.confirmDelete = 1;
+		hardwareService.generatePDF($scope.hardware.ID).then(function(response){
+			$window.open('REST/hardware/pdf/read/'+$scope.hardware.ID);
+		});
+	}
+
 /**********************
 * datePicker
 **********************/
@@ -100,6 +110,13 @@ angular
     $event.stopPropagation();
 
     $scope.openedEndDate = true;
+  };
+
+  $scope.openDeployDate = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+
+    $scope.openedDeployDate = true;
   };
 
   $scope.dateOptions = {

@@ -63,8 +63,21 @@
             <input type="text" class="form-control" ng-model="certificate.COUNTRY" placeholder="entrez le pays ...">
           </div>
         </div>
+      <!-- files -->
+        <div class="row light-margin-top  light-margin-bot">
+          <div class="col-md-4 text-right">
+            <label for="certificateLabel"><i class="fa fa-info animated text-info fa-lg faa-pulse faa-fast"  popover-placement="top" popover-trigger="mouseenter" popover="1 fichier au format ZIP uniquement (20 mb MAX)"></i> Fichier(s)</label>
+          </div>   
+          <div class="col-md-8">
+            <div class="btn btn-default" ng-file-select ng-model="files" allow-dir="false" accept=".zip" ng-multiple="false"><i class="fa fa-upload"></i> Selectionnez un fichier ZIP</div>
+            <ul>
+                <li ng-repeat="f in files" style="font:smaller">{{f.name}}</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
+
       <!-- DATES GROUP -->
         <div class="col-md-12 light-margin-top">
           <div class="col-md-2 text-left">

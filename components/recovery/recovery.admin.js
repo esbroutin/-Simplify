@@ -2,6 +2,9 @@
 angular
   .module('simplify')
   .controller('RecoveryAdminCtrl', ['$scope','$rootScope','$state','$stateParams', '$http', '$modal', 'recoveryService','adminService','$window', function($scope,$rootScope, $state,$stateParams, $http, $modal, recoveryService,adminService,$window){
+  $scope.loadMoreStep = 25;
+  $scope.forms = [];
+  $scope.countFormsOnHold = 0;
 
   $scope.open = function (form) {
 
@@ -14,23 +17,27 @@ angular
         }
       }
     });
-    }
+  }
 
-  $rootScope.listFormAdmin = function(form){
-    recoveryService.listFormAdmin(undefined).then(function(response){
-      $scope.forms = response.data; 
-      $scope.countFormsOnHold = $scope.forms['COUNT_ON_HOLD']; 
-      $scope.forms = $scope.forms['DATA']; 
-      // console.log('countFormsOnHold : ', $scope.countFormsOnHold);
-      console.log('response.data : ', response.data);
+  $rootScope.updateList = function(){
+    if ($rootScope.reset == 1) {
+      $scope.forms = [];
+      $scope.countFormsOnHold = 0;
+      $rootScope.reset = 0;
+    };
+    recoveryService.listFormAdmin($scope.forms.length,$scope.loadMoreStep).then(function(response){ 
+      $scope.newforms = response.data;
+      if ($scope.newforms['DATA'].length < $scope.loadMoreStep) {
+        $scope.disableMore = 1;
+      };
 
-    });
-   };
+      $scope.countFormsOnHold = $scope.newforms['COUNT_ON_HOLD']; 
+      $scope.forms = $scope.forms.concat($scope.newforms['DATA']);
+    });   
+  }
 
-  //show list function
   $scope.viewDetails = function(userId){
-    console.log('viewDetails : ', userId);
-  $state.go('adminDetailsRecovery',{recordId:userId}); 
+    $state.go('adminDetailsRecovery',{recordId:userId}); 
   }
 
 /*************************
@@ -39,32 +46,25 @@ angular
 *
 ***************************/
 
-$scope.displayPDF = function(formId){
+  $scope.displayPDF = function(formId){
 
-  // open a new tab (if Google Chrome) to display the PDF
-    //ugly temporary algorithm to remove double quotes because angularjs suddendly added stuff, bitch is crazy ...
     var str = '';
     str = formId;
     str = str.replace('"','');
     $scope.formId = str.replace('"',''); 
-  $window.open('REST/recovery/pdf/read/'+$scope.formId);
+    $window.open('REST/recovery/pdf/read/'+$scope.formId);
 
-}
+  }
+
   $scope.validate = function(form){
-
-    // console.log('form : ' + $scope.recoveryForm);
-
     recoveryService.validate(form).then(function(response){
       $scope.response = response.data;
       recoveryService.generatePDF(form.ID);
-      // console.log(' validate response : ' + $scope.response);
-      $rootScope.listFormAdmin();
-      // $scope.formDone = 1;
+      $scope.forms = [];
+      $rootScope.updateList();
     });
 
   };
-
-
 
   //we make sure we have a type-> number in the field
    $scope.$watch('agentSearch', function() {
@@ -73,10 +73,7 @@ $scope.displayPDF = function(formId){
       };
    });
 
-
   $scope.listUsers = function(search){
-
-    // console.log('form : ' + $scope.recoveryForm);
 
     adminService.listUsers(search).then(function(response){
       $scope.users = response.data;
@@ -84,15 +81,12 @@ $scope.displayPDF = function(formId){
 
   };
 
-  //on load, we get recovery list
-  $rootScope.listFormAdmin();
+  $rootScope.updateList(true);
 
 }]);
 
-
 angular.module('simplify').controller('ModalInstanceCtrl', ['$scope','$rootScope','$modalInstance','items','recoveryService', function ($scope,$rootScope, $modalInstance, items,recoveryService) {
 
-  console.log('items: ', items);
   $scope.form = items;
   $scope.refuse = function(form){
 
@@ -100,11 +94,11 @@ angular.module('simplify').controller('ModalInstanceCtrl', ['$scope','$rootScope
     $scope.loading = 1; 
     recoveryService.refuse(form).then(function(response){
       $scope.response = response.data;
-      console.log(' refuse response : ' + $scope.response.data);
-      $scope.loading = 0; 
-      $rootScope.listFormAdmin();
+      $scope.loading = 0;
+      $scope.loadMoreStep = 25;
+      $rootScope.reset = 1;
+      $rootScope.updateList(); 
       $modalInstance.close();
-      // $scope.formDone = 1;
     });
 
   };
@@ -112,5 +106,4 @@ angular.module('simplify').controller('ModalInstanceCtrl', ['$scope','$rootScope
   $scope.cancel = function () {
     $modalInstance.dismiss('cancel');
   };
-
 }]);

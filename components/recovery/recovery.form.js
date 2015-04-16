@@ -59,7 +59,7 @@ Array.prototype.sum = function (prop) {
   }
 
 
-  //redirection to addLicense
+  //redirection to addNew
   $scope.new = function(){   
     console.log('new');
     $scope.recoveryForm = {};

@@ -37,6 +37,7 @@ class SoftwareDAO extends BaseSimplifyObject{
       $sql = "SELECT  software.id ,
                       software.label,
                       software.edition_date,
+                      software.to_do,
                       software.current_version,
                       software.next_version,
                       software.service_pack
@@ -172,6 +173,91 @@ class SoftwareDAO extends BaseSimplifyObject{
 
   }
 
+
+
+  /***************************************
+  * UPDATE FILE LOCATION
+  *
+  * @return maintenanceId
+  ***************************************/
+
+  function addFileLocation($data){
+
+    $this->app->log->info(__CLASS__ . '::' . __METHOD__);
+    
+    $maintenanceId =  $data['ID'];
+    $certificateFileLocation =  $data['LOCATION'];
+
+    $sqlMaintenance = "UPDATE MAINTENANCE_ENTRY
+                  SET FILES='$certificateFileLocation'
+                  WHERE ID LIKE '$maintenanceId';";
+    $queryMaintenance = $this->db()->query($sqlMaintenance);
+    return($maintenanceId);
+
+  }
+
+  /**
+  * Add Maintenance entry in database
+  * @return array[{object}]
+  **/
+  function addMaintenance($data){
+
+    $this->app->log->info(__CLASS__ . '::' . __METHOD__);
+    $this->app->log->info('data :' .$this->dumpRet($data));
+
+    //we check for undefined variables
+    if (!isset($data->DESCRIPTION)) {
+      $data->TO_DO = '-';
+    };
+    if (!isset($data->ISSUES)) {
+      $data->WEB_ADDRESS = '-';
+    };
+    $description = $data->DESCRIPTION;
+    $issues = $data->ISSUES;
+    $linkedId = $data->LINKED_ID;
+    $date = $data->DATE;
+
+    //we generate an custom id
+    $maintenanceId = $this->generateId('MAI');
+    
+    $this->app->log->info('****new data **** -> '.$this->dumpRet($data));
+
+    $this->db()->beginTransaction();
+
+    $sql = "INSERT INTO MAINTENANCE_ENTRY(
+                                ID,
+                                LINKED_ID,
+                                DESCRIPTION,
+                                ISSUES,
+                                DATE,
+                                AUTHOR) 
+                         VALUES(:id,
+                                :linkedId,
+                                :description,
+                               :issues,
+                               :date,
+                               :author)";
+
+    $query = $this->db()->prepare($sql);
+
+    $result = $query->execute(array(                            
+                            ':id'=>$maintenanceId,                                       
+                            ':linkedId'=>$linkedId,                                       
+                            ':description'=>$description,                            
+                            ':issues'=>$issues,                            
+                            ':date'=>$date,
+                            ':author'=>$_SESSION['userid']
+                            ));
+    
+    $this->app->log->info('****result **** -> '.$this->dumpRet($result));
+ 
+      $return = $query->fetch(PDO::FETCH_ASSOC);
+      $this->db()->commit(); // commit global pour éviter les Entrées orphelines ou incomplète en cas d'erreur
+
+      return($maintenanceId);
+
+  }
+
   /***************************************
   * UPDATE SOFTWARE
   *
@@ -259,38 +345,75 @@ class SoftwareDAO extends BaseSimplifyObject{
   //FONCTION 
 
   function generateId($type) {
+    if ($type == 'SOF') {
 
-//we count all existing softwareId to predict the next id
+  //we count all existing softwareId to predict the next id
 
-    $sqlCount = "SELECT max(substring(software.id from 10 for 3)) as NEW_ID
-                  FROM software
-                  WHERE substring(software.id from 7 for 3) = '$type'
-                  AND substring(software.id from 1 for 6) = '".date('ymd')."'";
+      $sqlCount = "SELECT max(substring(software.id from 10 for 3)) as NEW_ID
+                    FROM software
+                    WHERE substring(software.id from 7 for 3) = '$type'
+                    AND substring(software.id from 1 for 6) = '".date('ymd')."'";
 
 
-    $resultCount = $this->db()->query($sqlCount)->fetch(PDO::FETCH_ASSOC);
-    $resultCount = $resultCount['NEW_ID'];
+      $resultCount = $this->db()->query($sqlCount)->fetch(PDO::FETCH_ASSOC);
+      $resultCount = $resultCount['NEW_ID'];
 
-    $softwareId ="";
-    $strCrypt ="";
-    $newOrderInc = $resultCount + 1;
-    if ($newOrderInc < 100){
-      $newOrderInc = "0".$newOrderInc;
+      $softwareId ="";
+      $strCrypt ="";
+      $newOrderInc = $resultCount + 1;
+      if ($newOrderInc < 100){
+        $newOrderInc = "0".$newOrderInc;
+      }
+      if ($newOrderInc < 10){
+        $newOrderInc = "0".$newOrderInc;
+      }
+
+      $softwareId = date('ymd').$type.$newOrderInc;
+      $salt = '$2a$07$MantaCaledoniavahinenoumeaTiare$';
+      $strCrypt = crypt($softwareId,$salt);
+      $strCrypt = substr($strCrypt,-2);
+      $strCrypt = str_replace('/', 'A', $strCrypt);
+      $strCrypt = str_replace('.', 'X', $strCrypt);
+      $strCrypt = str_replace('\\', 'B', $strCrypt);
+      $strCrypt = mb_strtoupper($strCrypt);
+
+      $data = $softwareId.$strCrypt;
+      return $data;
+
+    }else if ($type == 'MAI') {
+
+  //we count all existing softwareId to predict the next id
+
+      $sqlCount = "SELECT max(substring(maintenance_entry.id from 10 for 3)) as NEW_ID
+                    FROM maintenance_entry
+                    WHERE substring(maintenance_entry.id from 7 for 3) = '$type'
+                    AND substring(maintenance_entry.id from 1 for 6) = '".date('ymd')."'";
+
+
+      $resultCount = $this->db()->query($sqlCount)->fetch(PDO::FETCH_ASSOC);
+      $resultCount = $resultCount['NEW_ID'];
+
+      $softwareId ="";
+      $strCrypt ="";
+      $newOrderInc = $resultCount + 1;
+      if ($newOrderInc < 100){
+        $newOrderInc = "0".$newOrderInc;
+      }
+      if ($newOrderInc < 10){
+        $newOrderInc = "0".$newOrderInc;
+      }
+
+      $softwareId = date('ymd').$type.$newOrderInc;
+      $salt = '$2a$07$MantaCaledoniavahinenoumeaTiare$';
+      $strCrypt = crypt($softwareId,$salt);
+      $strCrypt = substr($strCrypt,-2);
+      $strCrypt = str_replace('/', 'A', $strCrypt);
+      $strCrypt = str_replace('.', 'X', $strCrypt);
+      $strCrypt = str_replace('\\', 'B', $strCrypt);
+      $strCrypt = mb_strtoupper($strCrypt);
+
+      $data = $softwareId.$strCrypt;
+      return $data;
     }
-    if ($newOrderInc < 10){
-      $newOrderInc = "0".$newOrderInc;
-    }
-
-    $softwareId = date('ymd').$type.$newOrderInc;
-    $salt = '$2a$07$MantaCaledoniavahinenoumeaTiare$';
-    $strCrypt = crypt($softwareId,$salt);
-    $strCrypt = substr($strCrypt,-2);
-    $strCrypt = str_replace('/', 'A', $strCrypt);
-    $strCrypt = str_replace('.', 'X', $strCrypt);
-    $strCrypt = str_replace('\\', 'B', $strCrypt);
-    $strCrypt = mb_strtoupper($strCrypt);
-
-    $data = $softwareId.$strCrypt;
-    return $data;
   }
 }

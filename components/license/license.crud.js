@@ -5,10 +5,11 @@ angular
 								'$state',
 								'$stateParams',
 								'$http',
+								'$rootScope',
 								'licenseService',
 								'providerService',
 								'brandService',
-								 function($scope, $state,$stateParams, $http, licenseService, providerService, brandService){
+								 function($scope, $state,$stateParams, $http, $rootScope, licenseService, providerService, brandService){
 
 //we initialize our values
 	$scope.formDone = 0;

@@ -118,15 +118,18 @@ class RecoveryDAO extends BaseSimplifyObject{
   * @return array[{object}]
   ***************************************/
 
-  function listFormAdmin(){
+  function listFormAdmin($startIndex,$length){
   
     $this->app->log->info(__CLASS__ . '::' . __METHOD__);
 
       $user_id = $_SESSION['userid'];
       $sql = "SELECT *
-              FROM recovery_form ORDER BY CREATION_DATE DESC";
+              FROM recovery_form ORDER BY CREATION_DATE DESC               
+        LIMIT " .  $length . "
+        OFFSET " . $startIndex;
 
-      // $this->app->log->info('sql : '.$sql);
+      $this->app->log->info('startIndex : '.$startIndex);
+      $this->app->log->info('length : '.$length);
 
       $form = $this->db()->query($sql);
       $forms['DATA'] = $form->fetchAll(PDO::FETCH_ASSOC); 
@@ -139,7 +142,7 @@ class RecoveryDAO extends BaseSimplifyObject{
       $form = $this->db()->query($sql);
       $forms['COUNT_ON_HOLD'] = count($form->fetchAll(PDO::FETCH_ASSOC)); 
 
-      // $this->app->log->info('recoverysData : '. $this->dumpRet($recoverysData));
+      $this->app->log->info('forms : '. $this->dumpRet($forms));
       return $forms ;          
   } 
      
@@ -762,7 +765,7 @@ class RecoveryDAO extends BaseSimplifyObject{
     $to_use = $formData['TO_USE'];
     $used_recovery_ids = '[';
 
-    $sqlListRecovery = "SELECT * FROM RECOVERY WHERE user_id = '$user_id' AND STATUS='valid' AND (CAST( RECOVERY_USED AS numeric) < CAST( RECOVERY_STOCK AS numeric)) ORDER BY DATE DESC;";
+    $sqlListRecovery = "SELECT * FROM RECOVERY WHERE user_id = '$user_id' AND STATUS='valid' AND (CAST( RECOVERY_USED AS numeric) < CAST( RECOVERY_STOCK AS numeric)) ORDER BY DATE ASC;";
     $recoveriesData = $this->db()->query($sqlListRecovery)->fetchAll(PDO::FETCH_ASSOC);
 
     //we get the available amount to use
@@ -847,17 +850,16 @@ class RecoveryDAO extends BaseSimplifyObject{
     $mail->SMTPDebug = 3;                               // Enable verbose debug output
 
     $mail->isSMTP();                                      // Set mailer to use SMTP
-    $mail->Host = 'balade.pnord.nc';  // Specify main and backup SMTP servers
+    $mail->Host = '10.16.21.30';  // Specify main and backup SMTP servers
     $mail->SMTPAuth = true;                               // Enable SMTP authentication
-    $mail->Username = 'admin-administrator';                 // SMTP username
-    $mail->Password = 'v6aHdJUw';                           // SMTP password
+    $mail->Username = 'adm.e.broutin';                 // SMTP username
+    $mail->Password = '11yz6x8j';                           // SMTP password
     $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
     $mail->Port = 587;                                      // TCP port to connect to
 
     $mail->From = 'admin-administrator@province-nord.nc';
     $mail->FromName = 'Mailer';
-    $mail->addAddress('e.broutin@province-nord.nc', 'Simplify account');     // Add a recipient
-    $mail->addAddress('e.broutin@province-nord.nc');
+    $mail->addAddress('l.rousseau@province-nord.nc');
     $mail->isHTML(true);                                  // Set email format to HTML
 
     $mail->Subject = 'Demande de recuperation !Simplify';
@@ -915,14 +917,6 @@ class RecoveryDAO extends BaseSimplifyObject{
       $mail->Body    = '<p> Votre demande '.$form->ID.' de recuperation pour le '.$this->formatDates($form->DATE).' a ete refusee -<br /> Raison : <strong>'.$form->REASON.'</strong></p>';
       $mail->AltBody = '<p> Votre demande '.$form->ID.' de recuperation pour le '.$this->formatDates($form->DATE).' a ete refusee -<br /> Raison : <strong>'.$form->REASON.'</strong></p>';
 
-      if(!$mail->send()) {
-        echo 'Message could not be sent.';
-
-        $this->app->log->info('****mail->ErrorInfo **** -> '.$this->dumpRet($mail->ErrorInfo));
-      } else {
-
-        $this->app->log->info('****Message has been sent **** -> ');
-      }
     }
 
     if ($type == 'validated') {                              // Set email format to HTML
@@ -931,14 +925,6 @@ class RecoveryDAO extends BaseSimplifyObject{
       $mail->Body    = '<p> Votre demande '.$form->ID.' de recuperation pour le '.$this->formatDates($form->DATE).' a ete validee </p>';
       $mail->AltBody = '<p> Votre demande '.$form->ID.' de recuperation pour le '.$this->formatDates($form->DATE).' a ete validee </p>';
 
-      if(!$mail->send()) {
-        echo 'Message could not be sent.';
-
-        // $this->app->log->info('****mail->ErrorInfo **** -> '.$this->dumpRet($mail->ErrorInfo));
-      } else {
-
-        // $this->app->log->info('****Message has been sent **** -> ');
-      }
     }
 
     if ($type == 'recovery_deleted') {                              // Set email format to HTML
@@ -947,15 +933,18 @@ class RecoveryDAO extends BaseSimplifyObject{
       $mail->Body    = '<p> Votre Operation '.$form['ID'].', "'.$form['LABEL'].'", du '.$this->formatDates($form['DATE']).' a ete supprimee par '.$_SESSION['userid'].' </p>';
       $mail->AltBody = '<p> Votre Operation '.$form['ID'].', "'.$form['LABEL'].'", du '.$this->formatDates($form['DATE']).' a ete supprimee par '.$_SESSION['userid'].' </p>';
 
-      if(!$mail->send()) {
-        echo 'Message could not be sent.';
-
-        // $this->app->log->info('****mail->ErrorInfo **** -> '.$this->dumpRet($mail->ErrorInfo));
-      } else {
-
-        // $this->app->log->info('****Message has been sent **** -> ');
-      }
     }
+
+    if(!$mail->send()) {
+      echo 'Message could not be sent.';
+
+      $this->app->log->info('****mail->ErrorInfo **** -> '.$this->dumpRet($mail->ErrorInfo));
+    } else {
+
+      $this->app->log->info('****Message has been sent **** -> ');
+      $this->app->log->info('****mail->Info **** -> '.$this->dumpRet($mail));
+    }
+    return('done');
   }
 
   /***************************************
@@ -972,6 +961,9 @@ class RecoveryDAO extends BaseSimplifyObject{
 
 
     $recoveryId =  $form->ID;
+    if (!isset($form->REASON)) {
+      $form->REASON = "-";
+    }
     $refused_reason = str_replace('à', "a", str_replace('é', "e", str_replace('"', "", str_replace("'", "", $form->REASON))));
     $sqlRecovery = "UPDATE RECOVERY_FORM
                   SET STATUS='DENIED',
@@ -1098,7 +1090,6 @@ class RecoveryDAO extends BaseSimplifyObject{
   //FONCTION 
 
   function generateId($type) {
-    $salt = '$2a$07$MantaCaledoniavahinenoumeaTiare$';
 
 //we count all existing recoveryId to predict the next id
     if ($type=='REC') {
@@ -1123,6 +1114,7 @@ class RecoveryDAO extends BaseSimplifyObject{
       }
 
       $recoveryId = date('ymd').$type.$newOrderInc;
+      $salt = '$2a$07$MantaCaledoniavahinenoumeaTiare$';
       $strCrypt = crypt($recoveryId,$salt);
       $strCrypt = substr($strCrypt,-2);
       $strCrypt = str_replace('/', 'A', $strCrypt);
@@ -1155,6 +1147,7 @@ class RecoveryDAO extends BaseSimplifyObject{
       }
 
       $recoveryId = date('ymd').$type.$newOrderInc;
+      $salt = '$2a$07$MantaCaledoniavahinenoumeaTiare$';
       $strCrypt = crypt($recoveryId,$salt);
       $strCrypt = substr($strCrypt,-2);
       $strCrypt = str_replace('/', 'A', $strCrypt);

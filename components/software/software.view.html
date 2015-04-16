@@ -1,7 +1,16 @@
 <div ng-controller="SoftwareViewCtrl">
   <legend><i class="fa fa-newspaper-o fa-lg"></i> Versionning</legend>
   <h4><i class="fa fa-eye"></i> Logiciel N° {{software.ID}} - {{software.LABEL}}</h4>
-  <div  ng-show="deleteButton == '0' && editButton != 1">
+  <div class="col-md-12" ng-show="uploading == 1">
+    <legend>Envoi de fichier</legend>
+    <div class='col-md-2 text-right'>Progression :</div>
+      <div class='col-md-4 text-left'>
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-info active" role="progressbar" aria-valuenow="{{progressPercentage}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progressPercentage}}%">{{progressPercentage}} %</div>
+          </div>
+      </div>
+  </div>
+  <div  ng-show="deleteButton == '0' && editButton != 1 && maintenanceView != 1 && maintenanceDetails != 1 && uploading == 0">
     <div class="blocBorder col-md-6">
     <legend><i class="fa fa-info-circle fa-lg"></i> Informations</legend>
       <div class='row'>
@@ -74,6 +83,7 @@
       <button type="submit" class="btn btn-info " ng-click="showList()"><i class="fa fa-list"></i> Liste</button>
       <button type="submit" class="btn btn-primary col-md-offset-1 " ng-click="edit()"><i class="fa fa-pencil"></i> Modifier</button>
       <button type="submit" class="btn btn-danger col-md-offset-1 " ng-click="deleteButton = 1"><i class="fa fa-trash-o"></i> Supprimer</button>
+      <button type="submit" class="btn btn-warning col-md-offset-1 " ng-click="maintenanceView = 1"><i class="fa fa-wrench"></i> Opérations de Maintenance</button>
     </div>
   </div>
 
@@ -124,6 +134,78 @@
       <button type="submit" class="btn btn-danger col-md-offset-1 " ng-click="save()"><i class="fa fa-floppy-o"></i> Enregistrer</button>
       <button type="submit" class="btn btn-warning col-md-offset-1" ng-click="cancelEdit()"><i class="fa fa-undo"></i> Annuler</button>
     </form> 
+<div class="col-md-12" ng-show="detailsView == 1">
+  <div class="col-md-12 light-margin-bot">
+    <label for="maintenanceAdd">Déroulement des opérations</label>
+    <textarea disabled rows='4' type="text" class="form-control" id="description" ng-model="details.DESCRIPTION"></textarea>
+  </div>
+  <div class="col-md-12 light-margin-bot">
+    <label for="maintenanceAdd">Problèmes rencontrés </label>
+    <textarea disabled rows='4' type="text" class="form-control" id="issues" ng-model="details.ISSUES"></textarea>
+  </div>
+  <button type="submit" class="btn btn-info col-md-offset-1" ng-click="detailsView = 0"><i class="fa fa-undo"></i> Retour</button> 
+</div>
+
+<div class="col-md-12" ng-show="maintenanceView == 1 && detailsView != 1">
+  <h4>Opérations de Maintenance</h4>
+  <div class="col-md-12 light-margin-top light-margin-bot">
+    <button type="submit" class="btn btn-info" ng-click="mode = 1"><i class="fa fa-history"></i> Historique</button>
+    <button type="submit" class="btn btn-danger col-md-offset-1" ng-click="mode = 0"><i class="fa fa-plus"></i> Nouvelle Opération</button> 
+    <button type="submit" class="btn btn-warning col-md-offset-1" ng-click="maintenanceView = 0"><i class="fa fa-undo"></i> Retour</button> 
+  </div>
+  <table class="table table-striped table-bordered table-hover tbl-list light-margin-top" ng-show="mode == 1">
+    <thead>
+      <tr class="info not-allowed"><th>Détails</th><th>Date</th><th>Opération</th><th>Problèmes rencontrés</th><th>Auteur</th><th>Fichiers</th></tr>
+    </thead>
+    <tbody>
+      <tr class="reveal-animation" ng-repeat="maintenance in maintenances" >
+        <td><button type="button" class="btn btn-default" ng-click="maintenanceDetails(maintenance)"><i class="fa fa-download fa-lg"></i></button></td>
+        <td>{{maintenance.DATE | tsDate}}</td>
+        <td>{{maintenance.DESCRIPTION}}</td>
+        <td>{{maintenance.ISSUES}}</td>
+        <td>{{maintenance.AUTHOR}}</td>
+        <td><button type="button" class="btn btn-info" ng-show='maintenance.FILES != null' ng-click="downloadFiles(maintenance.ID)"><i class="fa fa-download fa-lg"></i></button></td>
+      </tr>
+    </tbody>
+  </table>
+  <form class="col-md-6 light-margin-bot" ng-show="mode == 0">
+      <div class="col-md-12 light-margin-top">
+        <div class="col-md-3">
+          <label for="recoveryFormLabel">Date</label>
+        </div>   
+        <div class="col-md-9">
+            <p class="input-group">
+              <input type="text" class="form-control" datepicker-popup="dd-MM-yy" ng-model="maintenanceAdd.DATE" is-open="openedDate" min-date="2000-01-01" max-date="'2099-06-22'" close-text="Close" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-success" ng-click="openDate($event)"><i class="fa fa-calendar fa-lg"></i></button>
+              </span>
+            </p>
+        </div>
+      </div>
+    <div class="col-md-12 light-margin-bot">
+      <label for="maintenanceAdd">Déroulement des opérations</label>
+      <textarea  rows='4' type="text" class="form-control" id="description" ng-model="maintenanceAdd.DESCRIPTION"></textarea>
+    </div>
+    <div class="col-md-12 light-margin-bot">
+      <label for="maintenanceAdd">Problèmes rencontrés </label>
+      <textarea rows='4' type="text" class="form-control" id="issues" ng-model="maintenanceAdd.ISSUES"></textarea>
+    </div>
+    <div class='col-md-12 light-margin-bot'>
+      <label class="col-md-4 control-label"><i class="fa fa-info text-info fa-lg faa-pulse faa-fast animated"  popover-placement="top" popover-trigger="mouseenter" popover="1 fichier au format ZIP uniquement (20 mb MAX)"></i> Fichier(s):</label>
+      <div class="btn btn-success" ng-file-select ng-model="files" allow-dir="false" accept=".zip" ng-multiple="false"><i class="fa fa-upload"></i> Selectionnez un fichier ZIP</div>
+      <ul>
+        <li ng-repeat="f in files" style="font:smaller">{{f.name}}</li>
+      </ul>
+    </div>
+    <button type="submit" class="btn btn-danger col-md-offset-1 " ng-click="addMaintenance()"><i class="fa fa-floppy-o"></i> Enregistrer</button>
+    <button type="submit" class="btn btn-warning col-md-offset-1" ng-click="maintenanceView = 0"><i class="fa fa-undo"></i> Annuler</button>
+  </form>
+</div>
+
+
+
+
+
 
   <!-- we display the delete comfirmation dialog when the delete button is pushed -->
   <div class="col-md-12 jumbotron text-center" ng-show="deleteButton == '1'">

@@ -48,6 +48,7 @@ class HardwareDAO extends BaseSimplifyObject{
                       hardware.warranty_start,
                       hardware.warranty_end,
                       hardware.edition_date,
+                      hardware.deployment_date,
                       hardware.site,
                       hardware.status,
                       hardware.barcode
@@ -162,6 +163,12 @@ class HardwareDAO extends BaseSimplifyObject{
     if (!isset($hardware->SITE)) {
       $hardware->SITE = '-';
     };
+    if (!isset($hardware->DIRECTION)) {
+      $hardware->DIRECTION = '-';
+    };
+    if (!isset($hardware->DEPLOYMENT_DATE)) {
+      $hardware->DEPLOYMENT_DATE = '-';
+    };
     if (!isset($hardware->BARCODE)) {
       $hardware->BARCODE = '-';
     };
@@ -182,6 +189,8 @@ class HardwareDAO extends BaseSimplifyObject{
     $brand_Id = $hardware->BRAND_ID;      
     $type = $hardware->TYPE;    
     $site = $hardware->SITE;    
+    $direction = $hardware->DIRECTION;    
+    $deployment_date = $hardware->DEPLOYMENT_DATE;    
     $serial_number = $hardware->SERIAL_NUMBER;
     $provider_Id = $hardware->PROVIDER_ID;
     $barcode = $hardware->BARCODE;
@@ -200,7 +209,9 @@ class HardwareDAO extends BaseSimplifyObject{
                                       WARRANTY_END,
                                       TYPE,
                                       SITE,
+                                      DIRECTION,
                                       DESCRIPTION,
+                                      DEPLOYMENT_DATE,
                                       BRAND_ID,
                                       SERIAL_NUMBER,
                                       PROVIDER_ID,
@@ -212,7 +223,9 @@ class HardwareDAO extends BaseSimplifyObject{
                                      :warranty_end,
                                      :type,
                                      :site,
+                                     :direction,
                                      :description,
+                                     :deployment_date,
                                      :brand_id,
                                      :serial_number,
                                      :provider_Id,
@@ -228,7 +241,9 @@ class HardwareDAO extends BaseSimplifyObject{
                             ':warranty_end'=>$warranty_end,
                             ':type'=>$type,
                             ':site'=>$site,
+                            ':direction'=>$direction,
                             ':description'=>$description,
+                            ':deployment_date'=>$deployment_date,
                             ':brand_id'=>$brand_Id,
                             ':serial_number'=>$serial_number,
                             ':provider_Id'=>$provider_Id,
@@ -273,6 +288,9 @@ class HardwareDAO extends BaseSimplifyObject{
     if (!isset($hardware->PROVIDER_ID)) {
       $hardware->BRAND_ID = '-';
     };
+    if (!isset($hardware->DEPLOYMENT_DATE)) {
+      $hardware->DEPLOYMENT_DATE = '-';
+    };
     if (!isset($hardware->SERIAL_NUMBER)) {
       $hardware->SERIAL_NUMBER = '-';
     };
@@ -281,6 +299,9 @@ class HardwareDAO extends BaseSimplifyObject{
     };
     if (!isset($hardware->SITE)) {
       $hardware->SITE = '-';
+    };
+    if (!isset($hardware->DIRECTION)) {
+      $hardware->DIRECTION = '-';
     };
     if (!isset($hardware->STATUS)) {
       $hardware->STATUS = '-';
@@ -293,18 +314,22 @@ class HardwareDAO extends BaseSimplifyObject{
     $serial_number = str_replace("'", "", $hardware->SERIAL_NUMBER);
     $barcode = str_replace("'", "", $hardware->BARCODE);
     $site = str_replace("'", "", $hardware->SITE);
+    $direction = str_replace("'", "", $hardware->DIRECTION);
     $status = str_replace("'", "", $hardware->STATUS);
     $type = str_replace("'", "", $hardware->TYPE);
     $provider_Id = str_replace("'", "", $hardware->PROVIDER_ID);
+    $deployment_date = $hardware->DEPLOYMENT_DATE;
 
     $sqlHardware = "UPDATE HARDWARE
                   SET LABEL='$label',
                       WARRANTY_START='$warranty_start',
                       WARRANTY_END='$warranty_end',
                       DESCRIPTION='$description',
+                      DEPLOYMENT_DATE='$deployment_date',
                       BRAND_ID='$brand_Id',
                       BARCODE='$barcode',
                       SITE='$site',
+                      DIRECTION='$direction',
                       STATUS='$status',
                       TYPE='$type',
                       SERIAL_NUMBER='$serial_number',

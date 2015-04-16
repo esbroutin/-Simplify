@@ -6,16 +6,20 @@ angular
 								'$stateParams',
 								'$http',
 								'certificateService',
+								'$rootScope',
 								'providerService',
+								'$upload',
 								'brandService',
-								 function($scope, $state,$stateParams, $http, certificateService, providerService, brandService){
+								 function($scope, $state,$stateParams, $http, certificateService, $rootScope, providerService,$upload, brandService){
 
 //we initialize our values
 	$scope.formDone = 0;
 	$scope.addButton = 0;
+	$scope.uploading = 0;
 	$scope.certificate = {};
 	$scope.certificate.AUTO_SIGNED = true;
 	$scope.fields = [];
+	$scope.newCertificateId = 'XXXXX';
 	//show list function
 	$scope.showList = function(){
 		$state.transitionTo('listCertificate', {reload: true});
@@ -64,6 +68,36 @@ angular
 			});
 		});
 	};
+    $scope.upload = function (files) {
+        if (files && files.length) {
+				$scope.uploading = 1;
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var id = $scope.newCertificateId+'_'+file.name;
+                console.log('file', file);
+                console.log('id', id);
+                $upload.upload({
+				    url: 'REST/certificate/upload', 
+				    headers: {'Content-Type': file.type},
+				    method: 'POST',
+				    data: file,
+				    file: file,
+				    fileName: id
+                }).progress(function (evt) {
+                    $scope.progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                    // console.log('progress: ' + $scope.progressPercentage + '% ' +
+                    //             evt.config.file.name);
+                }).success(function (data, status, headers, config) {
+        		$scope.uploading = 0;
+                    // console.log('file ' + config.file.name + 'uploaded. Response: ' +
+                    //             JSON.stringify(data));
+                });
+            }
+        }else{
+
+        		$scope.uploading = 0;
+        }
+    };
 	
 /****************************
 *
@@ -76,12 +110,17 @@ angular
 			$scope.certificate.PROVIDER = '-';
 			$scope.certificate.BRAND = '-';
 		}
+		if ($scope.certificate.COMMON_NAME == '') {
+			$scope.certificate.COMMON_NAME = undefined;
+		};
 
 			var countDefined='';
 
 			for (var i = newValues.length - 1; i >= 0; i--) {
 
-				if(newValues[i] !=0 && newValues[i] !=undefined || newValues[i] ==false) {
+				if(newValues[i] !=0 && newValues[i] !=undefined && newValues[i].length !=0 || newValues[i] ==false) {
+					// console.log('newValues[i].length ',newValues[i].length);
+					// console.log('newValues[i] ',newValues[i]);
 					countDefined++;
 				}
 			};
@@ -125,7 +164,9 @@ angular
 			var str = '';
 			str = $scope.newCertificateId;
 			str = str.replace('"','');
-			$scope.newCertificateId = str.replace('"',''); 
+			$scope.newCertificateId = str.replace('"','');
+    		$scope.upload($scope.files);
+			$rootScope.listAlerts ();
 			// console.log('newCertificateId : ' + $scope.newCertificateId);
 		});
 

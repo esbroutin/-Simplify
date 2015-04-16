@@ -13,6 +13,7 @@ angular
 
 // angular.extend(this,$controller('BaseCRUDCtrl', { $scope: $scope, dataService: licenseService }));
 
+			$rootScope.listAlerts ();
 //we initialize our values
 	$scope.deleteButton = 0;
 	$scope.status =$state.current.name;

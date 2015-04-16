@@ -1,8 +1,91 @@
 <div ng-controller="MaintenanceCrudCtrl">
-<div class="margin-top jumbotron col-offset-1 col-md-8">
-  <h1 class=" text-center"><i class="fa fa-bug fa-lg"></i> Oups, cette fonctionnalité n'est pas encore présente ! <i class="fa fa-bug fa-lg"></i> </h1>
-  <div class=" text-center">
-	<p><i class="fa fa-connectdevelop fa-2x"></i>- Date de livraison : Inconnue -<i class="fa fa-connectdevelop fa-2x"></i></p>
-  </div> 
-</div>   
+  <div ng-show="formDone == 0 && addButton != 1">
+<legend><i class="fa fa-wrench fa-lg"></i> Maintenance</legend>
+  <h4><i class="fa fa-file-o"></i> Nouveau </h4>
+    <form class="col-md-10 " >
+      <!-- label -->
+      <div class="blocBorder col-md-12">
+        <div class="col-md-12 light-margin-top">
+          <div class="col-md-3 text-right">
+            <label for="maintenanceLabel"><i ng-hide='maintenance.softwareId ==undefined' class="fa fa-check text-success"></i><i ng-show='maintenance.softwareId ==undefined' class="fa fa-times text-danger"></i> Logiciel concerné</label>
+          </div>   
+          <div class="col-md-6">
+            <ui-select ng-model="maintenance.software" theme="selectize"> 
+              <ui-select-match placeholder="Selectionnez ou recherchez un logiciel dans la liste...">{{$select.selected.LABEL}}</ui-select-match>
+              <ui-select-choices repeat="software in softwares | filter: $select.search">
+                <strong> Libéllé :</strong> 
+                <span ng-bind-html="software.LABEL | highlight: $select.search" class="text-info"></span> 
+              </ui-select-choices>
+            </ui-select>
+          </div>        
+        </div>
+        <div class="col-md-12 light-margin-top light-margin-bot">
+          <div class="col-md-12">
+            <div class="col-md-3 text-right text-info"><strong>Version actuelle : </strong></div><div class="col-md-3 text-left">{{maintenance.software.CURRENT_VERSION}}</div>   
+            <div class="col-md-3 text-right text-info"><strong>Mise à jour :  </strong></div><div class="col-md-3 text-left">{{maintenance.software.NEXT_VERSION}}</div>   
+          </div>
+          <div class="col-md-12">
+            <div class="col-md-3 text-right text-info"><strong>A faire :  </strong></div><div class="col-md-3 text-left">{{maintenance.software.TO_DO}}</div>   
+          </div>
+        </div>
+      </div>
+        <!-- DATE -->
+      <div class="col-md-7 light-margin-top">
+        <div class="col-md-4">
+          <label for="recoveryLabel"><i ng-hide='maintenance.DATE ==undefined' class="fa fa-check text-success"></i><i ng-show='maintenance.DATE ==undefined' class="fa fa-times text-danger"></i> Date</label>
+        </div>   
+        <div class="col-md-8">
+            <p class="input-group">
+              <input type="text" class="form-control" datepicker-popup="dd-MM-yy" ng-model="maintenance.DATE" is-open="openedDate" min-date="2000-01-01" max-date="'2099-06-22'" close-text="Close" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-success" ng-click="openDate($event)"><i class="fa fa-calendar fa-lg"></i></button>
+              </span>
+            </p>
+        </div>
+      </div>
+      <!-- description -->
+      <div class="col-md-12 text-left col-md-12 light-margin-top">
+        <div class="col-md-2">
+          <label for="maintenanceDescription">Opération effectuées</label>
+        </div>   
+        <div class="col-md-6">
+          <textarea class="form-control" ng-model='maintenance.DESCRIPTION'></textarea>
+        </div>
+      </div>
+      <!-- Product name -->
+      <div class="form-group col-md-12 text-left light-margin-top light-margin-bot">
+        <div class="col-md-2">
+          <label for="maintenance">Problème rencontrés</label>
+        </div>   
+        <div class="col-md-6">
+          <textarea class="form-control" ng-model='maintenance.ISSUES'></textarea>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-danger col-md-offset-1 " ng-disabled="completeForm < 100"  name='addButton' ng-model="addButton" btn-radio="'1'"><i class="fa fa-floppy-o"></i> Ajouter</button>
+      <button type="submit" class="btn btn-warning col-md-offset-1" ng-click="showList()"><i class="fa fa-undo"></i> Annuler</button>
+    </form> 
+  </div>
+  
+  <!-- we display the choice options when the form add is completed -->
+  <div class="col-md-12 jumbotron text-center" ng-show="status == 'addMaintenance' && formDone == 1">
+    <legend>La nouvelle fiche de maintenance a été ajoutée, que souhaitez-vous faire ?</legend>
+      <p class="text-center">
+        <button type="submit" class="btn btn-info btn-lg" ng-click="showList()"  ><i class="fa fa-list"></i> Liste</button>
+        <button type="submit" class="btn btn-success btn-lg col-md-offset-1" ng-click="viewMaintenance()"  ><i class="fa fa-info"></i> Afficher les détails</button>
+        <button type="submit" class="btn btn-danger btn-lg col-md-offset-1" ng-click="newMaintenance()"  ><i class="fa fa-pencil"></i> Nouvelle entrée</button>
+      </p>
+  </div>
+
+  <!-- we display the add confirmation options when the add button is pushed -->
+  <div class="col-md-12 jumbotron" ng-show="addButton ==1">
+    <legend>Êtes-vous sûr des informations suivantes ?</legend>
+      <div class="row"><div class="col-md-6 text-right">Libellé: </div><div class="col-md-6 text-left text-warning"> {{maintenance.LABEL}}</div></div>
+      <div class="row light-margin-top "><div class="col-md-6 text-right">Description: </div><div class="col-md-6 text-left text-warning"> {{maintenance.DESCRIPTION}}</div></div>
+      <div class="row light-margin-top "><div class="col-md-6 text-right">Type: </div><div class="col-md-6 text-left text-warning"> {{maintenance.TYPE}}</div></div>
+      <p class="text-center light-margin-top">
+        <button type="submit" class="btn btn-danger btn-lg" ng-click="addNewMaintenance()"><i class="fa fa-floppy-o"></i> Oui</button>
+      	<button type="submit" class="btn btn-warning btn-lg col-md-offset-1 " name='addButton2' ng-model="addButton" btn-radio="'0'" ng-click=""><i class="fa fa-undo"></i> Annuler</button>
+      </p>
+  </div>
+
 </div>

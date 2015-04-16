@@ -25,12 +25,12 @@
         <!-- START TIME -->
       <div class="col-md-7 light-margin-top">     
         <div class="col-md-4 text-left"><label for="recoveryStartTime"><i ng-hide='recovery.START_TIME ==undefined' class="fa fa-check text-success"></i><i ng-show='recovery.START_TIME ==undefined' class="fa fa-times text-danger"></i> Heure de début</label></div>
-        <div class="col-md-6 text-left"><input class="form-control" type="time" ng-model='recovery.START_TIME'/></div>
+        <div class="col-md-6 text-left"><input class="form-control"  placeholder="00:00:00" type="time" ng-model='recovery.START_TIME'/></div>
       </div>
         <!-- END TIME -->
       <div class="col-md-7 light-margin-top">
         <div class="col-md-4 text-left"><label for="recoveryStartTime"><i ng-hide='recovery.END_TIME ==undefined' class="fa fa-check text-success"></i><i ng-show='recovery.END_TIME ==undefined' class="fa fa-times text-danger"></i> Heure de fin</label></div>
-        <div class="col-md-6 text-left"><input class="form-control" type="time" ng-model='recovery.END_TIME'/></div>
+        <div class="col-md-6 text-left"><input class="form-control" type="time" placeholder="00:00:00" ng-model='recovery.END_TIME'/></div>
       </div>
         <!-- SPECIAL_DAY -->
       <div class="col-md-7 light-margin-top">
@@ -41,12 +41,15 @@
       <div class="col-md-7 light-margin-top">
         <div class="col-md-4 text-left"><label for="recoveryLauchPause">Jour Férié ?</label></div>
         <div class="col-md-4 text-left"><input type="checkbox" ng-model="recovery.SPECIAL_DAY"></div>
-      </div> 
+      </div>  
         <!-- BUTTONS -->
       <div class="row col-md-12 light-margin-top">
         <button type="submit" class="btn btn-danger col-md-offset-1 " ng-disabled="completeForm < 100"  name='addButton' ng-model="addButton" btn-radio="'1'"><i class="fa fa-floppy-o"></i> Ajouter</button>
         <button type="submit" class="btn btn-warning col-md-offset-1" ng-click="show()"><i class="fa fa-undo"></i> Annuler</button>
-      </div> 
+      </div>
+      <div class=" col-md-12 light-margin-top" ng-show='showAlert==1'>
+        <p class="alert alert-danger">Les heures rentrées sont incohérentes :-/ </p>
+      </div>
     </form>
   <!-- we display the add confirmation options when the add button is pushed -->
   <div class="col-md-12 jumbotron" ng-show="addButton ==1">

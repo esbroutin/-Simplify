@@ -45,25 +45,42 @@ simplify.filter('tsDateTime', function() {
 **/
 simplify.filter('tsTime', function() {
   return function(input) {
-    var dt; 
-    var timestamp; 
-    if(input instanceof Date){
-      dt = input;
-    }else{
-      if(typeof input ==='number'){
-        dt = new Date(input*1000);
-      }else{
-        dt = new Date(input);
-      }
+    if(navigator.appVersion.indexOf("Chrome")==-1 && input != undefined){
+
+      var dt;
+      console.log('input ' + input);
+      dt = input.substr(0, 19);
+      console.log('dt 1' + dt);
+      dt = dt.split(' ');
+      dt = (new Date(((new Date(dt[0]+'T'+dt[1]+'.0Z')).getTime())+39600)).toLocaleString().toString().split(' ');
+      console.log('dt ' + dt);
+      time = dt[1].substr(0, 5);
+      dt = time;
+      console.log('dt 2 ' + dt);
+      return dt;
+      
     }
-    var timestamp = new Date(dt).getTime();
-    //we add time difference (+11h)
-    timestamp = timestamp /1000;
-    var str = new Date((timestamp+39600)*1000);
-    str = str.toLocaleString().toString();
-    str = str.substr(8, str.length-8);
-    // console.log('str ' + str);
-    return str;
+    else if (input != undefined) {
+      var dt; 
+      var timestamp; 
+      if(input instanceof Date){
+        dt = input;
+      }else{
+        if(typeof input ==='number'){
+          dt = new Date(input*1000);
+        }else{
+          dt = new Date(input);
+        }
+      }
+      var timestamp = new Date(dt).getTime();
+      //we add time difference (+11h)
+      timestamp = timestamp /1000;
+      var str = new Date((timestamp+39600)*1000);
+      str = str.toLocaleString().toString();
+      str = str.substr(8, str.length-8);
+      // console.log('str ' + str);
+      return str;
+    };
   };
 });
 /**

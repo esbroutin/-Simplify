@@ -26,7 +26,7 @@
           </div>
           <div class="col-md-2">heure(s)</div>
           <div class="col-md-4">
-            <select class="form-control" ng-change='switchHourDay()' ng-model="recoveryForm.minutes" ng-options="n for n in [] | range:0:60"></select> 
+            <select class="form-control" ng-change='switchHourDay()' ng-model="recoveryForm.minutes" ng-options="n for n in [] | range:0:59"></select> 
           </div>
           <div class="col-md-2">minute(s)</div>
         </div>
@@ -36,7 +36,7 @@
         <div class="col-md-4 text-left"><label for="recoveryFormLauchPause">Heures disponibles</label></div>
         <div class="col-md-8 text-left text-success">{{available | hourConv}}</div>
       </div>
-        <!-- AVAILABLE -->
+        <!-- LEFT -->
       <div class="col-md-8 light-margin-top" >
         <div class="col-md-4 text-left"><label for="recoveryFormLauchPause">Restant</label></div>
         <div class="col-md-8 text-left text-danger" ng-show='left < 0'><i class="fa fa-exclamation-circle faa-flash animated"></i> {{left | hourConv}} <i class="fa fa-exclamation-circle faa-flash animated"></i></div>
@@ -52,9 +52,9 @@
   <div class="col-md-12 jumbotron" ng-show="addButton ==1 && lock == 0 && formDone == 0">
     <legend>Êtes-vous sûr des informations suivantes ? </legend> 
     <div class="row light-margin-top "><div class="col-md-6 text-right">Jour de récupération: </div><div class="col-md-6 text-left text-warning"> {{recoveryForm.DATE | tsDate}} </div></div>
-    <div class="row light-margin-top "><div class="col-md-6 text-right">Temps de récupération: </div><div class="col-md-6 text-left text-warning"><span th-code="{{recoveryForm.TO_USE}}" /></div></div>
-    <div class="row light-margin-top "><div class="col-md-6 text-right">Temps disponible: </div><div class="col-md-6 text-left text-warning"><span th-code="{{available}}" /></div></div>
-    <div class="row light-margin-top "><div class="col-md-6 text-right">Temps restant: </div><div class="col-md-6 text-left text-warning"><span th-code="{{left}}" /></div></div>
+    <div class="row light-margin-top "><div class="col-md-6 text-right">Temps de récupération: </div><div class="col-md-6 text-left text-warning">{{recoveryForm.TO_USE | hourConv}}</div></div>
+    <div class="row light-margin-top "><div class="col-md-6 text-right">Temps disponible: </div><div class="col-md-6 text-left text-warning">{{available | hourConv}}</div></div>
+    <div class="row light-margin-top "><div class="col-md-6 text-right">Temps restant: </div><div class="col-md-6 text-left text-warning">{{left | hourConv}}</div></div>
     <p class="text-center light-margin-top"> 
       <button type="submit" class="btn btn-danger btn-lg" ng-click="add()"><i class="fa fa-floppy-o"></i> Oui</button>
       <button type="submit" class="btn btn-warning btn-lg col-md-offset-1 " name='addButton2' ng-model="addButton" btn-radio="'0'"><i class="fa fa-undo"></i> Annuler</button>

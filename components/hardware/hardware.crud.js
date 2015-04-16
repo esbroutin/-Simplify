@@ -5,10 +5,11 @@ angular
 								'$state',
 								'$stateParams',
 								'$http',
+								'$rootScope',
 								'hardwareService',
 								'providerService',
 								'brandService',
-								 function($scope, $state,$stateParams, $http, hardwareService, providerService, brandService){
+								 function($scope, $state,$stateParams, $http, $rootScope, hardwareService, providerService, brandService){
 
 //we initialize our values
 	$scope.formDone = 0;
@@ -72,7 +73,7 @@ angular
 *
 ****************************/
 
-	$scope.$watchCollection('[hardware.WARRANTY_START, hardware.WARRANTY_END, hardware.PROVIDER,hardware.TYPE,hardware.BRAND, hardware.LABEL]', function(newValues) {
+	$scope.$watchCollection('[hardware.WARRANTY_START, hardware.WARRANTY_END, hardware.DEPLOYMENT_DATE, hardware.PROVIDER,hardware.TYPE,hardware.BRAND, hardware.LABEL]', function(newValues) {
 		var countDefined='';
 
 		for (var i = newValues.length - 1; i >= 0; i--) {
@@ -106,6 +107,7 @@ angular
 			$scope.addButton = 0;
 			$scope.formDone = 1;
 			$scope.newHardwareId = $scope.response;
+			$rootScope.listAlerts ();
 
 			//ugly temporary algorithm to remove double quotes because angularjs suddendly added stuff, bitch is crazy ...
 			var str = '';
@@ -134,6 +136,13 @@ angular
     $event.stopPropagation();
 
     $scope.openedStartDate = true;
+  };
+
+  $scope.openDeployDate = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+
+    $scope.openedDeployDate = true;
   };
 
   $scope.openEndDate = function($event) {

@@ -59,13 +59,36 @@
           <input type="text" class="form-control" ng-model="hardware.DESCRIPTION" placeholder="entrez la description ...">
         </div>
       </div>
-      <!-- Product name -->
+      <!-- deploiement -->
+      <div class="form-group row text-left">
+        <div class="col-md-2">
+          <label for="DEPLOYMENT_DATE"><i ng-hide='hardware.DEPLOYMENT_DATE ==undefined' class="fa fa-check text-success"></i><i ng-show='hardware.DEPLOYMENT_DATE ==undefined' class="fa fa-times text-danger"></i>  Date de déploiement</label>
+        </div>   
+        <div class="col-md-4">
+            <p class="input-group">
+              <input type="text" class="form-control" datepicker-popup="dd-MM-yy" ng-model="hardware.DEPLOYMENT_DATE" is-open="openedDeployDate" max-date="'2099-06-22'" close-text="Close" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-danger" ng-click="openDeployDate($event)"><i class="fa fa-calendar fa-lg"></i></button>
+              </span>
+            </p>
+        </div>
+      </div>
+      <!-- site -->
       <div class="form-group row text-left">
         <div class="col-md-2">
           <label for="hardware">Site</label>
         </div>   
         <div class="col-md-10">
-          <input type="text" class="form-control" ng-model="hardware.SITE" placeholder="niveau de service ...">
+          <input type="text" class="form-control" ng-model="hardware.SITE" placeholder="site ...">
+        </div>
+      </div>
+      <!-- direction -->
+      <div class="form-group row text-left">
+        <div class="col-md-2">
+          <label for="hardware">Direction</label>
+        </div>   
+        <div class="col-md-10">
+          <input type="text" class="form-control" ng-model="hardware.DIRECTION" placeholder="direction ...">
         </div>
       </div>
       <!-- provider BLOC-->
@@ -182,7 +205,7 @@
   
   <!-- we display the choice options when the form add is completed -->
   <div class="col-md-12 jumbotron text-center" ng-show="status == 'addHardware' && formDone == 1">
-    <legend>La nouvelle licence a été ajoutée, que souhaitez-vous faire ?</legend>
+    <legend>Le nouveau matériel a été ajoutée, que souhaitez-vous faire ?</legend>
     </br>
       <p class="text-center">
         <button type="submit" class="btn btn-info btn-lg" ng-click="showList()"  ><i class="fa fa-list"></i> Liste</button>

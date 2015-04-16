@@ -192,6 +192,25 @@ $app->get('/hardware/get/:hardwareId', function($hardwareId) use($app)  {
     } 
 });
 
+$app->get('/hardware/pdf/:hardwareId', function($hardwareId) use($app)  {
+    if(checkAuth($app)){
+      $hardware = new \PNORD\Ctrl\HardwareCtrl($app);  
+      $ret = $hardware->generatePDF($hardwareId);
+      echo json_encode($ret);  
+    }else{
+      $app->response->setStatus(403); 
+    } 
+});
+
+$app->get('/hardware/pdf/read/:hardwareId', function($hardwareId) use($app)  {
+      $recovery = new \PNORD\Ctrl\HardwareCtrl($app);  
+      $ret = $recovery->readPDF($hardwareId);
+
+      $app->log->info('hardware/pdf/read ');
+
+      echo json_encode($ret);  
+});
+
 $app->delete('/hardware/delete/:hardwareId', function($hardwareId) use($app)  {
     if(checkAuth($app)){
       $hardware = new \PNORD\Ctrl\HardwareCtrl($app);  
@@ -236,10 +255,10 @@ $app->get('/recovery/admin/count', function () use ($app) {
     }
 }); 
 
-$app->get('/recovery/admin/form/list', function () use ($app) {
+$app->get('/recovery/admin/form/list/:startIndex/:length', function ($startIndex,$length) use ($app) {
     if(checkAuth($app)){
       $recovery = new \PNORD\Ctrl\RecoveryCtrl($app);    
-      $ret = $recovery->listFormAdmin();
+      $ret = $recovery->listFormAdmin($startIndex,$length);
       echo json_encode($ret);  
     }else{
       $app->response->setStatus(403); 
@@ -364,12 +383,53 @@ $app->get('/software/list/:search', function ($search) use ($app) {
       $app->response->setStatus(403); 
     }
 }); 
+$app->get('/software/maintenance/list/:softwareId', function ($softwareId) use ($app) {
+    if(checkAuth($app)){
+      $software = new \PNORD\Ctrl\SoftwareCtrl($app);    
+      $ret = $software->listMaintenance($softwareId);
+      echo json_encode($ret);  
+    }else{
+      $app->response->setStatus(403); 
+    }
+}); 
 
 $app->post('/software/add', function() use($app)  {
     if(checkAuth($app)){
       $software = new \PNORD\Ctrl\SoftwareCtrl($app);  
       $data = json_decode($app->request->getBody());  
       $ret = $software->addSoftware($data);
+      echo json_encode($ret);   
+    }else{
+      $app->response->setStatus(403); 
+    }
+});
+
+$app->post('/software/maintenance/upload', function() use($app)  {
+    if(checkAuth($app)){
+      $maintenance = new \PNORD\Ctrl\SoftwareCtrl($app);  
+      $data = json_decode($app->request->getBody());  
+      $ret = $maintenance->upload($data);
+      echo json_encode($ret);   
+    }else{
+      $app->response->setStatus(403); 
+    }
+});
+
+$app->get('/software/maintenance/download/:maintenance', function($maintenance) use($app)  {
+    if(checkAuth($app)){
+      $software = new \PNORD\Ctrl\SoftwareCtrl($app);  
+      $ret = $software->downloadFile($maintenance);
+      echo json_encode($ret);  
+    }else{
+      $app->response->setStatus(403); 
+    }
+});
+
+$app->post('/software/maintenance/add', function() use($app)  {
+    if(checkAuth($app)){
+      $software = new \PNORD\Ctrl\SoftwareCtrl($app);  
+      $data = json_decode($app->request->getBody());  
+      $ret = $software->addMaintenance($data);
       echo json_encode($ret);   
     }else{
       $app->response->setStatus(403); 
@@ -432,6 +492,24 @@ $app->post('/certificate/add', function() use($app)  {
     }
 });
 
+$app->get('/certificate/download/:certificate', function($certificate) use($app)  {
+      $recovery = new \PNORD\Ctrl\CertificateCtrl($app);  
+      $ret = $recovery->downloadFile($certificate);
+
+      echo json_encode($ret);  
+});
+
+$app->post('/certificate/upload', function() use($app)  {
+    if(checkAuth($app)){
+      $certificate = new \PNORD\Ctrl\CertificateCtrl($app);  
+      $data = json_decode($app->request->getBody());  
+      $ret = $certificate->upload($data);
+      echo json_encode($ret);   
+    }else{
+      $app->response->setStatus(403); 
+    }
+});
+
 $app->post('/certificate/update', function() use($app)  {
     if(checkAuth($app)){
       $certificate = new \PNORD\Ctrl\CertificateCtrl($app);  
@@ -467,15 +545,46 @@ $app->delete('/certificate/delete/:certificateId', function($certificateId) use(
 // *  MAINTENANCE
 // **************************************************
 
-$app->get('/maintenance/list', function () use ($app) {
+$app->get('/maintenance/list/:search', function ($search) use ($app) {
     if(checkAuth($app)){
       $maintenance = new \PNORD\Ctrl\MaintenanceCtrl($app);    
-      $ret = $maintenance->listMaintenance();
+      $ret = $maintenance->listMaintenance($search);
       echo json_encode($ret);  
     }else{
       $app->response->setStatus(403); 
     } 
 }); 
+
+$app->post('/maintenance/update', function() use($app)  {
+    if(checkAuth($app)){
+      $maintenance = new \PNORD\Ctrl\MaintenanceCtrl($app);  
+      $data = json_decode($app->request->getBody());  
+      $ret = $maintenance->updateMaintenance($data);
+      echo json_encode($ret);   
+    }else{
+      $app->response->setStatus(403); 
+    }
+});
+
+$app->get('/maintenance/get/:maintenanceId', function($maintenanceId) use($app)  {
+    if(checkAuth($app)){
+      $maintenance = new \PNORD\Ctrl\MaintenanceCtrl($app);  
+      $ret = $maintenance->getMaintenance($maintenanceId);
+      echo json_encode($ret);  
+    }else{
+      $app->response->setStatus(403); 
+    } 
+});
+
+$app->delete('/maintenance/delete/:maintenanceId', function($maintenanceId) use($app)  {
+    if(checkAuth($app)){
+      $maintenance = new \PNORD\Ctrl\MaintenanceCtrl($app);  
+      $ret = $maintenance->deleteMaintenance($maintenanceId);
+      echo json_encode($ret);   
+    }else{
+      $app->response->setStatus(403); 
+    } 
+});
 
 // **************************************************
 // *  PROVIDERS

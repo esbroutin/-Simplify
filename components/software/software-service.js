@@ -9,6 +9,9 @@ simplify.factory('softwareService', function($http) {
     add: function(data) {
          return $http.post("REST/software/add",data);
     },
+    addMaintenance: function(data) {
+         return $http.post("REST/software/maintenance/add",data);
+    },
     delete: function(softwareId) {
          return $http.delete("REST/software/delete/"+softwareId);
   	},
@@ -17,6 +20,9 @@ simplify.factory('softwareService', function($http) {
     },
     update: function(software) {
          return $http.post("REST/software/update",software);
+    },
+    listMaintenance: function(softwareId) {
+         return $http.get("REST/software/maintenance/list/"+softwareId);
     }
   }
 });

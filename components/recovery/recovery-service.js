@@ -15,8 +15,14 @@ simplify.factory('recoveryService', function($http) {
     countForms: function() {
          return $http.get("REST/recovery/admin/count");
     },
-    listFormAdmin: function() {
-         return $http.get("REST/recovery/admin/form/list");
+    listFormAdmin: function(startIndex,length) {
+        if(startIndex==undefined || startIndex==""){
+            startIndex = 0;
+        }
+        if(length==undefined || length==""){
+            length = 25;
+        }
+         return $http.get("REST/recovery/admin/form/list/"+startIndex+'/'+length);
     },
     add: function(recovery) {
          return $http.post("REST/recovery/add",recovery);

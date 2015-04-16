@@ -2,7 +2,6 @@
 include('config.inc.php');
 global $gTblConfig;
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" ng-app="simplify">
 <head> 
     <title>Province Nord - !Simplify</title>
@@ -48,6 +47,7 @@ global $gTblConfig;
   <script type="text/javascript" src="bower_components/angular-gantt/dist/angular-gantt.js"></script>
   <script type="text/javascript" src="bower_components/angular-gantt/dist/angular-gantt-plugins.js"></script>
   <script type="text/javascript" src="bower_components/ng-table/dist/ng-table.js"></script>
+  <script src="bower_components/ng-file-upload/angular-file-upload.js"></script>
 
   <!-- Calendar -->
   <script type="text/javascript" src="bower_components/angular-ui-calendar/src/calendar.js"></script>
@@ -99,7 +99,7 @@ global $gTblConfig;
     }
  </script>-->
 </head> 
-<body class='slate'> 
+<body class='slate' ng-cloak> 
   <div ng-app="simplify" class="container-fluid" >
   <div ng-controller="globalCtrl" > 
   <!-- NAVBAR -->

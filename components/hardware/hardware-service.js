@@ -15,6 +15,9 @@ simplify.factory('hardwareService', function($http) {
     get: function(hardwareId) {
          return $http.get("REST/hardware/get/"+hardwareId);
     },
+    generatePDF: function(hardwareId) {
+         return $http.get("REST/hardware/pdf/"+hardwareId);
+    },
     update: function(hardware) {
          return $http.post("REST/hardware/update",hardware);
     }

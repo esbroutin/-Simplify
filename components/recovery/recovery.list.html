@@ -6,28 +6,26 @@
   <!-- </div> -->
   <table class="table table-striped table-bordered table-hover tbl-list light-margin-top">
     <thead>
-      <tr class="info not-allowed"><th>ID</th><th>Date</th><th>Libéllé</th><th>Récupération obtenue (h)</th><th>Récupération utilisée (h)</th></tr>
+      <tr class="info not-allowed"><th>Date</th><th>Libéllé</th><th>Récupération obtenue (h)</th><th>Récupération utilisée (h)</th></tr>
     </thead>
     <tbody>
       <tr class="reveal-animation" ng-repeat="recovery in recoveries" ng-click="viewRecovery(recovery)" >
-        <td>{{recovery.ID}}</td>
         <td>{{recovery.DATE | tsDate}}</td>
         <td>{{recovery.LABEL}}</td>
         <td>{{recovery.RECOVERY_STOCK | hourConv}}</td>
         <td>{{recovery.RECOVERY_USED | hourConv}}</td>
       </tr>
-      <tr class="reveal-animation not-allowed"><td></td><td></td><td></td><td><strong class="text-info">Total obtenu: {{recoveries.SUM_RECOVERY_STOCK | hourConv}} </strong></td><td><strong class="text-danger">Total utilisé: {{recoveries.SUM_RECOVERY_USED | hourConv}} </strong></td></tr>
-      <tr class="reveal-animation text-center not-allowed" ><td colspan="5"><strong class="text-success ">Temps de récupération restant : {{(recoveries.SUM_RECOVERY_STOCK - recoveries.SUM_RECOVERY_USED) | hourConv}} </strong></td></tr>
+      <tr class="reveal-animation not-allowed"><td></td><td></td><td><strong class="text-info">Total obtenu: {{recoveries.SUM_RECOVERY_STOCK | hourConv}} </strong></td><td><strong class="text-danger">Total utilisé: {{recoveries.SUM_RECOVERY_USED | hourConv}} </strong></td></tr>
+      <tr class="reveal-animation text-center not-allowed" ><td colspan="4"><strong class="text-success ">Temps de récupération restant : {{(recoveries.SUM_RECOVERY_STOCK - recoveries.SUM_RECOVERY_USED) | hourConv}} </strong></td></tr>
     </tbody>
   </table>
   <h4>Demandes de récupération </h4>
   <table class="light-margin-top table table-striped table-bordered table-hover tbl-list light-margin-top">
   	<thead>
-  		<tr class="info not-allowed"><th>ID</th><th>Créé le </th><th>Date de récupération</th><th>Durée</th><th>Statut</th><th>PDF</th></tr>
+  		<tr class="info not-allowed"><th>Créé le </th><th>Date de récupération</th><th>Durée</th><th>Statut</th><th>PDF</th></tr>
   	</thead>
   	<tbody>
   		<tr class="reveal-animation not-allowed" ng-repeat="form in forms" >
-        <td>{{form.ID}}</td>
         <td>{{form.CREATION_DATE | tsDateTime}}</td>
         <td>{{form.DATE | tsDate}}</td>
         <td>{{form.TO_USE | hourConv}}</td>
@@ -40,7 +38,7 @@
             <button class="btn btn-default " popover-placement="right" popover-trigger="mouseenter" popover="{{form.REASON}}"><i class="fa fa-info fa-lg faa-pulse animated"></i></button>
           </div></td>
   			<td class="text-success" ng-show='form.STATUS == "VALIDATED"' ><span th-code="{{form.STATUS}}" th-cat="STATUS"/></td>
-        <td><button type="submit" class="btn btn-info " ng-disabled="form.STATUS != 'VALIDATED'" popover-placement="top" popover-trigger="mouseenter" popover="Afficher le PDF" ng-click="displayPDF(form.ID)"><i class="fa fa-file-pdf-o fa-lg"></i></button></td>
+        <td><button type="submit" class="btn btn-info " ng-hide="form.STATUS == 'ON_HOLD' || form.STATUS == 'DENIED'  " popover-placement="top" popover-trigger="mouseenter" popover="Afficher le PDF" ng-click="displayPDF(form.ID)"><i class="fa fa-file-pdf-o fa-lg"></i></button></td>
   		</tr>
   	</tbody>
   </table>

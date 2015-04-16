@@ -63,6 +63,59 @@ class CertificateCtrl extends BaseSimplifyObject{
   }
 
   /**
+  * upload a file
+  * @return array(array())
+  **/
+  function upload($certificate){
+    $data = [];
+    $this->app->log->info(__CLASS__ . '::' . __METHOD__);
+    
+    // $this->app->log->info('****certificate **** -> '.$this->dumpRet($certificate));
+    $filename = $_FILES['file']['name'];
+    $destination = '/var/www/data/certificates/' . $filename;
+    move_uploaded_file( $_FILES['file']['tmp_name'] , $destination );
+    $temp = split('_', $filename);
+    $data['ID'] = $temp[0];
+    $data['LOCATION'] = $destination;
+    $dao = new \PNORD\Model\CertificateDAO($this->app);  
+    return $dao->addFileLocation($data);   
+     
+  }
+
+  /**
+  * send file to user
+  * @return array(array())
+  **/
+
+  function downloadFile($data){
+
+    $dao = new \PNORD\Model\CertificateDAO($this->app);  
+    $info = $dao->getCertificate($data); 
+    $this->app->log->info('****info **** -> '.$this->dumpRet($info));
+
+
+      if (file_exists($info['FILES'])) {
+
+      // header('Content-Description: File Transfer');
+      header('Content-Type: application/zip');
+      $name = split('certificates/', $info['FILES']);
+      // $this->app->log->info('****name **** -> '.$this->dumpRet($name));
+      // $this->app->log->info('****info Files **** -> '.$this->dumpRet($info['FILES']));
+      // $this->app->log->info('****filesize(info[FILES]) **** -> '.$this->dumpRet(filesize($info['FILES'])));
+      header('Content-Disposition: inline; filename='.basename($name[1]));
+      header('Expires: 0');
+      header('Cache-Control: must-revalidate');
+      header('Pragma: public');
+      header('Content-Length: ' . filesize($info['FILES']));
+      ob_clean();
+      flush();
+      readfile($info['FILES']);
+      exit;
+
+      }  
+
+  }  
+  /**
   * update an existing certificate
   * @return array(array())
   **/
