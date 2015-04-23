@@ -8,9 +8,7 @@ angular
 		//we update the last password with the new one
 		adminService.update($scope.admin).then(function(response){
 			$scope.response = response.data;
-			console.log('$scope.response : ', $scope.response);
 			$scope.saved = 1;
-			console.log('$scope.saved  : ', $scope.saved );
 
 		});
 	};

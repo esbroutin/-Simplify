@@ -65,6 +65,6 @@ $scope.searchRecovery = function () {
 		});
 	};
 }
-		
+
 
 }]);

@@ -1,7 +1,7 @@
 <div ng-controller="CertificateCrudCtrl">
   <div ng-show="formDone == 0 && addButton != 1 && newProvider !=1 && addfield !=1 && newBrand !=1">
-<legend><i class="fa fa-certificate fa-lg"></i> Certificats</legend>
-  <h4><i class="fa fa-file-o"></i> Nouveau </h4>
+<legend><i class="  fa fa-certificate fa-lg"></i> Certificats</legend>
+  <h4><i class="  fa fa-file-o"></i> Nouveau </h4>
     <form class="col-md-12 " >
     <!-- BASIC INFO GROUP -->
     <div class="col-md-12 blocBorder">
@@ -9,7 +9,7 @@
         <div class="row light-margin-top">
           <!-- common name -->
           <div class="col-md-4">
-            <label for="certificateLabel"><i ng-hide='certificate.COMMON_NAME ==undefined || certificate.country == ""' class="fa fa-check text-success"></i><i ng-show='certificate.COMMON_NAME ==undefined || certificate.country == ""' class="fa fa-times text-danger"></i> Nom Commun</label>
+            <label for="certificateLabel"><i ng-hide='certificate.COMMON_NAME ==undefined || certificate.country == ""' class="fa fa-check animated rubberBand text-success"></i><i ng-show='certificate.COMMON_NAME ==undefined || certificate.country == ""' class="fa fa-times text-danger"></i> Nom Commun</label>
           </div>   
           <div class="col-md-8">
             <input type="text" class="form-control" ng-model="certificate.COMMON_NAME" placeholder="entrez le nom commun ...">
@@ -18,7 +18,7 @@
     <!-- organisation -->
         <div class="row light-margin-top">
           <div class="col-md-4">
-            <label for="certificateLabel"><i ng-hide='certificate.ORGANIZATION ==undefined || certificate.country == ""' class="fa fa-check text-success"></i><i ng-show='certificate.ORGANIZATION ==undefined || certificate.country == ""' class="fa fa-times text-danger"></i> Organisation</label>
+            <label for="certificateLabel"><i ng-hide='certificate.ORGANIZATION ==undefined || certificate.country == ""' class="fa fa-check animated rubberBand text-success"></i><i ng-show='certificate.ORGANIZATION ==undefined || certificate.country == ""' class="fa fa-times text-danger"></i> Organisation</label>
           </div>   
           <div class="col-md-8">
             <input type="text" class="form-control" ng-model="certificate.ORGANIZATION" placeholder="entrez l'organisation ...">
@@ -27,7 +27,7 @@
         <!-- organisation unit-->
         <div class="row light-margin-top">
           <div class="col-md-4">
-            <label for="certificateLabel"><i ng-hide='certificate.ORGANIZATION_UNIT ==undefined || certificate.country == ""' class="fa fa-check text-success"></i><i ng-show='certificate.ORGANIZATION_UNIT ==undefined' class="fa fa-times text-danger"></i> Unité d'organisation</label>
+            <label for="certificateLabel"><i ng-hide='certificate.ORGANIZATION_UNIT ==undefined || certificate.country == ""' class="fa fa-check animated rubberBand text-success"></i><i ng-show='certificate.ORGANIZATION_UNIT ==undefined' class="fa fa-times text-danger"></i> Unité d'organisation</label>
           </div>   
           <div class="col-md-8">
             <input type="text" class="form-control" ng-model="certificate.ORGANIZATION_UNIT" placeholder="entrez l'unité d'organisation ...">
@@ -39,7 +39,7 @@
         <div class="row light-margin-top">
         <!-- Town -->
           <div class="col-md-4 text-right">
-            <label for="certificateLabel"><i ng-hide="certificate.TOWN ==undefined" class="fa fa-check text-success"></i><i ng-show='certificate.TOWN ==undefined' class="fa fa-times text-danger"></i> Ville</label>
+            <label for="certificateLabel"><i ng-hide="certificate.TOWN ==undefined" class="fa fa-check animated rubberBand text-success"></i><i ng-show='certificate.TOWN ==undefined' class="fa fa-times text-danger"></i> Ville</label>
           </div>   
           <div class="col-md-8">
             <input type="text" class="form-control" ng-model="certificate.TOWN" placeholder="entrez la ville ...">
@@ -48,7 +48,7 @@
         <div class="row light-margin-top">
         <!-- Region -->
           <div class="col-md-4 text-right">
-            <label for="certificateLabel"><i ng-hide='certificate.REGION ==undefined' class="fa fa-check text-success"></i><i ng-show='certificate.REGION ==undefined' class="fa fa-times text-danger"></i> Region</label>
+            <label for="certificateLabel"><i ng-hide='certificate.REGION ==undefined' class="fa fa-check animated rubberBand text-success"></i><i ng-show='certificate.REGION ==undefined' class="fa fa-times text-danger"></i> Region</label>
           </div>   
           <div class="col-md-8">
             <input type="text" class="form-control" ng-model="certificate.REGION" placeholder="entrez le département ou la région ...">
@@ -57,7 +57,7 @@
       <!-- country -->
         <div class="row light-margin-top  light-margin-bot">
           <div class="col-md-4 text-right">
-            <label for="certificateLabel"><i ng-hide='certificate.COUNTRY ==undefined' class="fa fa-check text-success"></i><i ng-show='certificate.COUNTRY ==undefined' class="fa fa-times text-danger"></i> Pays</label>
+            <label for="certificateLabel"><i ng-hide='certificate.COUNTRY ==undefined' class="fa fa-check animated rubberBand text-success"></i><i ng-show='certificate.COUNTRY ==undefined' class="fa fa-times text-danger"></i> Pays</label>
           </div>   
           <div class="col-md-8">
             <input type="text" class="form-control" ng-model="certificate.COUNTRY" placeholder="entrez le pays ...">
@@ -66,10 +66,10 @@
       <!-- files -->
         <div class="row light-margin-top  light-margin-bot">
           <div class="col-md-4 text-right">
-            <label for="certificateLabel"><i class="fa fa-info animated text-info fa-lg faa-pulse faa-fast"  popover-placement="top" popover-trigger="mouseenter" popover="1 fichier au format ZIP uniquement (20 mb MAX)"></i> Fichier(s)</label>
+            <label for="certificateLabel"><i class="  fa fa-info animated text-info fa-lg rubberBand infinite "  popover-placement="top" popover-trigger="mouseenter" popover="1 fichier au format ZIP uniquement (20 mb MAX)"></i> Fichier(s)</label>
           </div>   
           <div class="col-md-8">
-            <div class="btn btn-default" ng-file-select ng-model="files" allow-dir="false" accept=".zip" ng-multiple="false"><i class="fa fa-upload"></i> Selectionnez un fichier ZIP</div>
+            <div class="animated flipInY btn btn-default" ng-file-select ng-model="files" allow-dir="false" accept=".zip" ng-multiple="false"><i class="  fa fa-upload"></i> Selectionnez un fichier ZIP</div>
             <ul>
                 <li ng-repeat="f in files" style="font:smaller">{{f.name}}</li>
             </ul>
@@ -81,26 +81,26 @@
       <!-- DATES GROUP -->
         <div class="col-md-12 light-margin-top">
           <div class="col-md-2 text-left">
-            <label for="certificateDateStart"><i ng-hide='certificate.DATE_START ==undefined' class="fa fa-check text-success"></i><i ng-show='certificate.DATE_START ==undefined' class="fa fa-times text-danger"></i> Date de début</label>
+            <label for="certificateDateStart"><i ng-hide='certificate.DATE_START ==undefined' class="fa fa-check animated rubberBand text-success"></i><i ng-show='certificate.DATE_START ==undefined' class="fa fa-times text-danger"></i> Date de début</label>
           </div>   
           <div class="col-md-6">
               <p class="input-group">
                 <input type="text" class="form-control" datepicker-popup="dd-MM-yy" ng-model="certificate.DATE_START" is-open="openedStartDate" min-date="2000-01-01" max-date="'2099-06-22'" close-text="Close" />
                 <span class="input-group-btn">
-                  <button type="button" class="btn btn-success" ng-click="openStartDate($event)"><i class="fa fa-calendar fa-lg"></i></button>
+                  <button type="button" class="animated flipInY btn btn-success" ng-click="openStartDate($event)"><i class="  fa fa-calendar fa-lg"></i></button>
                 </span>
               </p>
           </div>
         </div>
         <div class="col-md-12 light-margin-top">
           <div class="col-md-2 text-left">
-            <label for="certificateDateEnd"><i ng-hide='certificate.DATE_END ==undefined' class="fa fa-check text-success"></i><i ng-show='certificate.DATE_END ==undefined' class="fa fa-times text-danger"></i> Date de fin</label>
+            <label for="certificateDateEnd"><i ng-hide='certificate.DATE_END ==undefined' class="fa fa-check animated rubberBand text-success"></i><i ng-show='certificate.DATE_END ==undefined' class="fa fa-times text-danger"></i> Date de fin</label>
           </div>   
           <div class="col-md-6">
               <p class="input-group">
                 <input type="text" class="form-control" datepicker-popup="dd-MM-yy" ng-model="certificate.DATE_END" is-open="openedEndDate" min-date="{{certificate.DATE_START | date : 'yyyy-MM-dd'}}" max-date="'2099-06-22'" close-text="Close" />
                 <span class="input-group-btn">
-                  <button type="button" class="btn btn-warning" ng-click="openEndDate($event)"><i class="fa fa-calendar fa-lg"></i></button>
+                  <button type="button" class="animated flipInY btn btn-warning" ng-click="openEndDate($event)"><i class="  fa fa-calendar fa-lg"></i></button>
                 </span>
               </p>
           </div>
@@ -127,7 +127,7 @@
         <!-- provider BLOC-->
           <div class="form-group col-md-8 light-margin-top">
             <div class="col-md-2">
-              <label for="certificate"><i ng-hide='certificate.PROVIDER ==undefined' class="fa fa-check text-success"></i><i ng-show='certificate.PROVIDER ==undefined' class="fa fa-times text-danger"></i> Prestataire</label>
+              <label for="certificate"><i ng-hide='certificate.PROVIDER ==undefined' class="fa fa-check animated rubberBand text-success"></i><i ng-show='certificate.PROVIDER ==undefined' class="fa fa-times text-danger"></i> Prestataire</label>
             </div>
             <div class="col-md-7">
               <ui-select ng-model="certificate.PROVIDER" theme="selectize" ng-disabled="disabled"> 
@@ -141,13 +141,13 @@
               </ui-select>
             </div>
             <div class="col-md-3">
-              <button class="btn btn-info" ng-model="newProvider" btn-radio="'1'"><i class="fa fa-plus"></i></button>
+              <button class="animated flipInY btn btn-info" ng-model="newProvider" btn-radio="'1'"><i class="  fa fa-plus"></i></button>
             </div>       
           </div> 
           <!-- brand BLOC-->
           <div class="form-group  col-md-8 light-margin-top">
             <div class="col-md-2">
-              <label for="certificate"><i ng-hide='certificate.BRAND ==undefined' class="fa fa-check text-success"></i><i ng-show='certificate.BRAND ==undefined' class="fa fa-times text-danger"></i> Marque</label>
+              <label for="certificate"><i ng-hide='certificate.BRAND ==undefined' class="fa fa-check animated rubberBand text-success"></i><i ng-show='certificate.BRAND ==undefined' class="fa fa-times text-danger"></i> Marque</label>
             </div>
             <div class="col-md-7">
               <ui-select ng-model="certificate.BRAND" theme="selectize" ng-disabled="disabled"> 
@@ -159,7 +159,7 @@
               </ui-select>
             </div>
             <div class="col-md-3">
-              <button class="btn btn-info" ng-model="newBrand" btn-radio="'1'"><i class="fa fa-plus"></i></button>
+              <button class="animated flipInY btn btn-info" ng-model="newBrand" btn-radio="'1'"><i class="  fa fa-plus"></i></button>
             </div>       
           </div> 
         </div>      
@@ -180,8 +180,12 @@
         </div>
       </div>
       <div class="col-md-12 light-margin-top">
-        <button type="submit" class="btn btn-danger col-md-offset-1" ng-show='completeForm == 100' name='addButton' ng-model="addButton" btn-radio="'1'"><i class="fa fa-floppy-o"></i> Ajouter</button>
-        <button type="submit" class="btn btn-warning col-md-offset-1" ng-click="showList()"><i class="fa fa-undo"></i> Annuler</button>
+        <div ng-hide="completeForm < 100" class="col-md-3">
+          <button type="submit" class="animated flipInY btn btn-danger col-md-offset-1" ng-show='completeForm == 100' name='addButton' ng-model="addButton" btn-radio="'1'"><i class="  fa fa-floppy-o"></i> Ajouter</button>
+        </div>
+        <div class="col-md-3">
+          <button type="submit" class="animated flipInY btn btn-warning col-md-offset-1" ng-click="showList()"><i class="  fa fa-undo"></i> Annuler</button>
+        </div>
       </div>
     </form> 
   </div>
@@ -205,8 +209,8 @@
       <input type="text" class="form-control" id="providerWebAddress" ng-model="newProviderForm.WEB_ADDRESS" placeholder="site web ...">
     </div> 
     <div class="row col-md-12 light-margin-top">
-      <button class="btn btn-success" ng-model="addProvider" ng-click="addProvider()"><i class="fa fa-plus "></i> Créer</button>
-      <button class="btn btn-warning col-md-offset-1" ng-model="newProvider" btn-radio="'0'"><i class="fa fa-undo "></i> Annuler</button>
+      <button class="animated flipInY btn btn-success" ng-model="addProvider" ng-click="addProvider()"><i class="  fa fa-plus "></i> Créer</button>
+      <button class="animated flipInY btn btn-warning col-md-offset-1" ng-model="newProvider" btn-radio="'0'"><i class="  fa fa-undo "></i> Annuler</button>
     </div>
   </div>
   <!-- New brand form -->     
@@ -221,8 +225,8 @@
       <input type="text" class="form-control" id="providerWebAddress" ng-model="newBrandForm.WEB_ADDRESS" placeholder="site web ...">
     </div> 
     <div class="row col-md-12 light-margin-top">
-      <button class="btn btn-success" ng-model="addBrand" ng-click="addBrand()"><i class="fa fa-floppy-o "></i> Créer</button>
-      <button class="btn btn-warning col-md-offset-1" ng-model="newBrand" btn-radio="'0'"><i class="fa fa-undo "></i> Annuler</button>
+      <button class="animated flipInY btn btn-success" ng-model="addBrand" ng-click="addBrand()"><i class="  fa fa-floppy-o "></i> Créer</button>
+      <button class="animated flipInY btn btn-warning col-md-offset-1" ng-model="newBrand" btn-radio="'0'"><i class="  fa fa-undo "></i> Annuler</button>
     </div>
   </div>
   
@@ -231,9 +235,9 @@
     <legend>Le nouveau certificat a été ajouté, que souhaitez-vous faire ?</legend>
     
       <p class="text-center">
-        <button type="submit" class="btn btn-info btn-lg" ng-click="showList()"  ><i class="fa fa-list"></i> Liste</button>
-        <button type="submit" class="btn btn-success btn-lg col-md-offset-1" ng-click="view()"><i class="fa fa-info"></i> Détails</button>
-        <button type="submit" class="btn btn-danger btn-lg col-md-offset-1" ng-click="new()"><i class="fa fa-pencil"></i> Nouveau certificat</button>
+        <button type="submit" class="animated flipInY btn btn-info btn-lg" ng-click="showList()"  ><i class="  fa fa-list"></i> Liste</button>
+        <button type="submit" class="animated flipInY btn btn-success btn-lg col-md-offset-1" ng-click="view()"><i class="  fa fa-info"></i> Détails</button>
+        <button type="submit" class="animated flipInY btn btn-danger btn-lg col-md-offset-1" ng-click="new()"><i class="  fa fa-pencil"></i> Nouveau certificat</button>
       </p>
   </div>
 
@@ -255,8 +259,8 @@
       </div>
       <div class="row light-margin-top "><div class="col-md-6 text-right">Commentaires: </div><div class="col-md-6 text-left text-warning"> {{certificate.COMMENTS}}</div></div>
       <p class="text-center light-margin-top">
-        <button type="submit" class="btn btn-danger btn-lg" ng-click="confirmAdd()"><i class="fa fa-floppy-o"></i> Oui</button>
-      	<button type="submit" class="btn btn-warning btn-lg col-md-offset-1 " name='addButton2' ng-model="addButton" btn-radio="'0'" ng-click=""><i class="fa fa-undo"></i> Annuler</button>
+        <button type="submit" class="animated flipInY btn btn-danger btn-lg" ng-click="confirmAdd()"><i class="  fa fa-floppy-o"></i> Oui</button>
+      	<button type="submit" class="animated flipInY btn btn-warning btn-lg col-md-offset-1 " name='addButton2' ng-model="addButton" btn-radio="'0'" ng-click=""><i class="  fa fa-undo"></i> Annuler</button>
       </p>
   </div>
 

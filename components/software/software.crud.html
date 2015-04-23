@@ -1,7 +1,7 @@
 <div ng-controller="SoftwareCrudCtrl">
   <div ng-show="formDone == 0 && addButton != '1' && newBrand !=1">
-  <legend><i class="fa fa-newspaper-o fa-lg"></i> Versionning</legend>
-  <h4><i class="fa fa-file-o"></i> Nouveau</h4>
+  <legend><i class="  fa fa-newspaper-o fa-lg"></i> Versionning</legend>
+  <h4><i class="  fa fa-file-o"></i> Nouveau</h4>
       <!-- New Form -->
     <form class="col-md-10">
       <!-- Brand or brand name -->
@@ -19,7 +19,7 @@
           </ui-select>
         </div>
         <div class="col-md-2">
-          <button class="btn btn-info" ng-model="newBrand" btn-radio="'1'"><i class="fa fa-plus"></i></button>
+          <button class="btn animated flipInY btn-info" ng-model="newBrand" btn-radio="'1'"><i class="  fa fa-plus"></i></button>
         </div>       
       </div>
       <!-- Product name -->
@@ -73,8 +73,8 @@
       	</div>
       </div>
       <div class="row light-margin-top">
-    		<button type="submit" class="btn btn-danger" name='addButton' ng-disabled="completeForm < 100" ng-model="addButton" btn-radio="'1'"><i class="fa fa-floppy-o"></i> Ajouter</button>
-	      <button type="submit" class="btn btn-warning col-md-offset-1" ng-click="showList()"><i class="fa fa-undo"></i> Annuler</button>
+    		<button type="submit" class="btn animated flipInY btn-danger" name='addButton' ng-disabled="completeForm < 100" ng-model="addButton" btn-radio="'1'"><i class="  fa fa-floppy-o"></i> Ajouter</button>
+	      <button type="submit" class="btn animated flipInY btn-warning col-md-offset-1" ng-click="showList()"><i class="  fa fa-undo"></i> Annuler</button>
   		</div>
     </form> 
   	</div>
@@ -83,9 +83,9 @@
     <legend>Une nouvelle entrée a été ajoutée, que souhaitez-vous faire ?</legend>
     </br>
       <p class="text-center"> 
-        <button type="submit" class="btn btn-info btn-lg" ng-click="showList()">Liste</button>
-        <button type="submit" class="btn btn-primary btn-lg col-md-offset-1" ng-click="viewSoftware()">Afficher les détails</button>
-        <button type="submit" class="btn btn-default btn-lg col-md-offset-1" ng-click="newSoftware()">Nouvelle entrée</button>
+        <button type="submit" class="btn animated flipInY btn-info btn-lg" ng-click="showList()">Liste</button>
+        <button type="submit" class="btn animated flipInY btn-primary btn-lg col-md-offset-1" ng-click="viewSoftware()">Afficher les détails</button>
+        <button type="submit" class="btn animated flipInY btn-default btn-lg col-md-offset-1" ng-click="newSoftware()">Nouvelle entrée</button>
       </p>
   </div>
   <!-- newBrand form -->      
@@ -100,8 +100,8 @@
       <input type="text" class="form-control" id="brandWebAddress" ng-model="newBrandForm.WEB_ADDRESS" placeholder="site web ...">
     </div> 
     <div class="row col-md-12 light-margin-top">
-      <button class="btn btn-danger" ng-model="addBrand" ng-click="addBrand()" ng-disabled="newBrandForm.LABEL == undefined || newBrandForm.LABEL == ''"><i class="fa fa-floppy-o"></i> Ajouter</button>
-      <button class="btn btn-warning col-md-offset-1" ng-model="newBrand" ng-click="newBrand = 0"><i class="fa fa-undo"></i> Annuler</button>
+      <button class="btn animated flipInY btn-danger" ng-model="addBrand" ng-click="addBrand()" ng-disabled="newBrandForm.LABEL == undefined || newBrandForm.LABEL == ''"><i class="  fa fa-floppy-o"></i> Ajouter</button>
+      <button class="btn animated flipInY btn-warning col-md-offset-1" ng-model="newBrand" ng-click="newBrand = 0"><i class="  fa fa-undo"></i> Annuler</button>
     </div> 
   </div>
 
@@ -115,8 +115,8 @@
     <div class="row"><div class="col-md-6 text-right">Service Pack: </div><div class="col-md-6 text-left text-warning"> {{software.SERVICE_PACK}}</div></div>
     <div class="row"><div class="col-md-6 text-right">A faire: </div><div class="col-md-6 text-left text-warning"> {{software.TO_DO}}</div></div>
     <p class="text-center light-margin-top">
-      <button type="submit" class="btn btn-danger btn-lg" ng-click="addNew()">Oui</button>
-    	<button type="submit" class="btn btn-warning btn-lg col-md-offset-1 " name='addButton2' ng-model="addButton" btn-radio="'0'">Annuler</button>
+      <button type="submit" class="btn animated flipInY btn-danger btn-lg" ng-click="addNew()">Oui</button>
+    	<button type="submit" class="btn animated flipInY btn-warning btn-lg col-md-offset-1 " name='addButton2' ng-model="addButton" btn-radio="'0'">Annuler</button>
     </p>
   </div>
 

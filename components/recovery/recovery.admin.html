@@ -1,14 +1,16 @@
 <div acl-show='recoveryAdmin' ng-controller="RecoveryAdminCtrl">
-  <legend><i class="fa fa-bed fa-lg"></i> Récupération</legend>
-  <h4><i class="fa fa-tasks"></i> Demandes<span class='text-info' ng-show="countFormsOnHold > 0"> - {{countFormsOnHold}} demande(s) en attente </span></h4>
-  <button type="submit" class="btn btn-warning " ng-hide="agentSearch == 1" ng-click="agentSearch = 1">Chercher un agent</button>
+  <legend><i class=" fa fa-bed fa-lg"></i> Récupération</legend>
+  <h4><i class=" fa fa-tasks"></i> Demandes<span class='text-info' ng-show="countFormsOnHold > 0"> - {{countFormsOnHold}} demande(s) en attente </span></h4>
+  <div ng-hide="agentSearch == 1" class="col-md-12">
+    <button type="submit" class=" animated flipInY btn btn-warning "  ng-click="agentSearch = 1">Chercher un agent</button>
+  </div>
     <table class="table table-striped table-bordered table-hover tbl-list light-margin-top" ng-hide="agentSearch == 1">
       <thead>
         <tr class="info not-allowed"><th>Agent</th><th>Demande créée le</th><th>Date de récupération</th><th>Heures demandées</th><th>Statut</th><th>Action</th></tr>
       </thead>
       <tbody>
-        <tr class="reveal-animation" ng-repeat="form in forms">
-          <td><div class="col-md-6 text-left"><strong>{{form.USER_ID}}</strong></div><div class="col-md-6 text-right"><button class="btn btn-default " popover-placement="right" popover-trigger="mouseenter" popover="Voir la liste des opérations" ng-click="viewDetails(form.USER_ID)"><i class="fa fa-eye fa-lg"></i></button></div></td>
+        <tr class="animated zoomIn" ng-repeat="form in forms">
+          <td><div class="col-md-6 text-left"><strong>{{form.USER_ID}}</strong></div><div class="col-md-6 text-right"><button class=" animated flipInY btn btn-default " popover-placement="right" popover-trigger="mouseenter" popover="Voir la liste des opérations" ng-click="viewDetails(form.USER_ID)"><i class=" fa fa-eye fa-lg"></i></button></div></td>
           <td>{{form.CREATION_DATE | tsDateTime}}</td>
           <td>{{form.DATE | tsDate}}</td>
           <td>{{form.TO_USE | hourConv}}</td>
@@ -18,20 +20,20 @@
               <span class='text-warning' th-code="{{form.STATUS}}" th-cat="STATUS"/>
             </div>
             <div class="col-md-6 text-right">
-              <button class="btn btn-default " popover-placement="right" popover-trigger="mouseenter" popover="{{form.REASON}}"><i class="fa fa-info fa-lg faa-pulse animated"></i></button>
+              <button class=" animated flipInY btn btn-default " popover-placement="right" popover-trigger="mouseenter" popover="{{form.REASON}}"><i class=" fa fa-info fa-lg faa-pulse animated"></i></button>
             </div>
           </td>
           <td ng-show='form.STATUS == "VALIDATED"'><span class='text-success' th-code="{{form.STATUS}}" th-cat="STATUS"/></td>
-          <td><button type="submit" class="btn btn-success " ng-hide="form.STATUS == 'VALIDATED' || form.STATUS == 'DENIED'"  ng-click="validate(form)">Valider</button><button type="submit" class="btn btn-danger col-md-offset-1" ng-hide="form.STATUS == 'VALIDATED' || form.STATUS == 'DENIED'" ng-click="open(form)">Refuser</button><button type="submit" class="btn btn-info col-md-offset-1" ng-hide="form.STATUS == 'DENIED' || form.STATUS == 'ON_HOLD'" ng-click="displayPDF(form.ID)" popover-placement="top" popover-trigger="mouseenter" popover="Afficher le PDF" ><i class="fa fa-file-pdf-o fa-lg"></i></button></td>
+          <td><button type="submit" class=" animated flipInY btn btn-success " ng-hide="form.STATUS == 'VALIDATED' || form.STATUS == 'DENIED'"  ng-click="validate(form)">Valider</button><button type="submit" class=" animated flipInY btn btn-danger col-md-offset-1" ng-hide="form.STATUS == 'VALIDATED' || form.STATUS == 'DENIED'" ng-click="open(form)">Refuser</button><button type="submit" class=" animated flipInY btn btn-info col-md-offset-1" ng-hide="form.STATUS == 'DENIED' || form.STATUS == 'ON_HOLD'" ng-click="displayPDF(form.ID)" popover-placement="top" popover-trigger="mouseenter" popover="Afficher le PDF" ><i class=" fa fa-file-pdf-o fa-lg"></i></button></td>
         </tr>
       </tbody>
     </table> 
-  <div class="col-md-12 text-center light-margin-bot">
-      <button class="btn btn-info " ng-hide="agentSearch == 1 || disableMore == 1" ng-click="updateList()"><i class="fa fa-plus fa-lg"></i> Afficher plus </button>
+  <div class="col-md-12 text-center light-margin-bot" ng-hide="agentSearch == 1 || disableMore == 1" >
+      <button class=" animated flipInY btn btn-info " ng-click="updateList()"><i class=" fa fa-plus fa-lg"></i> Afficher plus </button>
   </div>
   <div class='row' ng-hide="agentSearch != 1">
-    <div class="col-md-12 light-margin-top">
-    <button type="submit" class="btn btn-warning " ng-hide="agentSearch != 1" ng-click="agentSearch = 0">Retour à la liste</button>
+    <div class="col-md-12 light-margin-top" ng-hide="agentSearch != 1">
+    <button type="submit" class=" animated flipInY btn btn-warning fadeInUp animated"  ng-click="agentSearch = 0">Retour à la liste</button>
     </div>
     <div class="col-md-12 light-margin-top">
       <input  class='form-control' type="text" name='userSearch' ng-model="userSearch" class="form-control" placeholder="Rechercher..." ng-change="listUsers(userSearch)"/>
@@ -41,13 +43,13 @@
         <tr class="info not-allowed"><th>Identifiant</th><th>Nom</th><th>Prénom</th><th>Role</th><th>Supérieur</th><th>Détails</th></tr>
       </thead>
       <tbody>
-        <tr class="reveal-animation" ng-repeat="user in users">
+        <tr class="animated zoomIn" ng-repeat="user in users">
           <td>{{user.LOGIN}}</td>
           <td>{{user.FAMILY_NAME}}</td>
           <td>{{user.NAME}}</td>
           <td>{{user.ROLE}}</td>
           <td>{{user.BOSS}}</td>
-          <td> <button class="btn btn-default " popover-placement="right" popover-trigger="mouseenter" popover="Voir la liste des opérations" ng-click="viewDetails(user.LOGIN)"><i class="fa fa-eye fa-lg"></i></button></td>
+          <td> <button class=" animated flipInY btn btn-default " popover-placement="right" popover-trigger="mouseenter" popover="Voir la liste des opérations" ng-click="viewDetails(user.LOGIN)"><i class=" fa fa-eye fa-lg"></i></button></td>
         </tr>
       </tbody>
     </table> 

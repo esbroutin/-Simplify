@@ -1,12 +1,12 @@
 
-<nav class="navbar" ng-controller="HeaderCtrl">
+<nav class="navbar " ng-controller="HeaderCtrl">
   <div class="container-fluid text-center" ng-show="userName != undefined">
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li><a class='btn btn-info' href="#/home"><strong><i class="fa fa-home fa-lg"></i> !Simplify | {{userName}}</strong></a></li>
+      <ul class="nav navbar-nav ">
+        <li><a class='btn btn-info flipInY animated'  popover-placement="bottom" popover-trigger="mouseenter" popover="!Simplify" href="#/home"><strong><i class="fa fa-home fa-lg "></i> {{userName}}</strong></a></li>
         <li class="dropdown" acl-show='software' >
-          <a href="#" class="dropdown-toggle faa-parent animated-hover" data-toggle="dropdown" role="button" aria-expanded="false">
-            <i class="fa fa-newspaper-o fa-lg  faa-pulse"></i>
+          <a href="#" class="dropdown-toggle faa-parent animated-hover flipInX animated" data-toggle="dropdown" role="button" aria-expanded="false">
+            <i class="fa fa-newspaper-o fa-lg  faa-tada "></i>
             <strong ng-show="$state.current.name == 'listSoftware' || $state.current.name == 'addSoftware' || $state.current.name == 'viewSoftware'" class='text-warning'> Versionning</strong>
             <strong ng-show="$state.current.name != 'listSoftware' && $state.current.name != 'addSoftware' && $state.current.name != 'viewSoftware'"> Versionning</strong><span class="caret"></span>
           </a>
@@ -16,8 +16,8 @@
           </ul>
         </li>
         <li class="dropdown" acl-show='license' >
-          <a href="#" class="dropdown-toggle faa-parent animated-hover " data-toggle="dropdown" role="button" aria-expanded="false">
-            <i class="fa fa-list fa-lg  faa-pulse"></i>
+          <a href="#" class="dropdown-toggle faa-parent animated-hover flipInX animated " data-toggle="dropdown" role="button" aria-expanded="false">
+            <i class="fa fa-list fa-lg  faa-tada "></i>
             <strong ng-show="$state.current.name == 'listLicense' || $state.current.name == 'addLicense' || $state.current.name == 'viewLicense'" class='text-warning'> Licences</strong>
             <strong ng-show="$state.current.name != 'listLicense' && $state.current.name != 'addLicense' && $state.current.name != 'viewLicense'"> Licences</strong> <span class="caret"></span>
           </a>
@@ -29,8 +29,8 @@
           </ul>
         </li>
         <li class="dropdown" acl-show='certificate' >
-          <a href="#" class="dropdown-toggle faa-parent animated-hover " data-toggle="dropdown" role="button" aria-expanded="false">
-            <i class="fa fa-certificate fa-lg  faa-pulse"></i> 
+          <a href="#" class="dropdown-toggle faa-parent animated-hover flipInX animated" data-toggle="dropdown" role="button" aria-expanded="false">
+            <i class="fa fa-certificate fa-lg  faa-tada "></i> 
             <strong ng-show="$state.current.name == 'listCertificate' || $state.current.name == 'addCertificate' || $state.current.name == 'viewCertificate'" class='text-warning'> Certificats</strong>
             <strong ng-show="$state.current.name != 'listCertificate' && $state.current.name != 'addCertificate' && $state.current.name != 'viewCertificate'"> Certificats</strong> <span class="caret"></span>
           </a>
@@ -40,8 +40,8 @@
           </ul>
         </li>
         <li class="dropdown" acl-show='hardware' >
-          <a href="#" class="dropdown-toggle faa-parent animated-hover " data-toggle="dropdown" role="button" aria-expanded="false">
-            <i class="fa fa-barcode fa-lg  faa-pulse"></i> 
+          <a href="#" class="dropdown-toggle faa-parent animated-hover flipInX animated" data-toggle="dropdown" role="button" aria-expanded="false">
+            <i class="fa fa-barcode fa-lg  faa-tada "></i> 
             <strong ng-show="$state.current.name == 'listHardware' || $state.current.name == 'addHardware' || $state.current.name == 'viewHardware'" class='text-warning'> Matériel</strong>
             <strong ng-show="$state.current.name != 'listHardware' && $state.current.name != 'addHardware' && $state.current.name != 'viewHardware'"> Matériel</strong> <span class="caret"></span>
           </a>
@@ -51,8 +51,8 @@
           </ul>
         </li>
         <li class="dropdown" acl-show='provider' >
-          <a href="#" class="dropdown-toggle faa-parent animated-hover" data-toggle="dropdown" role="button" aria-expanded="false">
-            <i class="fa fa-users fa-lg  faa-pulse"></i> 
+          <a href="#" class="dropdown-toggle faa-parent animated-hover flipInX animated" data-toggle="dropdown" role="button" aria-expanded="false">
+            <i class="fa fa-users fa-lg  faa-tada "></i> 
             <strong ng-show="$state.current.name == 'listProvider' || $state.current.name == 'addProvider' || $state.current.name == 'viewProvider'" class='text-warning'> Prestataire</strong>
             <strong ng-show="$state.current.name != 'listProvider' && $state.current.name != 'addProvider' && $state.current.name != 'viewProvider'"> Prestataire</strong> <span class="caret"></span>
           </a>
@@ -62,8 +62,8 @@
           </ul>
         </li>
         <li class="dropdown" acl-show='brand' >
-          <a href="#" class="dropdown-toggle faa-parent animated-hover" data-toggle="dropdown" role="button" aria-expanded="false">
-            <i class="fa fa-building fa-lg faa-pulse"></i>
+          <a href="#" class="dropdown-toggle faa-parent animated-hover flipInX animated" data-toggle="dropdown" role="button" aria-expanded="false">
+            <i class="fa fa-building fa-lg faa-tada "></i>
             <strong ng-show="$state.current.name == 'listBrand' || $state.current.name == 'addBrand' || $state.current.name == 'viewBrand'" class='text-warning'> Marques/Entreprises</strong>
             <strong ng-show="$state.current.name != 'listBrand' && $state.current.name != 'addBrand' && $state.current.name != 'viewBrand'"> Marques/Entreprises</strong> <span class="caret"></span>
           </a>
@@ -73,8 +73,8 @@
           </ul>
         </li>
         <li class="dropdown" acl-show='recovery' >
-          <a href="#" class="dropdown-toggle faa-parent animated-hover " data-toggle="dropdown" role="button" aria-expanded="false">
-            <i class="fa fa-bed fa-lg  faa-pulse"></i>
+          <a href="#" class="dropdown-toggle faa-parent animated-hover flipInX animated " data-toggle="dropdown" role="button" aria-expanded="false">
+            <i class="fa fa-bed fa-lg  faa-tada "></i>
             <strong ng-show="$state.current.name == 'listRecovery' || $state.current.name == 'addRecovery' || $state.current.name == 'formRecovery'|| $state.current.name == 'viewRecovery' || $state.current.name == 'recoveryAdmin'" class='text-warning'> Récupération</strong>
             <strong ng-show="$state.current.name != 'listRecovery' && $state.current.name != 'addRecovery' && $state.current.name != 'formRecovery' && $state.current.name != 'viewRecovery' && $state.current.name != 'recoveryAdmin'"> Récupération</strong> <span class="caret"></span>
           </a>
@@ -86,12 +86,12 @@
           </ul>
         </li>
       </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a class='faa-parent animated-hover' href="/logout.php">Déconnexion <i class="fa fa-power-off fa-lg faa-pulse faa-fast"></i> </a></li>
-        <li><a href="#/admin" class='faa-parent animated-hover'><i class="fa faa-spin fa-gear fa-lg"></i>  Paramètres </a></li>
+      <ul class="nav navbar-nav navbar-right ">
+        <li><a class='faa-parent animated-hover flipInX animated flipInY animated' href="/logout.php" popover-placement="bottom" popover-trigger="mouseenter" popover="Déconnexion"><i class="fa fa-power-off fa-lg faa-bounce faa-fast"></i> </a></li>
+        <li><a href="#/admin" popover-placement="bottom" popover-trigger="mouseenter" popover="Paramètres" class='faa-parent flipInY animated animated-hover flipInX animated'><i class="fa faa-spin fa-gear fa-lg"></i></a></li>
         <li class="dropdown" ng-show='noAlerts == 0'>
           <a href="#" class="dropdown-toggle text-danger" class="form-control" data-toggle="dropdown" role="button" aria-expanded="false">
-            <i class="fa fa-bell fa-lg faa-wrench faa-slow animated"></i> <strong>Alertes: {{alerts.COUNT_ALERTS}}</strong>  <span class="caret"></span>
+            <i class="fa fa-bell fa-lg faa-tada  animated"></i> <strong>Alertes: {{alerts.COUNT_ALERTS}}</strong>  <span class="caret"></span>
           </a>
           <ul class="dropdown-menu" role="menu">
             <li ng-repeat="alert in alerts"><a ng-click="viewData(alert.TYPE,alert.ID)">

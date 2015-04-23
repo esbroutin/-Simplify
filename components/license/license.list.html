@@ -1,5 +1,5 @@
-<legend><i class="fa fa-list fa-lg"></i> Licence</legend>
-  <h4><i class="fa fa-list"></i> Liste </h4>
+<legend><i class="  fa fa-list fa-lg"></i> Licence</legend>
+  <h4><i class="  fa fa-list"></i> Liste </h4>
 <div ng-controller="LicenseListCtrl">
   <div class='row'><div class="col-md-4 "><input  class='form-control' type="text" name='listSearch' ng-model="licenseSearch" class="form-control" placeholder="Rechercher..." ng-change="searchLicense()"/></div><div class="col-md-6 text-info"> Recherchez par Libellé, Marque/Entreprise,Prestataire, ID</div>
   </div>
@@ -8,7 +8,7 @@
   		<tr class="info"><th>Date de création</th><th>Libellé</th><th>Prestataire</th><th>Marque</th><th>Date de début</th><th>Date de fin</th></tr>
   	</thead>
   	<tbody>
-  		<tr class="reveal-animation" ng-repeat="license in licenses" ng-click="viewLicense(license)" >
+  		<tr class="" ng-repeat="license in licenses" ng-click="viewLicense(license)" >
         <td>{{license.DATE_CREATION | tsDateTime}}</td>
   			<td>{{license.LABEL}}</td>
         <td>{{license.PROVIDER.LABEL}}</td>

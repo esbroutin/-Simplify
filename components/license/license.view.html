@@ -1,9 +1,9 @@
 <div ng-controller="LicenseViewCtrl">
-  <legend><i class="fa fa-list fa-lg"></i> Licence</legend>
-  <h4><i class="fa fa-eye"></i> Licence N° {{license.LICENSE_ID}} - {{license.LICENSE_LABEL}} </h4>
+  <legend><i class="  fa fa-list fa-lg"></i> Licence</legend>
+  <h4><i class="  fa fa-eye"></i> Licence N° {{license.LICENSE_ID}} - {{license.LICENSE_LABEL}} </h4>
   <div  ng-show="deleteButton == '0' && editButton != 1">
-    <div class="blocBorder col-md-6">
-    <legend><i class="fa fa-info-circle fa-lg"></i> Informations</legend>
+    <div class="blocBorder col-md-6 ">
+    <legend><i class="  fa fa-info-circle fa-lg"></i> Informations</legend>
       <div class='row'>
         <label class="col-md-4 text-right control-label"> ID Licence:</label>
         <div class="col-md-4">
@@ -30,7 +30,7 @@
       </div>
       <div class='row borderTop'>
         <label class="col-md-4 text-right control-label"> Date de fin:</label>
-        <div class="col-md-8 text-danger" ng-show='license.ALERT == 1'><i class="fa fa-bell faa-pulse faa-fast animated"></i>
+        <div class="col-md-8 text-danger" ng-show='license.ALERT == 1'><i class="  fa fa-bell rubberBand infinite animated"></i>
           {{license.DATE_END | tsDate}}
         </div>
         <div class="col-md-8" ng-hide='license.ALERT == 1'>
@@ -52,13 +52,13 @@
       <div class='row'>
         <label class="col-md-4 text-right control-label">Adresse Web:</label>
         <div class="col-md-4 light-margin-bot">
-          <a target="_new" href="{{license.WEB_ADDRESS}}" class="btn btn-success "><i class="fa fa-globe"></i> Lien Web</a>
+          <a target="_new" href="{{license.WEB_ADDRESS}}" class="btn btn-success animated flipInY"><i class="  fa fa-globe"></i> Lien Web</a>
         </div>
       </div>
     </div>
     <!-- PROVIDER BLOC -->
-    <div class="blocBorder col-md-3">
-      <legend><i class="fa fa-users fa-lg"></i> Prestataire <span class="text-warning" ng-show="license.PROVIDER.STATUS == 'DELETED'"> Doit être changé !</span></legend>
+    <div class="blocBorder col-md-3  ">
+      <legend><i class="  fa fa-users fa-lg"></i> Prestataire <span class="text-warning" ng-show="license.PROVIDER.STATUS == 'DELETED'"> Doit être changé !</span></legend>
       <div class='row'>
         <label class="col-md-4 text-right control-label"> Nom:</label>
         <div class="col-md-8 row">
@@ -80,13 +80,13 @@
       <div class='row'>
         <label class="col-md-4 text-right control-label">Site Web:</label>
         <div class="col-md-4 light-margin-bot">
-          <a target="_new" href="http://{{license.PROVIDER.WEB_ADDRESS}}" class="btn btn-success "><i class="fa fa-globe"></i> Site Web</a>
+          <a target="_new" href="http://{{license.PROVIDER.WEB_ADDRESS}}" class="btn btn-success animated flipInY"><i class="  fa fa-globe"></i> Site Web</a>
         </div>
       </div>
     </div>
     <!-- BRAND BLOC -->
-    <div class="blocBorder col-md-3">
-      <legend><i class="fa fa-building fa-lg"></i> Marque <span class="text-warning" ng-show="license.BRAND.STATUS == 'DELETED'"> Doit être changé !</span></legend>
+    <div class="blocBorder col-md-3 ">
+      <legend><i class="  fa fa-building fa-lg"></i> Marque <span class="text-warning" ng-show="license.BRAND.STATUS == 'DELETED'"> Doit être changé !</span></legend>
       <div class='row'>
         <label class="col-md-4 text-right control-label"> Nom:</label>
         <div class="col-md-8 row">
@@ -95,12 +95,12 @@
       </div>
       <div class='row'>
         <label class="col-md-4 text-right control-label">Site Web:</label>
-        <div class="col-md-4 light-margin-bot">
-          <a target="_new" href="http://{{license.BRAND.WEB_ADDRESS}}" class="btn btn-success "><i class="fa fa-globe"></i> Site Web</a>
+        <div class="col-md-4 light-margin-bot animated flipInY">
+          <a target="_new" href="http://{{license.BRAND.WEB_ADDRESS}}" class="btn btn-success animated flipInY"><i class="  fa fa-globe"></i> Site Web</a>
         </div>
       </div>
     </div>
-    <div class="blocBorder col-md-12"> 
+    <div class="blocBorder col-md-12 animated flipInX"> 
       <div class='row'>
         <label class="col-md-4 text-right control-label">Numéro de Licence:</label>
         <div class="col-md-8">
@@ -109,18 +109,19 @@
       </div>
     </div>
     <div class='row col-md-12 light-margin-top text-left button-group'>
-      <button type="submit" class="btn btn-info " ng-click="showList()"><i class="fa fa-th-list"></i> Liste</button>
-      <button type="submit" class="btn btn-primary col-md-offset-1 " ng-click="edit()"><i class="fa fa-pencil"></i> Modifier</button>
-      <button type="submit" class="btn btn-danger col-md-offset-1 " ng-click="deleteButton = 1"><i class="fa fa-trash-o"></i> Supprimer</button>
+      <button type="submit" class="btn btn-info  animated flipInY" ng-click="showList()"><i class="  fa fa-th-list"></i> Liste</button>
+      <button type="submit" class="btn btn-primary col-md-offset-1 animated flipInY " ng-click="edit()"><i class="  fa fa-pencil"></i> Modifier</button>
+      <button type="submit" class="btn btn-danger col-md-offset-1 animated flipInY " ng-click="deleteButton = 1"><i class="  fa fa-trash-o"></i> Supprimer</button>
     </div>
   </div>
 
   <!-- we display the delete comfirmation dialog when the delete button is pushed -->
   <div class="col-md-12 jumbotron text-center" ng-show="deleteButton == '1'">
-    <legend>Êtes-vous sûr de vouloir supprimer la licence {{license.LICENSE_ID}} -- <span class="text-warning ">{{license.LICENSE_LABEL}}</span> ?</legend>
-      <p class="text-center">
-        <button type="submit" class="btn btn-danger btn-lg" ng-click="deleteLicense()"  ><i class="fa fa-trash"></i> Oui</button>
-        <button type="submit" class="col-md-offset-1 btn btn-success btn-lg" ng-model="deleteButton" btn-radio="'0'"><i class="fa fa-undo"></i> Non</button>
+    <legend class="fadeInUp animated">Êtes-vous sûr de vouloir supprimer la licence {{license.LICENSE_ID}} -- <span class="text-warning ">{{license.LICENSE_LABEL}}</span> ?</legend>
+      <p class="text-danger animated zoomIn">Cet acte est irréversible !</p>
+      <p class="text-center fadeInDown animated">
+        <button type="submit" class="btn btn-danger btn-lg animated flipInY" ng-click="deleteLicense()"  ><i class="  fa fa-trash"></i> Oui</button>
+        <button type="submit" class="col-md-offset-1 btn btn-success btn-lg animated flipInY" ng-model="deleteButton" btn-radio="'0'"><i class="  fa fa-undo"></i> Non</button>
       </p>
   </div>
 
@@ -144,7 +145,7 @@
             <p class="input-group">
               <input type="text" class="form-control" datepicker-popup="dd-MM-yy" ng-model="license.DATE_START" is-open="openedStartDate" min-date="2000-01-01" max-date="'2099-06-22'" close-text="Close" />
               <span class="input-group-btn">
-                <button type="button" class="btn btn-success" ng-click="openStartDate($event)"><i class="fa fa-calendar fa-lg"></i></button>
+                <button type="button" class="btn btn-success animated flipInY" ng-click="openStartDate($event)"><i class="  fa fa-calendar fa-lg"></i></button>
               </span>
             </p>
         </div>
@@ -155,7 +156,7 @@
             <p class="input-group">
               <input type="text" class="form-control" datepicker-popup="dd-MM-yy" ng-model="license.DATE_END" is-open="openedEndDate" min-date="{{license.DATE_START | date : 'yyyy-MM-dd'}}" max-date="'2099-06-22'" close-text="Close" />
               <span class="input-group-btn">
-                <button type="button" class="btn btn-danger" ng-click="openEndDate($event)"><i class="fa fa-calendar fa-lg"></i></button>
+                <button type="button" class="btn btn-danger animated flipInY" ng-click="openEndDate($event)"><i class="  fa fa-calendar fa-lg"></i></button>
               </span>
             </p>
         </div>
@@ -227,7 +228,7 @@
           <input type="text" class="form-control" ng-model="license.WEB_ADDRESS" placeholder="Lien Web ...">
         </div>
       </div>
-      <button type="submit" class="btn btn-danger col-md-offset-1 " ng-click="save()"><i class="fa fa-floppy-o"></i> Enregistrer</button>
-      <button type="submit" class="btn btn-warning col-md-offset-1" ng-click="cancelEdit()"><i class="fa fa-undo"></i> Annuler</button>
+      <button type="submit" class="animated flipInY btn btn-danger col-md-offset-1 " ng-click="save()"><i class="  fa fa-floppy-o"></i> Enregistrer</button>
+      <button type="submit" class="animated flipInY btn btn-warning col-md-offset-1" ng-click="cancelEdit()"><i class="  fa fa-undo"></i> Annuler</button>
     </form> 
 </div>

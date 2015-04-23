@@ -1,6 +1,6 @@
 
-  <legend><i class="fa fa-newspaper-o fa-lg"></i> Versionning</legend>
-  <h4><i class="fa fa-list"></i> Liste</h4>
+  <legend><i class="  fa fa-newspaper-o fa-lg"></i> Versionning</legend>
+  <h4><i class="  fa fa-list"></i> Liste</h4>
 <div ng-controller="SoftwareListCtrl">  
   <div class='row'><div class="col-md-4 "><input  class='form-control' type="text" name='listSearch' ng-model="softwareSearch" class="form-control" placeholder="Rechercher..." ng-change="searchSoftware()"/></div><div class="col-md-6 text-info"> Recherchez par Produit, Marque/Entreprise, ID</div>
   </div>
@@ -9,7 +9,7 @@
   		<tr class="info"><th>Modifié le</th><th>Marque / Entreprise</th><th>Produit</th><th>Version actuelle</th><th>Mise à jour</th><th>Service Pack</th></tr>
   	</thead>
   	<tbody>
-  		<tr class="reveal-animation" ng-repeat="software in softwares" ng-click="viewSoftware(software)" >
+  		<tr class="" ng-repeat="software in softwares" ng-click="viewSoftware(software)" >
         <td>{{software.EDITION_DATE | tsDateTime}}</td>
         <td>{{software.BRAND.LABEL}}</td>
   			<td>{{software.LABEL}}</td>

@@ -1,19 +1,19 @@
 <div ng-controller="HardwareCrudCtrl">
   <div ng-show="formDone == 0 && addButton != 1 && newProvider !=1&& newBrand !=1">
-<legend><i class="fa fa-barcode fa-lg"></i> Matériel</legend>
-  <h4><i class="fa fa-file-o"></i> Nouveau </h4>
+<legend><i class="  fa fa-barcode fa-lg"></i> Matériel</legend>
+  <h4><i class="  fa fa-file-o"></i> Nouveau </h4>
     <form class="col-md-10 " >
       <!-- label -->
       <div class="form-group row text-left">
         <div class="col-md-2">
-          <label for="hardwareLabel"><i ng-hide='hardware.LABEL ==undefined' class="fa fa-check text-success"></i><i ng-show='hardware.LABEL ==undefined' class="fa fa-times text-danger"></i> Libéllé</label>
+          <label for="hardwareLabel"><i ng-hide='hardware.LABEL ==undefined' class="animated flipInY fa fa-check text-success"></i><i ng-show='hardware.LABEL ==undefined' class="fa fa-times text-danger"></i> Libéllé</label>
         </div>   
         <div class="col-md-4">
           <input type="text" class="form-control" ng-model="hardware.LABEL" placeholder="entrez le libéllé ...">
         </div>
       <!-- type -->
         <div class="col-md-2">
-          <label for="hardwareType"><i ng-hide='hardware.TYPE ==undefined' class="fa fa-check text-success"></i><i ng-show='hardware.TYPE ==undefined' class="fa fa-times text-danger"></i> Type</label>
+          <label for="hardwareType"><i ng-hide='hardware.TYPE ==undefined' class="animated flipInY fa fa-check text-success"></i><i ng-show='hardware.TYPE ==undefined' class="fa fa-times text-danger"></i> Type</label>
         </div>   
         <div class="col-md-4">
           <select class="form-control" id="select" ng-model="hardware.TYPE">
@@ -28,24 +28,24 @@
       <!-- Web link -->
       <div class="form-group row text-left">
         <div class="col-md-2">
-          <label for="hardwareStartWarranty"><i ng-hide='hardware.WARRANTY_START ==undefined' class="fa fa-check text-success"></i><i ng-show='hardware.WARRANTY_START ==undefined' class="fa fa-times text-danger"></i> Début de garantie</label>
+          <label for="hardwareStartWarranty"><i ng-hide='hardware.WARRANTY_START ==undefined' class="animated flipInY fa fa-check text-success"></i><i ng-show='hardware.WARRANTY_START ==undefined' class="fa fa-times text-danger"></i> Début de garantie</label>
         </div>   
         <div class="col-md-4">
             <p class="input-group">
               <input type="text" class="form-control" datepicker-popup="dd-MM-yy" ng-model="hardware.WARRANTY_START" is-open="openedStartDate" max-date="'2099-06-22'" close-text="Close" />
               <span class="input-group-btn">
-                <button type="button" class="btn btn-success" ng-click="openStartDate($event)"><i class="fa fa-calendar fa-lg"></i></button>
+                <button type="button" class="btn animated flipInY btn-success" ng-click="openStartDate($event)"><i class="  fa fa-calendar fa-lg"></i></button>
               </span>
             </p>
         </div>
         <div class="col-md-2">
-          <label for="hardwareEndWarranty"><i ng-hide='hardware.WARRANTY_END ==undefined' class="fa fa-check text-success"></i><i ng-show='hardware.WARRANTY_END ==undefined' class="fa fa-times text-danger"></i> Fin de garantie</label>
+          <label for="hardwareEndWarranty"><i ng-hide='hardware.WARRANTY_END ==undefined' class="animated flipInY fa fa-check text-success"></i><i ng-show='hardware.WARRANTY_END ==undefined' class="fa fa-times text-danger"></i> Fin de garantie</label>
         </div>   
         <div class="col-md-4">
             <p class="input-group">
               <input type="text" class="form-control" datepicker-popup="dd-MM-yy" ng-model="hardware.WARRANTY_END" is-open="openedEndDate" max-date="'2099-06-22'" close-text="Close" />
               <span class="input-group-btn">
-                <button type="button" class="btn btn-danger" ng-click="openEndDate($event)"><i class="fa fa-calendar fa-lg"></i></button>
+                <button type="button" class="btn animated flipInY btn-danger" ng-click="openEndDate($event)"><i class="  fa fa-calendar fa-lg"></i></button>
               </span>
             </p>
         </div>
@@ -62,13 +62,13 @@
       <!-- deploiement -->
       <div class="form-group row text-left">
         <div class="col-md-2">
-          <label for="DEPLOYMENT_DATE"><i ng-hide='hardware.DEPLOYMENT_DATE ==undefined' class="fa fa-check text-success"></i><i ng-show='hardware.DEPLOYMENT_DATE ==undefined' class="fa fa-times text-danger"></i>  Date de déploiement</label>
+          <label for="DEPLOYMENT_DATE"><i ng-hide='hardware.DEPLOYMENT_DATE ==undefined' class="animated flipInY fa fa-check text-success"></i><i ng-show='hardware.DEPLOYMENT_DATE ==undefined' class="fa fa-times text-danger"></i>  Date de déploiement</label>
         </div>   
         <div class="col-md-4">
             <p class="input-group">
               <input type="text" class="form-control" datepicker-popup="dd-MM-yy" ng-model="hardware.DEPLOYMENT_DATE" is-open="openedDeployDate" max-date="'2099-06-22'" close-text="Close" />
               <span class="input-group-btn">
-                <button type="button" class="btn btn-danger" ng-click="openDeployDate($event)"><i class="fa fa-calendar fa-lg"></i></button>
+                <button type="button" class="btn animated flipInY btn-danger" ng-click="openDeployDate($event)"><i class="  fa fa-calendar fa-lg"></i></button>
               </span>
             </p>
         </div>
@@ -94,7 +94,7 @@
       <!-- provider BLOC-->
       <div class="form-group row" ng-hide="newProvider ==1">
         <div class="col-md-2">
-          <label for="hardware"><i ng-hide='hardware.PROVIDER ==undefined' class="fa fa-check text-success"></i><i ng-show='hardware.PROVIDER ==undefined' class="fa fa-times text-danger"></i> Prestataire</label>
+          <label for="hardware"><i ng-hide='hardware.PROVIDER ==undefined' class="animated flipInY fa fa-check text-success"></i><i ng-show='hardware.PROVIDER ==undefined' class="fa fa-times text-danger"></i> Prestataire</label>
         </div>
         <div class="col-md-7">
           <ui-select ng-model="hardware.PROVIDER" theme="selectize" ng-disabled="disabled"> 
@@ -108,13 +108,13 @@
           </ui-select>
         </div>
         <div class="col-md-3">
-          <button class="btn btn-info" ng-model="newProvider" btn-radio="'1'"><i class="fa fa-plus"></i></button>
+          <button class="btn animated flipInY btn-info" ng-model="newProvider" btn-radio="'1'"><i class="  fa fa-plus"></i></button>
         </div>       
       </div> 
       <!-- brand BLOC-->
       <div class="form-group row" ng-hide="newBrand ==1">
         <div class="col-md-2">
-          <label for="hardware"><i ng-hide='hardware.BRAND ==undefined' class="fa fa-check text-success"></i><i ng-show='hardware.BRAND ==undefined' class="fa fa-times text-danger"></i> Marque</label>
+          <label for="hardware"><i ng-hide='hardware.BRAND ==undefined' class="animated flipInY fa fa-check text-success"></i><i ng-show='hardware.BRAND ==undefined' class="fa fa-times text-danger"></i> Marque</label>
         </div>
         <div class="col-md-7">
           <ui-select ng-model="hardware.BRAND" theme="selectize" ng-disabled="disabled"> 
@@ -126,7 +126,7 @@
           </ui-select>
         </div>
         <div class="col-md-3">
-          <button class="btn btn-info" ng-model="newBrand" btn-radio="'1'"><i class="fa fa-plus"></i></button>
+          <button class="btn animated flipInY btn-info" ng-model="newBrand" btn-radio="'1'"><i class="  fa fa-plus"></i></button>
         </div>       
       </div> 
       <!-- Serial-->
@@ -162,8 +162,8 @@
           </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-danger col-md-offset-1 " ng-disabled="completeForm < 100"  name='addButton' ng-model="addButton" btn-radio="'1'"><i class="fa fa-floppy-o"></i> Ajouter</button>
-      <button type="submit" class="btn btn-warning col-md-offset-1" ng-click="showList()"><i class="fa fa-undo"></i> Annuler</button>
+      <button type="submit" class="btn animated flipInY btn-danger col-md-offset-1 animated bounceInLeft" ng-hide="completeForm < 100"  name='addButton' ng-model="addButton" btn-radio="'1'"><i class="  fa fa-floppy-o"></i> Ajouter</button>
+      <button type="submit" class="btn animated flipInY btn-warning col-md-offset-1" ng-click="showList()"><i class="  fa fa-undo"></i> Annuler</button>
     </form> 
   </div>
   <!-- New provider form -->     
@@ -182,8 +182,8 @@
       <input type="text" class="form-control" id="providerDescription" ng-model="newProviderForm.DESCRIPTION" placeholder="entrez la description ...">
     </div>
     <div class="row col-md-12 light-margin-top">
-      <button class="btn btn-success" ng-model="addProvider" ng-click="addProvider()"><i class="fa fa-floppy-o "></i> Créer</button>
-      <button class="btn btn-warning col-md-offset-1" ng-model="newProvider" btn-radio="'0'"><i class="fa fa-undo "></i> Annuler</button>
+      <button class="btn animated flipInY btn-success" ng-model="addProvider" ng-click="addProvider()"><i class="  fa fa-floppy-o "></i> Créer</button>
+      <button class="btn animated flipInY btn-warning col-md-offset-1" ng-model="newProvider" btn-radio="'0'"><i class="  fa fa-undo "></i> Annuler</button>
     </div>
   </div>
   <!-- New brand form -->     
@@ -198,8 +198,8 @@
       <input type="text" class="form-control" id="providerWebAddress" ng-model="newBrandForm.WEB_ADDRESS" placeholder="site web ...">
     </div> 
     <div class="row col-md-12 light-margin-top">
-      <button class="btn btn-success" ng-model="addBrand" ng-click="addBrand()"><i class="fa fa-floppy-o "></i> Créer</button>
-      <button class="btn btn-warning col-md-offset-1" ng-model="newBrand" btn-radio="'0'"><i class="fa fa-undo "></i> Annuler</button>
+      <button class="btn animated flipInY btn-success" ng-model="addBrand" ng-click="addBrand()"><i class="  fa fa-floppy-o "></i> Créer</button>
+      <button class="btn animated flipInY btn-warning col-md-offset-1" ng-model="newBrand" btn-radio="'0'"><i class="  fa fa-undo "></i> Annuler</button>
     </div>
   </div>
   
@@ -208,9 +208,9 @@
     <legend>Le nouveau matériel a été ajoutée, que souhaitez-vous faire ?</legend>
     </br>
       <p class="text-center">
-        <button type="submit" class="btn btn-info btn-lg" ng-click="showList()"  ><i class="fa fa-list"></i> Liste</button>
-        <button type="submit" class="btn btn-success btn-lg col-md-offset-1" ng-click="viewHardware()"  ><i class="fa fa-info"></i> Afficher les détails</button>
-        <button type="submit" class="btn btn-danger btn-lg col-md-offset-1" ng-click="newHardware()"  ><i class="fa fa-pencil"></i> Nouveau Matériel</button>
+        <button type="submit" class="btn animated flipInY btn-info btn-lg" ng-click="showList()"  ><i class="  fa fa-list"></i> Liste</button>
+        <button type="submit" class="btn animated flipInY btn-success btn-lg col-md-offset-1" ng-click="viewHardware()"  ><i class="  fa fa-info"></i> Afficher les détails</button>
+        <button type="submit" class="btn animated flipInY btn-danger btn-lg col-md-offset-1" ng-click="newHardware()"  ><i class="  fa fa-pencil"></i> Nouveau Matériel</button>
       </p>
   </div>
 
@@ -228,8 +228,8 @@
       <div class="row light-margin-top "><div class="col-md-6 text-right">Prestataire: </div><div class="col-md-6 text-left text-warning"> {{hardware.PROVIDER.LABEL}}</div></div>
       <div class="row light-margin-top "><div class="col-md-6 text-right">Marque: </div><div class="col-md-6 text-left text-warning"> {{hardware.BRAND.LABEL}}</div></div>
       <p class="text-center light-margin-top">
-        <button type="submit" class="btn btn-danger btn-lg" ng-click="addNewHardware()"><i class="fa fa-floppy-o"></i> Oui</button>
-      	<button type="submit" class="btn btn-warning btn-lg col-md-offset-1 " name='addButton2' ng-model="addButton" btn-radio="'0'" ng-click=""><i class="fa fa-undo"></i> Annuler</button>
+        <button type="submit" class="btn animated flipInY btn-danger btn-lg" ng-click="addNewHardware()"><i class="  fa fa-floppy-o"></i> Oui</button>
+      	<button type="submit" class="btn animated flipInY btn-warning btn-lg col-md-offset-1 " name='addButton2' ng-model="addButton" btn-radio="'0'" ng-click=""><i class="  fa fa-undo"></i> Annuler</button>
       </p>
   </div>
 

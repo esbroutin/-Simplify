@@ -1,9 +1,9 @@
 <div ng-controller="ProviderViewCtrl">
-  <legend><i class="fa fa-users fa-lg"></i> Prestataires</legend>
-  <h4><i class="fa fa-eye"></i> Prestataire N° {{provider.ID}} - {{provider.LABEL}} </h4>
-  <div  ng-show="deleteButton == '0' && editButton != 1">
+  <legend><i class="  fa fa-users fa-lg"></i> Prestataires</legend>
+  <h4><i class="  fa fa-eye"></i> Prestataire N° {{provider.ID}} - {{provider.LABEL}} </h4>
+  <div  class=""   ng-show="deleteButton == '0' && editButton != 1">
     <div class="blocBorder col-md-6">
-    <legend><i class="fa fa-info-circle fa-lg"></i> Informations</legend>
+    <legend><i class="  fa fa-info-circle fa-lg"></i> Informations</legend>
       <div class='row'>
         <label class="col-md-4 text-right control-label"> ID Prestataire:</label>
         <div class="col-md-4">
@@ -37,14 +37,14 @@
       <div class='row'>
         <label class="col-md-4 text-right control-label">Adresse Web:</label>
         <div class="col-md-4 light-margin-bot">
-          <a target="_new" href="http://{{provider.WEB_ADDRESS}}" class="btn btn-success"><i class="fa fa-globe"></i> Lien Web</a>
+          <a target="_new" href="http://{{provider.WEB_ADDRESS}}" class="btn animated flipInY btn-success"><i class="  fa fa-globe"></i> Lien Web</a>
         </div>
       </div>
     </div>
     <div class='row col-md-12 light-margin-top text-left button-group'>
-      <button type="submit" class="btn btn-info " ng-click="showList()"><i class="fa fa-list"></i> Liste</button>
-      <button type="submit" class="btn btn-primary col-md-offset-1 " ng-click="edit()"><i class="fa fa-pencil"></i> Modifier</button>
-      <button type="submit" class="btn btn-danger col-md-offset-1 " ng-click="deleteButton = 1"><i class="fa fa-trash-o"></i> Supprimer</button>
+      <button type="submit" class="btn animated flipInY btn-info " ng-click="showList()"><i class="  fa fa-list"></i> Liste</button>
+      <button type="submit" class="btn animated flipInY btn-primary col-md-offset-1 " ng-click="edit()"><i class="  fa fa-pencil"></i> Modifier</button>
+      <button type="submit" class="btn animated flipInY btn-danger col-md-offset-1 " ng-click="deleteButton = 1"><i class="  fa fa-trash-o"></i> Supprimer</button>
     </div>
   </div>
 
@@ -66,17 +66,18 @@
         <label for="provider">Lien Web</label>
         <input type="text" class="form-control" id="providerWeb" ng-model="provider.WEB_ADDRESS">
       </div>
-      <button type="submit" class="btn btn-danger col-md-offset-1 " ng-click="save()"><i class="fa fa-floppy-o"></i> Enregistrer</button>
-      <button type="submit" class="btn btn-warning col-md-offset-1" ng-click="cancelEdit()"><i class="fa fa-undo"></i> Annuler</button>
+      <button type="submit" class="btn animated flipInY btn-danger col-md-offset-1 " ng-click="save()"><i class="  fa fa-floppy-o"></i> Enregistrer</button>
+      <button type="submit" class="btn animated flipInY btn-warning col-md-offset-1" ng-click="cancelEdit()"><i class="  fa fa-undo"></i> Annuler</button>
     </form> 
 
   <!-- we display the delete comfirmation dialog when the delete button is pushed -->
   <div class="col-md-12 jumbotron text-center" ng-show="deleteButton == '1'">
-    <legend>Êtes-vous sûr de vouloir supprimer le prestataire {{provider.ID}} -- <span class="text-warning ">{{provider.LABEL}}</span> ?</legend>
-      <p class="text-danger">Les licences liées à ce prestataire devront être modifiées afin de leur assigner un nouveau prestataire</p>
-      <p class="text-center">
-        <button type="submit" class="btn btn-danger btn-lg" ng-click="deleteProvider()"  ><i class="fa fa-trash-o"></i> Oui</button>
-        <button type="submit" class="col-md-offset-1 btn btn-success btn-lg" ng-model="deleteButton" btn-radio="'0'"><i class="fa fa-undo"></i>Non</button>
+    <legend class="animated fadeInDown">Êtes-vous sûr de vouloir supprimer le prestataire {{provider.ID}} -- <span class="text-warning ">{{provider.LABEL}}</span> ?</legend>
+      <p class="text-danger animated zoomIn">Cet acte est irréversible !</p>
+      <p class="text-danger animated fadeInLeft">Les licences liées à ce prestataire devront être modifiées afin de leur assigner un nouveau prestataire</p>
+      <p class="text-center animated fadeInUp">
+        <button type="submit" class="btn animated flipInY btn-danger btn-lg" ng-click="deleteProvider()"  ><i class="  fa fa-trash-o"></i> Oui</button>
+        <button type="submit" class="col-md-offset-1 btn btn-success btn-lg" ng-model="deleteButton" btn-radio="'0'"><i class="  fa fa-undo"></i>Non</button>
       </p>
   </div>
 </div>

@@ -1,5 +1,5 @@
-<legend><i class="fa fa-certificate fa-lg"></i> Certificats</legend>
-  <h4><i class="fa fa-list"></i> Liste </h4>
+<legend><i class="  fa fa-certificate fa-lg"></i> Certificats</legend>
+  <h4><i class="  fa fa-list"></i> Liste </h4>
 <div ng-controller="CertificateListCtrl">
   <div class='row'><div class="col-md-4 "><input  class='form-control' type="text" name='listSearch' ng-model="certificateSearch" class="form-control" placeholder="Rechercher..." ng-change="search()"/></div><div class="col-md-6 text-info"> Recherchez par Libellé, Marque/Entreprise,Prestataire, ID</div>
   </div>
@@ -8,7 +8,7 @@
   		<tr class="info"><th>Date de création</th><th>Nom</th><th>Organisation</th><th>Unité d'organisation</th><th>Date de début</th><th>Date de fin</th><th>Auto-signé ?</th></tr>
   	</thead>
   	<tbody>
-  		<tr class="reveal-animation" ng-repeat="certificate in certificates" ng-click="view(certificate.ID)" >
+  		<tr class="" ng-repeat="certificate in certificates" ng-click="view(certificate.ID)" >
         <td>{{certificate.CREATION_DATE | tsDateTime}}</td>
   			<td>{{certificate.COMMON_NAME}}</td>
         <td>{{certificate.ORGANIZATION}}</td>

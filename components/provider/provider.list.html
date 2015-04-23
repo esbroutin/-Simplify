@@ -1,6 +1,6 @@
 
-  <legend><i class="fa fa-users fa-lg"></i> Prestataires</legend>
-  <h4><i class="fa fa-list"></i> Liste </h4>
+  <legend><i class="  fa fa-users fa-lg"></i> Prestataires</legend>
+  <h4><i class="  fa fa-list"></i> Liste </h4>
 <div ng-controller="ProviderListCtrl">
   <div class='row'><div class="col-md-4 "><input  class='form-control' type="text" name='listSearch' ng-model="providerSearch" class="form-control" placeholder="Rechercher..." ng-change="searchProvider()"/></div>
   </div>
@@ -9,7 +9,7 @@
   		<tr class="info"><th>Modifié le</th><th>Libéllé</th><th>Contact</th></tr>
   	</thead>
   	<tbody>
-  		<tr class="reveal-animation" ng-repeat="provider in providers" ng-click="viewProvider(provider)" >
+  		<tr class="" ng-repeat="provider in providers" ng-click="viewProvider(provider)" >
         <td>{{provider.EDITION_DATE | tsDateTime}}</td>
   			<td>{{provider.LABEL}}</td>
         <td>{{provider.CONTACT}}</td>

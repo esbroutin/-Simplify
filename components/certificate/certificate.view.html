@@ -1,9 +1,9 @@
 <div ng-controller="CertificateViewCtrl">
-<legend><i class="fa fa-certificate fa-lg"></i> Certificats</legend>
-  <h4><i class="fa fa-eye"></i> Certificat N° {{certificate.ID}} - {{certificate.COMMON_NAME}} </h4>
-  <div  ng-show="deleteButton == '0' && editButton != 1">
+<legend><i class="  fa fa-certificate fa-lg"></i> Certificats</legend>
+  <h4><i class="  fa fa-eye"></i> Certificat N° {{certificate.ID}} - {{certificate.COMMON_NAME}} </h4>
+  <div class="" ng-show="deleteButton == '0' && editButton != 1">
     <div class="blocBorder col-md-6">
-    <legend><i class="fa fa-info-circle fa-lg"></i> Informations</legend>
+    <legend><i class="  fa fa-info-circle fa-lg"></i> Informations</legend>
       <div class='row'>
         <label class="col-md-4 text-right control-label"> ID Certificat:</label>
         <div class="col-md-4">
@@ -60,7 +60,7 @@
       </div>
       <div class='row borderTop'>
         <label class="col-md-4 text-right control-label"> Date de fin:</label>
-        <div class="col-md-8 text-danger" ng-show='certificate.ALERT == 1'><i class="fa fa-bell faa-pulse faa-fast animated"></i>
+        <div class="col-md-8 text-danger" ng-show='certificate.ALERT == 1'><i class="  fa fa-bell faa-tada faa-fast animated"></i>
           {{certificate.DATE_END | tsDate}}
         </div>
         <div class="col-md-8" ng-hide='certificate.ALERT == 1'>
@@ -80,9 +80,9 @@
         </div>
       </div>
       <div class='row'>
-        <label class="col-md-4 text-right control-label"><i class="fa fa-info animated text-info fa-lg faa-pulse faa-fast"  popover-placement="top" popover-trigger="mouseenter" popover="1 fichier au format ZIP uniquement (20 mb MAX)"></i>Fichier(s):</label>
+        <label class="col-md-4 text-right control-label"> Fichier(s):</label>
         <div class="col-md-4 light-margin-bot">
-          <div class="btn btn-success " ng-click='downloadFiles()'><i class="fa fa-download"></i> Télécharger</div>
+          <div class="btn btn-success animated flipInY" ng-click='downloadFiles()'><i class=" animated bounceInLeft fa fa-download"></i> Télécharger</div>
         </div>
       </div>
       <div class='row borderTop'>
@@ -94,7 +94,7 @@
     </div>
     <!-- PROVIDER BLOC -->
     <div class="blocBorder col-md-3" ng-show="certificate.AUTO_SIGNED == 'false'">
-      <legend><i class="fa fa-users fa-lg"></i> Prestataire <span class="text-warning" ng-show="certificate.PROVIDER.STATUS == 'DELETED'"> Doit être changé !</span></legend>
+      <legend><i class="  fa fa-users fa-lg"></i> Prestataire <span class="text-warning" ng-show="certificate.PROVIDER.STATUS == 'DELETED'"> Doit être changé !</span></legend>
       <div class='row'>
         <label class="col-md-4 text-right control-label"> Nom:</label>
         <div class="col-md-8 row">
@@ -116,13 +116,13 @@
       <div class='row'>
         <label class="col-md-4 text-right control-label">Site Web:</label>
         <div class="col-md-4 light-margin-bot">
-          <a target="_new" href="http://{{certificate.PROVIDER.WEB_ADDRESS}}" class="btn btn-success "><i class="fa fa-globe"></i> Site Web</a>
+          <a target="_new" href="http://{{certificate.PROVIDER.WEB_ADDRESS}}" class="btn btn-success "><i class="  fa fa-globe"></i> Site Web</a>
         </div>
       </div>
     </div>
     <!-- BRAND BLOC -->
     <div class="blocBorder col-md-3" ng-show="certificate.AUTO_SIGNED == 'false'">
-      <legend><i class="fa fa-building fa-lg"></i> Marque <span class="text-warning" ng-show="certificate.BRAND.STATUS == 'DELETED'"> Doit être changé !</span></legend>
+      <legend><i class="  fa fa-building fa-lg"></i> Marque <span class="text-warning" ng-show="certificate.BRAND.STATUS == 'DELETED'"> Doit être changé !</span></legend>
       <div class='row'>
         <label class="col-md-4 text-right control-label"> Nom:</label>
         <div class="col-md-8 row">
@@ -132,23 +132,24 @@
       <div class='row'>
         <label class="col-md-4 text-right control-label">Site Web:</label>
         <div class="col-md-4 light-margin-bot">
-          <a target="_new" href="http://{{certificate.BRAND.WEB_ADDRESS}}" class="btn btn-success "><i class="fa fa-globe"></i> Site Web</a>
+          <a target="_new" href="http://{{certificate.BRAND.WEB_ADDRESS}}" class="btn btn-success "><i class="  fa fa-globe"></i> Site Web</a>
         </div>
       </div>
     </div>
     <div class='row col-md-12 light-margin-top text-left button-group'>
-      <button type="submit" class="btn btn-info " ng-click="list()"><i class="fa fa-th-list"></i> Liste</button>
-      <button type="submit" class="btn btn-primary col-md-offset-1 " ng-click="edit()"><i class="fa fa-pencil"></i> Modifier</button>
-      <button type="submit" class="btn btn-danger col-md-offset-1 " ng-click="deleteButton = 1"><i class="fa fa-trash-o"></i> Supprimer</button>
+      <button type="submit" class="btn btn-info animated flipInY " ng-click="list()"><i class="  fa fa-th-list"></i> Liste</button>
+      <button type="submit" class="btn btn-primary animated flipInY col-md-offset-1 " ng-click="edit()"><i class="  fa fa-pencil"></i> Modifier</button>
+      <button type="submit" class="btn btn-danger animated flipInY col-md-offset-1 " ng-click="deleteButton = 1"><i class="  fa fa-trash-o"></i> Supprimer</button>
     </div>
   </div>
 
   <!-- we display the delete comfirmation dialog when the delete button is pushed -->
   <div class="col-md-12 jumbotron text-center" ng-show="deleteButton == '1'">
-    <legend>Êtes-vous sûr de vouloir supprimer le certificat {{certificate.ID}} -- <span class="text-warning ">{{certificate.LABEL}}</span> ?</legend>
+    <legend>Êtes-vous sûr de vouloir supprimer le certificat {{certificate.ID}} -- <span class="text-warning ">{{certificate.COMMON_NAME}}</span> ?</legend>
+      <p class="text-danger animated zoomIn">Cet acte est irréversible !</p>
       <p class="text-center">
-        <button type="submit" class="btn btn-danger btn-lg" ng-click="delete()"  ><i class="fa fa-trash"></i> Oui</button>
-        <button type="submit" class="col-md-offset-1 btn btn-success btn-lg" ng-model="deleteButton" btn-radio="'0'"><i class="fa fa-undo"></i> Non</button>
+        <button type="submit" class="btn btn-danger btn-lg animated flipInY" ng-click="delete()"  ><i class="  fa fa-trash"></i> Oui</button>
+        <button type="submit" class="col-md-offset-1 btn btn-success btn-lg animated flipInY" ng-model="deleteButton" btn-radio="'0'"><i class="  fa fa-undo"></i> Non</button>
       </p>
   </div>
 
@@ -172,7 +173,7 @@
             <p class="input-group">
               <input type="text" class="form-control" datepicker-popup="dd-MM-yy" ng-model="certificate.DATE_START" is-open="openedStartDate" min-date="2000-01-01" max-date="'2099-06-22'" close-text="Close" />
               <span class="input-group-btn">
-                <button type="button" class="btn btn-success" ng-click="openStartDate($event)"><i class="fa fa-calendar fa-lg"></i></button>
+                <button type="button" class="btn btn-success" ng-click="openStartDate($event)"><i class="  fa fa-calendar fa-lg"></i></button>
               </span>
             </p>
         </div>
@@ -183,7 +184,7 @@
             <p class="input-group">
               <input type="text" class="form-control" datepicker-popup="dd-MM-yy" ng-model="certificate.DATE_END" is-open="openedEndDate" min-date="{{certificate.DATE_START | date : 'yyyy-MM-dd'}}" max-date="'2099-06-22'" close-text="Close" />
               <span class="input-group-btn">
-                <button type="button" class="btn btn-danger" ng-click="openEndDate($event)"><i class="fa fa-calendar fa-lg"></i></button>
+                <button type="button" class="btn btn-danger" ng-click="openEndDate($event)"><i class="  fa fa-calendar fa-lg"></i></button>
               </span>
             </p>
         </div>
@@ -235,7 +236,7 @@
             <label for="certificateLabel"> Fichier(s)</label>
           </div>   
           <div class="col-md-8">
-            <div class="btn btn-default" ng-file-select ng-model="files" allow-dir="false" accept=".zip" ng-multiple="false"><i class="fa fa-upload"></i> Selectionnez un fichier ZIP</div>
+            <div class="btn btn-default animated flipInY" ng-file-select ng-model="files" allow-dir="false" accept=".zip" ng-multiple="false"><i class="  fa fa-upload"></i> Selectionnez un fichier ZIP</div>
             <ul>
                 <li ng-repeat="f in files" style="font:smaller">{{f.name}}</li>
             </ul>
@@ -291,7 +292,7 @@
           </div>     
         </div>
       </div> 
-      <button type="submit" class="btn btn-danger col-md-offset-1 " ng-click="save()"><i class="fa fa-floppy-o"></i> Enregistrer</button>
-      <button type="submit" class="btn btn-warning col-md-offset-1" ng-click="cancelEdit()"><i class="fa fa-undo"></i> Annuler</button>
+      <button type="submit" class="btn btn-danger col-md-offset-1  animated flipInY" ng-click="save()"><i class="  fa fa-floppy-o"></i> Enregistrer</button>
+      <button type="submit" class="btn btn-warning col-md-offset-1 animated flipInY" ng-click="cancelEdit()"><i class="  fa fa-undo"></i> Annuler</button>
     </form> 
 </div>

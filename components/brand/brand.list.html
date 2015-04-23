@@ -1,5 +1,5 @@
-<legend><i class="fa fa-building fa-lg"></i>Marques / Entreprises</legend>
-<h4><i class="fa fa-list"></i> Liste </h4>
+<legend><i class="  fa fa-building fa-lg"></i>Marques / Entreprises</legend>
+<h4><i class="  fa fa-list"></i> Liste </h4>
 <div ng-controller="BrandListCtrl">
   <div class='row'><div class="col-md-4 "><input  class='form-control' type="text" name='listSearch' ng-model="brandSearch" class="form-control" placeholder="Rechercher..." ng-change="searchBrand()"/></div>
   </div>
@@ -8,7 +8,7 @@
   		<tr class="info"><th>Modifié le</th><th>Libéllé</th></tr>
   	</thead>
   	<tbody>
-  		<tr class="reveal-animation" ng-repeat="brand in brands" ng-click="viewBrand(brand)" >
+  		<tr class="" ng-repeat="brand in brands" ng-click="viewBrand(brand)" >
         <td>{{brand.EDITION_DATE | tsDateTime}}</td>
   			<td>{{brand.LABEL}}</td>
   		</tr>

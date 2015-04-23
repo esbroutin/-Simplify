@@ -1,7 +1,7 @@
 <div ng-controller="RecoveryFormCtrl">
-  <legend><i class="fa fa-bed fa-lg"></i> Récupération</legend>
-  <h4><i class="fa fa-file-o"></i> Nouvelle demande </h4>
-    <form class="col-md-8 row" ng-hide="addButton == 1 || lock == 1 || formDone == 1" name='RecoveryRequest'>
+  <legend><i class="  fa fa-bed fa-lg"></i> Récupération</legend>
+  <h4><i class="  fa fa-file-o"></i> Nouvelle demande </h4>
+    <form class="col-md-8 row " ng-hide="addButton == 1 || lock == 1 || formDone == 1" name='RecoveryRequest'>
         <!-- DATE -->
       <div class="col-md-8 light-margin-top">
         <div class="col-md-3">
@@ -11,7 +11,7 @@
             <p class="input-group">
               <input type="text" class="form-control" datepicker-popup="dd-MM-yy" ng-model="recoveryForm.DATE" is-open="openedDate" min-date="2000-01-01" max-date="'2099-06-22'" close-text="Close" />
               <span class="input-group-btn">
-                <button type="button" class="btn btn-success" ng-click="openDate($event)"><i class="fa fa-calendar fa-lg"></i></button>
+                <button type="button" class="btn btn-success" ng-click="openDate($event)"><i class="  fa fa-calendar fa-lg"></i></button>
               </span>
             </p>
         </div>
@@ -19,7 +19,7 @@
         <!-- TOTAL -->
       <div class="col-md-8 light-margin-top">
         <div class="col-md-3 text-left"><label>Temps souhaité</label></div>
-        <div class="col-md-9"><p ng-show='recoveryForm.TO_USE >= 8'> Journée complète (8h) <a href=""><i class="fa fa-undo text-info" ng-click="recoveryForm.hours = 7"></i></a></p></div>
+        <div class="col-md-9"><p ng-show='recoveryForm.TO_USE >= 8'> Journée complète (8h) <a href=""><i class="  fa fa-undo text-info" ng-click="recoveryForm.hours = 7"></i></a></p></div>
         <div class="col-md-9 text-left" ng-hide='recoveryForm.TO_USE >= 8'>
           <div class="col-md-4">
             <select class="form-control" ng-change='switchHourDay()' ng-model="recoveryForm.hours" ng-options="n for n in [] | range:1:24" ng-change='switchHourDay'></select>            
@@ -39,13 +39,17 @@
         <!-- LEFT -->
       <div class="col-md-8 light-margin-top" >
         <div class="col-md-4 text-left"><label for="recoveryFormLauchPause">Restant</label></div>
-        <div class="col-md-8 text-left text-danger" ng-show='left < 0'><i class="fa fa-exclamation-circle faa-flash animated"></i> {{left | hourConv}} <i class="fa fa-exclamation-circle faa-flash animated"></i></div>
+        <div class="col-md-8 text-left text-danger " ng-show='left < 0'><i class="  fa fa-exclamation-circle animated rubberBand infinite"></i> {{left | hourConv}} <i class="  fa fa-exclamation-circle animated rubberBand infinite"></i></div>
         <div class="col-md-8 text-left text-info" ng-show='left >= 0'>{{left | hourConv}}</div>
       </div>
         <!-- BUTTONS -->
       <div class="row col-md-12 light-margin-top">
-        <button class="btn btn-danger col-md-offset-1 " ng-disabled="invalidForm == 1"  name='addButton' ng-model="addButton" btn-radio="'1'"><i class="fa fa-floppy-o"></i> Valider</button>
-        <button class="btn btn-warning col-md-offset-1" ng-click="show()"><i class="fa fa-undo"></i> Annuler</button>
+        <div class="col-md-4" ng-hide="invalidForm == 1" >
+          <button class="btn btn-danger  animated flipInY"  name='addButton' ng-model="addButton" btn-radio="'1'"><i class="fa fa-floppy-o"></i> Valider</button>     
+        </div>
+        <div class="col-md-4 col-md-offset-1">
+          <button class="btn btn-warning animated flipInY" ng-click="show()"><i class="  fa fa-undo"></i> Annuler</button> 
+        </div>
       </div> 
     </form>
   <!-- we display the add confirmation options when the add button is pushed --> 
@@ -56,17 +60,17 @@
     <div class="row light-margin-top "><div class="col-md-6 text-right">Temps disponible: </div><div class="col-md-6 text-left text-warning">{{available | hourConv}}</div></div>
     <div class="row light-margin-top "><div class="col-md-6 text-right">Temps restant: </div><div class="col-md-6 text-left text-warning">{{left | hourConv}}</div></div>
     <p class="text-center light-margin-top"> 
-      <button type="submit" class="btn btn-danger btn-lg" ng-click="add()"><i class="fa fa-floppy-o"></i> Oui</button>
-      <button type="submit" class="btn btn-warning btn-lg col-md-offset-1 " name='addButton2' ng-model="addButton" btn-radio="'0'"><i class="fa fa-undo"></i> Annuler</button>
+      <button type="submit" class="btn btn-danger btn-lg animated flipInY " ng-click="add()"><i class="  fa fa-floppy-o"></i> Oui</button>
+      <button type="submit" class="btn btn-warning btn-lg animated flipInY col-md-offset-1 " name='addButton2' ng-model="addButton" btn-radio="'0'"><i class="  fa fa-undo"></i> Annuler</button>
     </p>
   </div>
   <!-- we display the registration message --> 
   <div class="col-md-12 jumbotron" ng-show="lock == 1">
-    <legend>Enregistrement en cours, veuillez patienter    <i class="fa fa-floppy-o fa-lg faa-fast faa-passing animated"></i></legend>
+    <legend>Enregistrement en cours, veuillez patienter    <i class="  fa fa-floppy-o fa-lg faa-fast faa-passing animated"></i></legend>
   </div>
   <!-- we display the choice options when the form add is completed -->
   <div class="col-md-12 jumbotron text-center" ng-show="formDone == 1">
-    <legend>Une nouvelle entrée a été ajoutée <i class="fa fa-trophy faa-tada animated"></i>, que souhaitez-vous faire ?</legend>
+    <legend>Une nouvelle entrée a été ajoutée <i class="  fa fa-trophy faa-tada animated"></i>, que souhaitez-vous faire ?</legend>
     </br>
       <p class="text-center"> 
         <button type="submit" class="btn btn-info btn-lg" ng-click="show()">Liste</button>

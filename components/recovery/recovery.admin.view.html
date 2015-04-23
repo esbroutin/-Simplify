@@ -10,7 +10,7 @@
             <p class="input-group">
               <input type="text" class="form-control" datepicker-popup="dd-MM-yy" ng-model="recoveryForm.DATE" is-open="openedDate" min-date="2000-01-01" max-date="'2099-06-22'" close-text="Close" />
               <span class="input-group-btn">
-                <button type="button" class="btn btn-success" ng-click="openDate($event)"><i class="fa fa-calendar fa-lg"></i></button>
+                <button type="button" class="btn btn-success" ng-click="openDate($event)"><i class=" animated rollIn fa fa-calendar fa-lg"></i></button>
               </span>
             </p>
         </div>
@@ -28,13 +28,13 @@
         <!-- AVAILABLE -->
       <div class="col-md-7 light-margin-top" >
         <div class="col-md-4 text-left"><label for="recoveryFormLauchPause">Restant</label></div>
-        <div class="col-md-8 text-left text-danger" ng-show='left < 0'><i class="fa fa-exclamation-circle"></i> {{left}} heure(s) <i class="fa fa-exclamation-circle"></i></div>
+        <div class="col-md-8 text-left text-danger" ng-show='left < 0'><i class=" animated rollIn fa fa-exclamation-circle"></i> {{left}} heure(s) <i class=" animated rollIn fa fa-exclamation-circle"></i></div>
         <div class="col-md-8 text-left text-info" ng-show='left >= 0'>{{left}} heure(s)</div>
       </div>
         <!-- BUTTONS -->
       <div class="row col-md-12 light-margin-top">
-        <button type="submit" class="btn btn-danger col-md-offset-1 " ng-disabled="invalidForm == 1"  name='addButton' ng-model="addButton" btn-radio="'1'"><i class="fa fa-floppy-o"></i> Valider</button>
-        <button type="submit" class="btn btn-warning col-md-offset-1" ng-click="showList()"><i class="fa fa-undo"></i> Annuler</button>
+        <button type="submit" class="btn btn-danger col-md-offset-1 " ng-disabled="invalidForm == 1"  name='addButton' ng-model="addButton" btn-radio="'1'"><i class=" animated rollIn fa fa-floppy-o"></i> Valider</button>
+        <button type="submit" class="btn btn-warning col-md-offset-1" ng-click="showList()"><i class=" animated rollIn fa fa-undo"></i> Annuler</button>
       </div> 
     </form>
   <!-- we display the add confirmation options when the add button is pushed -->
@@ -45,8 +45,8 @@
     <div class="row light-margin-top "><div class="col-md-6 text-right">Temps disponible: </div><div class="col-md-6 text-left text-warning"><span th-code="{{available}}" /></div></div>
     <div class="row light-margin-top "><div class="col-md-6 text-right">Temps restant: </div><div class="col-md-6 text-left text-warning"><span th-code="{{left}}" /></div></div>
     <p class="text-center light-margin-top">
-      <button type="submit" class="btn btn-danger btn-lg" ng-click="add()"><i class="fa fa-floppy-o"></i> Oui</button>
-      <button type="submit" class="btn btn-warning btn-lg col-md-offset-1 " name='addButton2' ng-model="addButton" btn-radio="'0'"><i class="fa fa-undo"></i> Annuler</button>
+      <button type="submit" class="btn btn-danger btn-lg" ng-click="add()"><i class=" animated rollIn fa fa-floppy-o"></i> Oui</button>
+      <button type="submit" class="btn btn-warning btn-lg col-md-offset-1 " name='addButton2' ng-model="addButton" btn-radio="'0'"><i class=" animated rollIn fa fa-undo"></i> Annuler</button>
     </p>
   </div>
   <!-- we display the choice options when the form add is completed -->

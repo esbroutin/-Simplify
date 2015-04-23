@@ -22,7 +22,6 @@ angular
     console.log(' recoveries : ' + $scope.recoveries);
     // $scope.formDone = 1;
   });
-
 //go to detailed recovery view
 $scope.viewRecovery = function(recovery){
 

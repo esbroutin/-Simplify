@@ -1,14 +1,14 @@
 <div ng-hide='loading == 1'>
   <div class="modal-header">
-      <h3 class="modal-title">Refuser la demande</h3>
+      <h3 class="modal-title fadeInUp animated">Refuser la demande</h3>
   </div>
-  <div class="modal-body">  
+  <div class="modal-body fadeInDown animated">  
   <h4>Veuillez indiquer la raison du refus</h4>
   <input ng-model='form.REASON' type="text" class=" form-control">
   </div>
   <div class="modal-footer">
-      <button class="btn btn-primary" ng-click="refuse(form)">OK</button>
-      <button class="btn btn-warning" ng-click="cancel()">Annuler</button>
+      <button class="btn btn-primary fadeInLeft animated" ng-click="refuse(form)">OK</button>
+      <button class="btn btn-warning fadeInRight animated" ng-click="cancel()">Annuler</button>
   </div>
 </div>
 <div ng-show='loading == 1'>

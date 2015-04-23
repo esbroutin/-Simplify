@@ -1,5 +1,5 @@
-<legend><i class="fa fa-barcode fa-lg"></i> Matériel</legend>
-  <h4><i class="fa fa-list"></i> Liste </h4>
+<legend><i class="  fa fa-barcode fa-lg"></i> Matériel</legend>
+  <h4><i class="  fa fa-list"></i> Liste </h4>
 <div ng-controller="HardwareListCtrl">
   <div class='row'><div class="col-md-4 "><input  class='form-control' type="text" name='listSearch' ng-model="hardwareSearch" class="form-control" placeholder="Rechercher..." ng-change="searchHardware()"/></div><div class="col-md-6 text-info"> Recherchez par Libellé, Marque/Entreprise, Prestataire, Code barre, site, ID</div>
   </div>
@@ -8,7 +8,7 @@
   		<tr class="info not-allowed"><th>Date de Modification</th><th>Libellé</th><th>Code barre</th><th>Site</th><th>Prestataire</th><th>Marque/Entreprise</th><th>Début de garantie</th><th>Fin de garantie</th><th>Status</th></tr>
   	</thead>
   	<tbody>
-  		<tr class="reveal-animation" ng-repeat="hardware in hardwares" ng-click="viewHardware(hardware)" >
+  		<tr class="" ng-repeat="hardware in hardwares" ng-click="viewHardware(hardware)" >
         <td>{{hardware.EDITION_DATE | tsDateTime}}</td>
         <td>{{hardware.LABEL}}</td>
         <td>{{hardware.BARCODE}}</td>

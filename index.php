@@ -16,6 +16,8 @@ global $gTblConfig;
   <link rel="stylesheet" href="css/simplify.css">
   <!-- <link rel="stylesheet" href="css/custom_darkly_bootstrap.css"> -->
   <link rel="stylesheet" href="css/custom_slate_bootstrap.css">
+  <!-- <link rel="stylesheet" href="css/bootstrap_readable.min.css"> -->
+
   <!-- <link rel="stylesheet" href="css/custom_spacelab_bootstrap.min.css"> -->
   <!-- <link rel="stylesheet" href="css/bootstrap-journal.min.css"> -->
   <!-- <link rel="stylesheet" href="css/bootstrap-sandstone.min.css"> -->
@@ -29,7 +31,9 @@ global $gTblConfig;
   <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css">
   <link rel="stylesheet" href="bower_components/ng-table/dist/ng-table.css">
   <link rel="stylesheet" href="css/selectize.default.css">
-  <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.css"/>
+  <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.css">
+  <link rel="stylesheet" href="lib/animate.css-master/animate.min.css">
+
 <!--  scripts-->
   <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="bower_components/jquery-ui/ui/jquery-ui.js"></script>
@@ -44,11 +48,8 @@ global $gTblConfig;
   <script type="text/javascript" src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
   <script type="text/javascript" src="bower_components/moment/moment.js"></script>
   <script type="text/javascript" src="bower_components/angular-moment/angular-moment.js"></script>
-  <script type="text/javascript" src="bower_components/angular-gantt/dist/angular-gantt.js"></script>
-  <script type="text/javascript" src="bower_components/angular-gantt/dist/angular-gantt-plugins.js"></script>
   <script type="text/javascript" src="bower_components/ng-table/dist/ng-table.js"></script>
-  <script src="bower_components/ng-file-upload/angular-file-upload.js"></script>
-
+  <script type="text/javascript" src="bower_components/ng-file-upload/angular-file-upload.js"></script>
   <!-- Calendar -->
   <script type="text/javascript" src="bower_components/angular-ui-calendar/src/calendar.js"></script>
   <script type="text/javascript" src="bower_components/fullcalendar/fullcalendar.js"></script>
@@ -110,9 +111,8 @@ global $gTblConfig;
     <!-- UI-VIEW --> 
         <div class="col-md-10 col-md-offset-1  light-margin-top reveal-animation" ui-view></div>
       </div>
-      <!-- <footer class="col-xs-12 col-md-12 sticky-footer" ng-include="'templates/footer.html'"></footer> -->
+      <!-- <footer class="col-md-12 sticky-footer" ng-include="'templates/footer.html'"></footer> -->
   </div>
   </div>
 </body>
 </html>   
-   
