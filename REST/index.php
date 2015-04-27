@@ -160,6 +160,27 @@ $app->get('/hardware/list/:search', function ($search) use ($app) {
     }
 }); 
 
+$app->post('/hardware/type/add', function() use($app)  {
+    if(checkAuth($app)){
+      $hardware = new \PNORD\Ctrl\HardwareCtrl($app);  
+      $data = json_decode($app->request->getBody());  
+      $ret = $hardware->addType($data);
+      echo json_encode($ret);   
+    }else{
+      $app->response->setStatus(403); 
+    }
+});
+
+$app->get('/hardware/type/list', function () use ($app) {
+    if(checkAuth($app)){
+      $hardware = new \PNORD\Ctrl\HardwareCtrl($app);    
+      $ret = $hardware->listTypes();
+      echo json_encode($ret);  
+    }else{
+      $app->response->setStatus(403); 
+    }
+}); 
+
 $app->post('/hardware/add', function() use($app)  {
     if(checkAuth($app)){
       $hardware = new \PNORD\Ctrl\HardwareCtrl($app);  

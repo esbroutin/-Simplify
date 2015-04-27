@@ -34,12 +34,14 @@ class HardwareDAO extends BaseSimplifyObject{
           $conditionSql = "AND (HARDWARE.ID LIKE '%$search%' 
             OR HARDWARE.LABEL LIKE '%".strtoupper($search)."%' 
             OR HARDWARE.LABEL LIKE '%".strtolower($search)."%'
-            OR HARDWARE.BARCODE LIKE '%$search'
+            OR HARDWARE.BARCODE LIKE '%$search%'
             OR PROVIDER.LABEL LIKE '%".strtoupper($search)."%' 
-            OR PROVIDER.LABEL LIKE '%".strtolower($search)."%' 
-            OR PROVIDER.STATUS LIKE '%".strtoupper($search)."' 
+            OR PROVIDER.LABEL LIKE '%".strtolower($search)."%'
+            OR HARDWARE.SERIAL_NUMBER LIKE '%".strtoupper($search)."%' 
+            OR HARDWARE.SERIAL_NUMBER LIKE '%".strtolower($search)."%' 
+            OR PROVIDER.STATUS LIKE '%".strtoupper($search)."%' 
             OR PROVIDER.STATUS LIKE '%".strtolower($search)."%' 
-            OR BRAND.LABEL LIKE '%".strtoupper($search)."' 
+            OR BRAND.LABEL LIKE '%".strtoupper($search)."%' 
             OR BRAND.LABEL LIKE '%".strtolower($search)."%')";
     }
 
@@ -49,12 +51,13 @@ class HardwareDAO extends BaseSimplifyObject{
                       hardware.warranty_end,
                       hardware.edition_date,
                       hardware.deployment_date,
+                      hardware.serial_number,
                       hardware.site,
                       hardware.status,
                       hardware.barcode
               FROM hardware,provider,brand WHERE hardware.provider_id=provider.id AND hardware.brand_id=brand.id ".$conditionSql." ORDER BY EDITION_DATE DESC";
 
-    	// $this->app->log->info('sql : '.$sql);
+      $this->app->log->info('sql : '.$sql);
 
       $hardwareData = $this->db()->query($sql);
       $hardwaresData = $hardwareData->fetchAll(PDO::FETCH_ASSOC); 
@@ -89,6 +92,25 @@ class HardwareDAO extends BaseSimplifyObject{
       // $this->app->log->info('hardwaresData : '. $this->dumpRet($hardwaresData));
       return $hardwaresData ;          
   } 
+  /***************************************
+  * listTypes
+  *parameter -> search string
+  * @return array[{object}]
+  ***************************************/
+
+  function listTypes(){
+  
+    $this->app->log->info(__CLASS__ . '::' . __METHOD__);
+
+      $sql = "SELECT * FROM TYPE";
+
+    	// $this->app->log->info('sql : '.$sql);
+
+      $types = $this->db()->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+
+      // $this->app->log->info('hardwaresData : '. $this->dumpRet($hardwaresData));
+      return $types ;          
+  } 
      
   
   /**
@@ -118,6 +140,14 @@ class HardwareDAO extends BaseSimplifyObject{
     $provider = $this->db()->query($Sqlprovider);
     $result['PROVIDER'] = $provider->fetch(PDO::FETCH_ASSOC);
 
+  //we get the associated provider data  
+    $sqlType = "SELECT type.id as ID , type.label
+                             FROM type,hardware 
+                          WHERE CAST(hardware.type AS NUMERIC) = type.id AND hardware.id = '$hardwareId'";
+    // $this->app->log->info('sqlType : '. $this->dumpRet($sqlType));
+    $type = $this->db()->query($sqlType);
+    $result['TYPE'] = $type->fetch(PDO::FETCH_ASSOC);
+
   //we get the associated brand data  
     $SqlBrand = "SELECT brand.id as ID,
                            brand.label as LABEL,
@@ -139,6 +169,44 @@ class HardwareDAO extends BaseSimplifyObject{
   } 
  
   /***************************************
+  * Add Type
+  * @return array[{object}]
+  ***************************************/
+
+  function addType($type){
+
+    $this->app->log->notice(__CLASS__ . '::' . __METHOD__);
+    $this->app->log->notice('type : '.$this->dumpRet($type));
+
+    //we check for undefined variables
+    if (!isset($type->LABEL)) {
+      $type->LABEL = '-';
+    };
+
+    $this->app->log->info('****type **** -> '.$this->dumpRet($type));
+    $label = $type->LABEL;    
+
+    //we use transaction to avoid sql injection level 1 & bad character escaping
+    $this->db()->beginTransaction();
+
+    $sql = "INSERT INTO TYPE(LABEL) 
+                               VALUES(:label)";
+
+    $query = $this->db()->prepare($sql);
+
+    $result = $query->execute(array(                                       
+                            ':label'=>$label
+                            ));
+
+      $return = $query->fetch(PDO::FETCH_ASSOC);
+      $this->db()->commit(); // commit global pour éviter les Entrées orphelines ou incomplète en cas d'erreur
+
+      return('done');
+
+  }
+
+ 
+  /***************************************
   * Add Hardware
   * @return array[{object}]
   ***************************************/
@@ -147,11 +215,11 @@ class HardwareDAO extends BaseSimplifyObject{
 
     $this->app->log->notice(__CLASS__ . '::' . __METHOD__);
     
-    // $this->app->log->info('****hardware **** -> '.$this->dumpRet($hardware));
+    // $this->app->log->info('****hardware 1**** -> '.$this->dumpRet($hardware));
 
     $label = $hardware->LABEL;
-    $warranty_start = $hardware->WARRANTY_START;
-    $warranty_end = $hardware->WARRANTY_END;
+    $warranty_start = date(DATE_ATOM,(strtotime($hardware->WARRANTY_START))+39600);
+    $warranty_end = date(DATE_ATOM,(strtotime($hardware->WARRANTY_END))+39600);
 
     //we check for undefined variables
     if (!isset($hardware->DESCRIPTION)) {
@@ -167,7 +235,7 @@ class HardwareDAO extends BaseSimplifyObject{
       $hardware->DIRECTION = '-';
     };
     if (!isset($hardware->DEPLOYMENT_DATE)) {
-      $hardware->DEPLOYMENT_DATE = '-';
+      $hardware->DEPLOYMENT_DATE = date('ymd');
     };
     if (!isset($hardware->BARCODE)) {
       $hardware->BARCODE = '-';
@@ -185,6 +253,7 @@ class HardwareDAO extends BaseSimplifyObject{
       $hardware->SERIAL_NUMBER = '-';
     };
 
+    $this->app->log->info('****hardware **** -> '.$this->dumpRet($hardware));
     $description = $hardware->DESCRIPTION;
     $brand_Id = $hardware->BRAND_ID;      
     $type = $hardware->TYPE;    
@@ -272,8 +341,6 @@ class HardwareDAO extends BaseSimplifyObject{
 
     $hardwareId =  $hardware->ID;
     $label = $hardware->LABEL;
-    $warranty_start = $hardware->WARRANTY_START;
-    $warranty_end = $hardware->WARRANTY_END;
 
     //we check for undefined variables
     if (!isset($hardware->DESCRIPTION)) {
@@ -318,7 +385,9 @@ class HardwareDAO extends BaseSimplifyObject{
     $status = str_replace("'", "", $hardware->STATUS);
     $type = str_replace("'", "", $hardware->TYPE);
     $provider_Id = str_replace("'", "", $hardware->PROVIDER_ID);
-    $deployment_date = $hardware->DEPLOYMENT_DATE;
+    $deployment_date = date(DATE_ATOM,(strtotime($hardware->DEPLOYMENT_DATE))+39600);
+    $warranty_start = date(DATE_ATOM,(strtotime($hardware->WARRANTY_START))+39600);
+    $warranty_end = date(DATE_ATOM,(strtotime($hardware->WARRANTY_END))+39600);
 
     $sqlHardware = "UPDATE HARDWARE
                   SET LABEL='$label',

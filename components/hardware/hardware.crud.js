@@ -38,6 +38,10 @@ angular
 	brandService.list(undefined).then(function(response){
 		$scope.brands = response.data;
 			});
+	// we load the types list
+	hardwareService.listTypes().then(function(response){
+		$scope.types = response.data;
+			});
 
 	$scope.addProvider = function () {
 
@@ -48,6 +52,20 @@ angular
 				$scope.providers = response.data;
 				$scope.newProvider = 0;
 				$scope.newProviderForm = {};
+
+			});
+		});
+	};
+
+	$scope.addType = function () {
+
+		//we add the new provider then reload the providers list
+		hardwareService.addType($scope.newTypeForm).then(function(response){
+			//reloading & hide the provider form
+			hardwareService.listTypes().then(function(response){
+				$scope.types = response.data;
+				$scope.newType = 0;
+				$scope.newTypeForm = {};
 
 			});
 		});
@@ -73,7 +91,7 @@ angular
 *
 ****************************/
 
-	$scope.$watchCollection('[hardware.WARRANTY_START, hardware.WARRANTY_END, hardware.DEPLOYMENT_DATE, hardware.PROVIDER,hardware.TYPE,hardware.BRAND, hardware.LABEL]', function(newValues) {
+	$scope.$watchCollection('[hardware.WARRANTY_START, hardware.WARRANTY_END, hardware.PROVIDER,hardware.TYPE,hardware.BRAND, hardware.LABEL]', function(newValues) {
 		var countDefined='';
 
 		for (var i = newValues.length - 1; i >= 0; i--) {
@@ -100,6 +118,7 @@ angular
 
 		$scope.hardware.PROVIDER_ID = $scope.hardware.PROVIDER.ID 
 		$scope.hardware.BRAND_ID = $scope.hardware.BRAND.ID 
+		$scope.hardware.TYPE = $scope.hardware.TYPE.ID 
 			console.log('hardware : ' + $scope.hardware);
 
 		hardwareService.add($scope.hardware).then(function(response){

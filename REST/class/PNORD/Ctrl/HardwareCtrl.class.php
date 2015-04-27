@@ -33,7 +33,7 @@ class HardwareCtrl extends BaseSimplifyObject{
   }
 
   /**
-  * get a hardware
+  * list
   * @return array(array())
   **/
   function listHardware($search){
@@ -41,6 +41,18 @@ class HardwareCtrl extends BaseSimplifyObject{
     $this->app->log->info(__CLASS__ . '::' . __METHOD__);
     $dao = new \PNORD\Model\HardwareDAO($this->app);  
     return $dao->listHardware($search);   
+     
+  }
+
+  /**
+  * listTypes
+  * @return array(array())
+  **/
+  function listTypes(){
+
+    $this->app->log->info(__CLASS__ . '::' . __METHOD__);
+    $dao = new \PNORD\Model\HardwareDAO($this->app);  
+    return $dao->listTypes();   
      
   }
 
@@ -60,11 +72,22 @@ class HardwareCtrl extends BaseSimplifyObject{
   * add a new hardware
   * @return array(array())
   **/
-  function addHardware($hardware){
+  function addHardware($type){
 
     $this->app->log->info(__CLASS__ . '::' . __METHOD__);
     $dao = new \PNORD\Model\HardwareDAO($this->app);  
-    return $dao->addHardware($hardware);   
+    return $dao->addHardware($type);   
+     
+  }
+  /**
+  * addType
+  * @return array(array())
+  **/
+  function addType($hardware){
+
+    $this->app->log->info(__CLASS__ . '::' . __METHOD__);
+    $dao = new \PNORD\Model\HardwareDAO($this->app);  
+    return $dao->addType($hardware);   
      
   }
 

@@ -44,7 +44,7 @@
       <div class='row borderTop'>
         <label class="col-md-4 text-right control-label"> Type:</label>
         <div class="col-md-8">
-          {{hardware.TYPE}}
+          {{hardware.TYPE.LABEL}}
         </div>
       </div>
     <!-- STATUS -->
@@ -146,7 +146,7 @@
     </div>
     <div class='row col-md-12 light-margin-top text-left button-group'>
       <button type="submit" class="btn animated flipInY btn-info " ng-click="showList()"><i class="  fa fa-th-list"></i> Liste</button>
-      <button type="submit" class="btn animated flipInY btn-primary col-md-offset-1 " ng-click="edit()"><i class="  fa fa-pencil"></i> Modifier</button>
+      <button type="submit" class="btn animated flipInY btn-primary col-md-offset-1 " ng-click="edit()"><i class="  fa fa-edit"></i> Modifier</button>
       <button type="submit" class="btn animated flipInY btn-danger col-md-offset-1 " ng-click="deleteButton = 1"><i class="  fa fa-trash-o"></i> Supprimer</button>
       <button type="submit" class="btn animated flipInY btn-success col-md-offset-1 " ng-click="generatePDF()"><i class="  fa fa-pdf-o"></i> Générer le PDF</button>
     </div>
@@ -177,13 +177,13 @@
           <label for="licenseLabel">Type</label>
         </div>   
         <div class="col-md-4">
-          <select class="form-control" id="select" ng-model="hardware.TYPE">
-              <option>Serveur</option>
-              <option>Switch</option>
-              <option>Astaro RED</option>
-              <option>Routeur</option>
-              <option>Routeur CISCO</option>
-          </select>
+          <ui-select ng-model="hardware.TYPE" theme="selectize" ng-disabled="disabled"> 
+            <ui-select-match placeholder="Selectionnez ou recherchez un prestataire dans la liste...">{{$select.selected.LABEL}}</ui-select-match>
+            <ui-select-choices repeat="type in types | filter: $select.search">
+              <strong> Nom :</strong> 
+              <span ng-bind-html="type.LABEL | highlight: $select.search" class="text-info"></span> 
+            </ui-select-choices>
+          </ui-select>
         </div>
       </div>
       <!-- status -->

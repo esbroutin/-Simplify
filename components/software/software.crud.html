@@ -72,10 +72,14 @@
         	<input type="text"  popover-placement="top" popover-trigger="focus" popover="rentrez l'URL complète (avec http:// ...)" Popover-animation="true"class="form-control" ng-model="software.WEB_ADDRESS" placeholder="Adresse web ...">
       	</div>
       </div>
-      <div class="row light-margin-top">
-    		<button type="submit" class="btn animated flipInY btn-danger" name='addButton' ng-disabled="completeForm < 100" ng-model="addButton" btn-radio="'1'"><i class="  fa fa-floppy-o"></i> Ajouter</button>
-	      <button type="submit" class="btn animated flipInY btn-warning col-md-offset-1" ng-click="showList()"><i class="  fa fa-undo"></i> Annuler</button>
-  		</div>
+      <div class="col-md-12">
+        <div ng-hide="completeForm < 100" class="col-md-3">
+        <button type="submit" class="btn animated flipInY btn-danger" name='addButton' ng-disabled="completeForm < 100" ng-model="addButton" btn-radio="'1'"><i class="  fa fa-floppy-o"></i> Ajouter</button>     
+        </div>
+        <div  class="col-md-3">
+        <button type="submit" class="btn animated flipInY btn-warning col-md-offset-1" ng-click="showList()"><i class="  fa fa-undo"></i> Annuler</button>
+        </div>
+      </div>
     </form> 
   	</div>
   <!-- we display the choice options when the form add is completed -->

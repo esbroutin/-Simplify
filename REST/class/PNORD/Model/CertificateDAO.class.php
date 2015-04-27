@@ -36,7 +36,7 @@ class CertificateDAO extends BaseSimplifyObject{
             OR CERTIFICATE.COMMON_NAME LIKE '%".strtolower($search)."%'
             OR CERTIFICATE.ORGANIZATION LIKE '%".strtoupper($search)."%' 
             OR CERTIFICATE.ORGANIZATION LIKE '%".strtolower($search)."%'
-            OR CERTIFICATE.ORGANIZATION_UNIT LIKE '%".strtoupper($search)."' 
+            OR CERTIFICATE.ORGANIZATION_UNIT LIKE '%".strtoupper($search)."%' 
             OR CERTIFICATE.ORGANIZATION_UNIT LIKE '%".strtolower($search)."%'";
     }
 

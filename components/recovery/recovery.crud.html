@@ -2,11 +2,11 @@
   <!-- New recovery form -->      
   <legend><i class="   fa fa-bed fa-lg"></i> Récupération</legend>
   <h4><i class="   fa fa-file-o"></i> Nouveau </h4>
-    <form class="col-md-10" ng-show="addButton != 1 && formDone == 0" >
+    <div class="col-md-10" ng-show="addButton != 1 && formDone == 0" >
   <p class="bounceInLeft col-md-6 animated alert alert-info"> Une journée normale commence à 7h30 et se termine à 16h30</p>
         <!-- LABEL -->
       <div class="col-md-7 light-margin-top">   
-        <div class="col-md-4"><label for="recoveryLabel"><i ng-hide='recovery.LABEL ==undefined' class="fa fa-check text-success"></i><i ng-show='recovery.LABEL ==undefined' class="fa fa-times text-danger"></i> Libéllé</label></div>
+        <div class="col-md-4"><label for="recoveryLabel"><i ng-hide='recovery.LABEL ==undefined || recovery.LABEL ==""' class="fa fa-check text-success"></i><i ng-show='recovery.LABEL ==undefined  || recovery.LABEL ==""' class="fa fa-times text-danger"></i> Libéllé</label></div>
         <div class="col-md-8"><input type="text" class="form-control" id="recoveryLabel" ng-model="recovery.LABEL" placeholder="entrez la description ..."></div>
       </div> 
         <!-- DATE -->
@@ -25,12 +25,12 @@
       </div>
         <!-- START TIME -->
       <div class="col-md-7 light-margin-top">     
-        <div class="col-md-4 text-left"><label for="recoveryStartTime"><i ng-hide='recovery.START_TIME ==undefined' class="fa fa-check text-success"></i><i ng-show='recovery.START_TIME ==undefined' class="fa fa-times text-danger"></i> Heure de début</label></div>
+        <div class="col-md-4 text-left"><label for="recoveryStartTime"><i ng-hide='recovery.START_TIME ==undefined || recovery.START_TIME ==""' class="fa fa-check text-success"></i><i ng-show='recovery.START_TIME ==undefined || recovery.START_TIME ==""' class="fa fa-times text-danger"></i> Heure de début</label></div>
         <div class="col-md-6 text-left"><input class="form-control"  placeholder="00:00:00" type="time" ng-model='recovery.START_TIME'/></div>
       </div>
         <!-- END TIME -->
       <div class="col-md-7 light-margin-top">
-        <div class="col-md-4 text-left"><label for="recoveryStartTime"><i ng-hide='recovery.END_TIME ==undefined' class="fa fa-check text-success"></i><i ng-show='recovery.END_TIME ==undefined' class="fa fa-times text-danger"></i> Heure de fin</label></div>
+        <div class="col-md-4 text-left"><label for="recoveryStartTime"><i ng-hide='recovery.END_TIME ==undefined || recovery.END_TIME ==""' class="fa fa-check text-success"></i><i ng-show='recovery.END_TIME ==undefined || recovery.END_TIME ==""' class="fa fa-times text-danger"></i> Heure de fin</label></div>
         <div class="col-md-6 text-left"><input class="form-control" type="time" placeholder="00:00:00" ng-model='recovery.END_TIME'/></div>
       </div>
         <!-- SPECIAL_DAY -->
@@ -55,7 +55,7 @@
       <div class=" col-md-12 light-margin-top" ng-show='showAlert==1'>
         <p class="alert alert-danger animated zoomIn">Les heures rentrées sont incohérentes :-/ </p>
       </div>
-    </form>
+    </div>
   <!-- we display the add confirmation options when the add button is pushed -->
   <div class="col-md-12 jumbotron" ng-show="addButton ==1">
     <legend>Êtes-vous sûr des informations suivantes ?</legend>

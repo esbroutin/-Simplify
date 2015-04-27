@@ -42,6 +42,10 @@ angular
 	providerService.list(undefined).then(function(response){
 		$scope.providers = response.data;
 	});
+	// we load the types list
+	hardwareService.listTypes().then(function(response){
+		$scope.types = response.data;
+			});
 
 	// we load the provider list uin case we edit the form
 	brandService.list(undefined).then(function(response){
@@ -55,6 +59,7 @@ angular
 
 		$scope.hardware.PROVIDER_ID = $scope.hardware.PROVIDER.ID 
 		$scope.hardware.BRAND_ID = $scope.hardware.BRAND.ID 
+		$scope.hardware.TYPE = $scope.hardware.TYPE.ID 
 
 		hardwareService.update($scope.hardware).then(function(response){
 			$scope.newHardwareId = response.data;

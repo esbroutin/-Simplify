@@ -1,7 +1,7 @@
 <div ng-controller="RecoveryFormCtrl">
   <legend><i class="  fa fa-bed fa-lg"></i> Récupération</legend>
   <h4><i class="  fa fa-file-o"></i> Nouvelle demande </h4>
-    <form class="col-md-8 row " ng-hide="addButton == 1 || lock == 1 || formDone == 1" name='RecoveryRequest'>
+    <div class="col-md-8 row " ng-hide="addButton == 1 || lock == 1 || formDone == 1" name='RecoveryRequest'>
         <!-- DATE -->
       <div class="col-md-8 light-margin-top">
         <div class="col-md-3">
@@ -51,7 +51,7 @@
           <button class="btn btn-warning animated flipInY" ng-click="show()"><i class="  fa fa-undo"></i> Annuler</button> 
         </div>
       </div> 
-    </form>
+    </div>
   <!-- we display the add confirmation options when the add button is pushed --> 
   <div class="col-md-12 jumbotron" ng-show="addButton ==1 && lock == 0 && formDone == 0">
     <legend>Êtes-vous sûr des informations suivantes ? </legend> 

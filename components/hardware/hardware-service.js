@@ -6,8 +6,14 @@ simplify.factory('hardwareService', function($http) {
     list: function(search) {
          return $http.get("REST/hardware/list/"+search);
     },
+    listTypes: function() {
+         return $http.get("REST/hardware/type/list");
+    },
     add: function(hardware) {
          return $http.post("REST/hardware/add",hardware);
+    },
+    addType: function(type) {
+         return $http.post("REST/hardware/type/add",type);
     },
     delete: function(hardwareId) {
          return $http.delete("REST/hardware/delete/"+hardwareId);

@@ -7,7 +7,7 @@
       <!-- label -->
       <div class="form-group row text-left">
         <div class="col-md-2">
-          <label for="licenseLabel"><i ng-hide='license.LABEL ==undefined' class="fa fa-check text-success"></i><i ng-show='license.LABEL ==undefined' class="fa fa-times text-danger"></i> Libéllé</label>
+          <label for="licenseLabel"><i ng-hide='license.LABEL ==undefined || license.LABEL == ""' class="fa fa-check text-success"></i><i ng-show='license.LABEL ==undefined || license.LABEL == ""' class="fa fa-times text-danger"></i> Libéllé</label>
         </div>   
         <div class="col-md-10">
           <input type="text" class="form-control" ng-model="license.LABEL" placeholder="entrez le libéllé ...">
@@ -73,7 +73,7 @@
           </ui-select>
         </div>
         <div class="col-md-3">
-          <button class="btn btn-info" ng-model="newProvider" btn-radio="'1'"><i class="  fa fa-plus"></i></button>
+          <button class="btn btn-info animated flipInY" ng-model="newProvider" btn-radio="'1'"><i class="  fa fa-plus"></i></button>
         </div>       
       </div> 
       <!-- brand BLOC-->
@@ -91,7 +91,7 @@
           </ui-select>
         </div>
         <div class="col-md-3">
-          <button class="btn btn-info" ng-model="newBrand" btn-radio="'1'"><i class="  fa fa-plus"></i></button>
+          <button class="btn btn-info animated flipInY" ng-model="newBrand" btn-radio="'1'"><i class="  fa fa-plus"></i></button>
         </div>       
       </div> 
       <!-- Serial BLOC-->
@@ -118,8 +118,14 @@
           </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-danger col-md-offset-1 "ng-disabled="completeForm < 100"  name='addButton' ng-model="addButton" btn-radio="'1'"><i class="  fa fa-floppy-o"></i> Ajouter</button>
-      <button type="submit" class="btn btn-warning col-md-offset-1" ng-click="showList()"><i class="  fa fa-undo"></i> Annuler</button>
+      <div class="col-md-12">
+        <div ng-hide="completeForm < 100" class="col-md-3">
+          <button type="submit" class="btn btn-danger animated flipInY col-md-offset-1 "  name='addButton' ng-model="addButton" btn-radio="'1'"><i class="  fa fa-floppy-o"></i> Ajouter</button>        
+        </div>
+        <div  class="col-md-3">
+          <button type="submit" class="btn btn-warning animated flipInY col-md-offset-1" ng-click="showList()"><i class="  fa fa-undo"></i> Annuler</button>
+        </div>
+      </div>
     </form> 
   </div>
   <!-- New provider form -->     
@@ -142,8 +148,8 @@
       <input type="text" class="form-control" id="providerWebAddress" ng-model="newProviderForm.WEB_ADDRESS" placeholder="site web ...">
     </div> 
     <div class="row col-md-12 light-margin-top">
-      <button class="btn btn-success" ng-model="addProvider" ng-click="addProvider()"><i class="  fa fa-floppy-o "></i> Créer</button>
-      <button class="btn btn-warning col-md-offset-1" ng-model="newProvider" btn-radio="'0'"><i class="  fa fa-undo "></i> Annuler</button>
+      <button class="btn btn-success animated flipInY " ng-model="addProvider" ng-click="addProvider()"><i class="  fa fa-floppy-o "></i> Créer</button>
+      <button class="btn btn-warning  animated flipInY col-md-offset-1" ng-model="newProvider" btn-radio="'0'"><i class="  fa fa-undo "></i> Annuler</button>
     </div>
   </div>
   <!-- New brand form -->     
@@ -158,8 +164,8 @@
       <input type="text" class="form-control" id="providerWebAddress" ng-model="newBrandForm.WEB_ADDRESS" placeholder="site web ...">
     </div> 
     <div class="row col-md-12 light-margin-top">
-      <button class="btn btn-success" ng-model="addBrand" ng-click="addBrand()"><i class="  fa fa-floppy-o "></i> Créer</button>
-      <button class="btn btn-warning col-md-offset-1" ng-model="newBrand" btn-radio="'0'"><i class="  fa fa-undo "></i> Annuler</button>
+      <button class="btn btn-success animated flipInY" ng-model="addBrand" ng-click="addBrand()"><i class="  fa fa-floppy-o "></i> Créer</button>
+      <button class="btn btn-warning animated flipInY col-md-offset-1" ng-model="newBrand" btn-radio="'0'"><i class="  fa fa-undo "></i> Annuler</button>
     </div>
   </div>
   
@@ -168,9 +174,9 @@
     <legend>La nouvelle licence a été ajoutée, que souhaitez-vous faire ?</legend>
     </br>
       <p class="text-center">
-        <button type="submit" class="btn btn-info btn-lg" ng-click="showList()"  ><i class="  fa fa-list"></i> Liste</button>
-        <button type="submit" class="btn btn-success btn-lg col-md-offset-1" ng-click="viewLicense()"  ><i class="  fa fa-info"></i> Afficher les détails</button>
-        <button type="submit" class="btn btn-danger btn-lg col-md-offset-1" ng-click="newLicense()"  ><i class="  fa fa-pencil"></i> Nouvelle Licence</button>
+        <button type="submit" class="animated flipInY btn btn-info btn-lg" ng-click="showList()"  ><i class="  fa fa-list"></i> Liste</button>
+        <button type="submit" class="animated flipInY btn btn-success btn-lg col-md-offset-1" ng-click="viewLicense()"  ><i class="  fa fa-info"></i> Afficher les détails</button>
+        <button type="submit" class="animated flipInY btn btn-danger btn-lg col-md-offset-1" ng-click="newLicense()"  ><i class="  fa fa-pencil"></i> Nouvelle Licence</button>
       </p>
   </div>
 
@@ -186,8 +192,8 @@
       <div class="row light-margin-top "><div class="col-md-6 text-right">Niveau de Service: </div><div class="col-md-6 text-left text-warning"> {{license.SERVICE_LEVEL}}</div></div>
       <div class="row light-margin-top "><div class="col-md-6 text-right">Lien Web: </div><div class="col-md-6 text-left text-warning"> {{license.WEB_ADDRESS}}</div></div>
       <p class="text-center light-margin-top">
-        <button type="submit" class="btn btn-danger btn-lg" ng-click="addNewLicense()"><i class="  fa fa-floppy-o"></i> Oui</button>
-      	<button type="submit" class="btn btn-warning btn-lg col-md-offset-1 " name='addButton2' ng-model="addButton" btn-radio="'0'" ng-click=""><i class="  fa fa-undo"></i> Annuler</button>
+        <button type="submit" class="btn btn-danger btn-lg animated flipInY " ng-click="addNewLicense()"><i class="  fa fa-floppy-o"></i> Oui</button>
+      	<button type="submit" class="btn btn-warning btn-lg  animated flipInY col-md-offset-1 " name='addButton2' ng-model="addButton" btn-radio="'0'" ng-click=""><i class="  fa fa-undo"></i> Annuler</button>
       </p>
   </div>
 
